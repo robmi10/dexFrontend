@@ -1,18 +1,16 @@
-import { client } from "../../../sanityclient/sanity";
+import { client } from "../../../sanityClient/client";
 
 const CreatePool = async (req, res) => {
   try {
-    const proposalDoc = {
-      //   _type: "proposeTable",
-      //   _id: req.body.proposeId,
-      //   ProposeTitle: req.body.proposeTitle,
-      //   Proposer: req.body.proposer,
-      //   ProposeId: req.body.proposeId,
-      //   ProposeStatus: req.body.proposeStatus,
-      //   Time: req.body.time,
+    const poollDoc = {
+      _type: "poolTable",
+      _id: req.body.createdBy + req.body.createdId,
+      PoolId: req.body.createdId,
+      PoolOwner: req.body.createdBy,
+      Token: req.body.createdToken,
     };
-    console.log({ proposalDoc });
-    await client.createIfNotExists(proposalDoc);
+    console.log({ poollDoc });
+    await client.createIfNotExists(poollDoc);
     console.log("Success !");
     res.status(200).send({ message: "success" });
   } catch (error) {

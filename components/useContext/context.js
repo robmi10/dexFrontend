@@ -12,7 +12,14 @@ const DexProvider = ({ children }) => {
   //     }
   //   });
 
-  const createProposal = async () => {
+  useEffect(() => {
+    if (createPoolStatus) {
+      createPool();
+    }
+  }, [createPoolStatus]);
+
+  const createPool = async () => {
+    console.log({ createPoolStatus });
     try {
       await fetch("api/db/createPool", {
         method: "POST",
@@ -20,15 +27,11 @@ const DexProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          //   proposeTitle: proposal.proposeTitle,
-          //   proposer: proposal.proposerAddr,
-          //   proposeId: proposal.proposalId,
-          //   proposeStatus: true,
-          //   time: Date.now(),
+          createdId: createPoolStatus.createdId,
+          createdBy: createPoolStatus.createdBy,
+          createdToken: createPoolStatus.createdToken,
         }),
-      }).then(() => {
-        getProposal();
-      });
+      }).then(() => {});
     } catch (error) {
       console.log({ error });
     }

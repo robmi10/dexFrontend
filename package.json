@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "13.0.7",
+    "@sanity/client": "^3.4.1",
     "@thirdweb-dev/react": "^3.6.8",
     "@usedapp/core": "^1.2.2",
     "eslint": "8.30.0",
