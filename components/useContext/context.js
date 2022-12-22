@@ -35,14 +35,14 @@ const DexProvider = ({ children }) => {
   };
 
   return (
-    <DexProvider.Provider
+    <DexContext.Provider
       value={{
         createPoolStatus,
         setCreatePoolStatus,
       }}
     >
       {children}
-    </DexProvider.Provider>
+    </DexContext.Provider>
   );
 };
 

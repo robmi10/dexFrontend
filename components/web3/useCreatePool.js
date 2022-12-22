@@ -7,7 +7,7 @@ import { DexAddress, DaiTokenAddress } from "../../constants/address";
 import { DexContext } from "../useContext/context";
 
 const Web3CreatePool = () => {
-  //   const { createPoolStatus, setCreatePoolStatus } = useContext(DexContext);
+  const { createPoolStatus, setCreatePoolStatus } = useContext(DexContext);
   const { account } = useEthers();
   const dexAddress = DexAddress;
   const daiAddress = DaiTokenAddress;
@@ -24,7 +24,18 @@ const Web3CreatePool = () => {
     console.log({ createStatus: createStatus.status });
 
     if (createStatus.status === "Success") {
-      console.log("inside success!!", createStatus);
+      console.log({ createEvents: createEvents[0]?.args });
+
+      console.log({
+        createEventsIDSecond: createEvents[0]?.args?._id.toString(),
+      });
+      console.log({ createStatus });
+
+      setCreatePoolStatus({
+        createdId: createEvents[0]?.args._createBy,
+        createdBy: createEvents[0]?.args._id.toString(),
+        createdToken: createEvents[0]?.args._token,
+      });
     }
   }, [createStatus]);
 

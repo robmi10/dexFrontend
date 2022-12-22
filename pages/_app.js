@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import { ChainId } from "@thirdweb-dev/react";
 import { DAppProvider } from "@usedapp/core";
+import DexProvider from "../components/useContext/context";
 
 const config = {
   autoConnect: true,
@@ -12,8 +13,10 @@ const config = {
 
 export default function App({ Component, pageProps }) {
   return (
-    <DAppProvider config={config}>
-      <Component {...pageProps} />
-    </DAppProvider>
+    <DexProvider>
+      <DAppProvider config={config}>
+        <Component {...pageProps} />
+      </DAppProvider>
+    </DexProvider>
   );
 }
