@@ -4,11 +4,6 @@ export const poolSchema = {
   title: 'PoolTable',
   fields: [
     {
-      name: 'PoolTitle',
-      title: 'pooltitle',
-      type: 'string',
-    },
-    {
       name: 'PoolId',
       title: 'poolId',
       type: 'string',
@@ -16,6 +11,11 @@ export const poolSchema = {
 
     {
       name: 'PoolOwner',
+      title: 'owner',
+      type: 'string',
+    },
+    {
+      name: 'Token',
       title: 'owner',
       type: 'string',
     },
