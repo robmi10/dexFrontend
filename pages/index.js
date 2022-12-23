@@ -1,12 +1,18 @@
+import {
+  Liquidation,
+  LiquidationAdd,
+} from "../components/liquidation/liquidationAdd";
+import { LiquidationRemove } from "../components/liquidation/liquidationRemove";
 import { Navbar } from "../components/navbar";
 import Web3CreatePool from "../components/web3/useCreatePool";
 
 export default function Home() {
   const { usePool } = Web3CreatePool();
+
   return (
     <>
       <Navbar />
-      <div className=" flex justify-center w-full">
+      <div className="flex items-center w-full flex-col gap-4">
         <div className="bg-blue-600 w-3/4 p-4 text-white flex flex-col items-center gap-20">
           <h1>DEX</h1>
           <button
@@ -18,6 +24,8 @@ export default function Home() {
             CREATE POOL
           </button>
         </div>
+        <LiquidationAdd />
+        <LiquidationRemove />
       </div>
     </>
   );
