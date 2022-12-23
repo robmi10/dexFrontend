@@ -5,6 +5,8 @@ export const DexContext = createContext();
 
 const DexProvider = ({ children }) => {
   const [createPoolStatus, setCreatePoolStatus] = useState(false);
+  const [approveStatus, setCreateApproveStatus] = useState(false);
+  const [liquidityStatus, setliquidityStatus] = useState(false);
 
   //   useEffect(() => {
   //     if (!voteList) {
@@ -17,6 +19,12 @@ const DexProvider = ({ children }) => {
       createPool();
     }
   }, [createPoolStatus]);
+
+  useEffect(() => {
+    if (liquidityStatus) {
+      addLiquidity();
+    }
+  }, [liquidityStatus]);
 
   const createPool = async () => {
     console.log({ createPoolStatus });
@@ -37,11 +45,35 @@ const DexProvider = ({ children }) => {
     }
   };
 
+  const addLiquidity = async () => {
+    console.log({ liquidityStatus });
+    try {
+      await fetch("api/db/addLiquidity", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          liquidityid: liquidityStatus.liquidityid,
+          liquidityowner: liquidityStatus.liquidityowner,
+          amount: liquidityStatus.amount,
+          token: liquidityStatus.token,
+        }),
+      }).then(() => {});
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   return (
     <DexContext.Provider
       value={{
         createPoolStatus,
         setCreatePoolStatus,
+        approveStatus,
+        setCreateApproveStatus,
+        liquidityStatus,
+        setliquidityStatus,
       }}
     >
       {children}

@@ -1,28 +1,28 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from "sanity";
 export default defineType({
-  name: 'liquidityTable',
-  type: 'document',
-  title: 'LiquidityTable',
+  name: "liquidityTable",
+  type: "document",
+  title: "LiquidityTable",
   fields: [
     defineField({
-      name: 'LiquidityId',
-      title: 'liquidityid',
-      type: 'string',
+      name: "LiquidityOwner",
+      title: "liquidityowner",
+      type: "string",
     }),
     defineField({
-      name: 'LiquidityOwner',
-      title: 'liquidityowner',
-      type: 'string',
+      name: "LiquidityId",
+      title: "liquidityid",
+      type: "string",
     }),
     defineField({
-      name: 'Token',
-      title: 'token',
-      type: 'string',
+      name: "Token",
+      title: "token",
+      type: "string",
     }),
     defineField({
-      name: 'Amount',
-      title: 'amount',
-      type: 'string',
+      name: "Amount",
+      title: "amount",
+      type: "string",
     }),
   ],
-})
+});

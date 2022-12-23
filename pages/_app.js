@@ -11,6 +11,15 @@ const config = {
   },
 };
 
+// const config = {
+//   autoConnect: true,
+//   readOnlyChainId: ChainId.Localhost,
+//   readOnlyUrls: {
+//     1337: "http://localhost:8545",
+//   },
+//   gasLimitBufferPercentage: 10,
+// };
+
 export default function App({ Component, pageProps }) {
   return (
     <DexProvider>

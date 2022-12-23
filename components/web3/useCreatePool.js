@@ -3,7 +3,7 @@ import { useEthers, useContractFunction } from "@usedapp/core";
 import dexInfo from "../../constants/Dex.json";
 import { ethers } from "ethers";
 import { Contract } from "@ethersproject/contracts";
-import { DexAddress, DaiTokenAddress } from "../../constants/address";
+import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 
 const Web3CreatePool = () => {
@@ -24,7 +24,7 @@ const Web3CreatePool = () => {
     console.log({ createStatus: createStatus.status });
 
     if (createStatus.status === "Success") {
-      console.log({ createEvents: createEvents[0]?.args });
+      console.log({ createEvents });
 
       console.log({
         createEventsIDSecond: createEvents[0]?.args?._id.toString(),

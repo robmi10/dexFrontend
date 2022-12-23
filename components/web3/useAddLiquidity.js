@@ -1,47 +1,73 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useEthers, useContractFunction } from "@usedapp/core";
 import dexInfo from "../../constants/Dex.json";
+import daiInfo from "../../constants/DAI.json";
 import { ethers } from "ethers";
 import { Contract } from "@ethersproject/contracts";
-import { DexAddress, DaiTokenAddress } from "../../constants/address";
+import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 
-const Web3CreatePool = () => {
-  const { createPoolStatus, setCreatePoolStatus } = useContext(DexContext);
+const Web3CreatePoolAdd = () => {
+  const { liquidityStatus, setliquidityStatus } = useContext(DexContext);
   const { account } = useEthers();
-  const dexAddress = DexAddress;
   const daiAddress = DaiTokenAddress;
+  const dexAddress = DexAddress;
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
   const dexAddressContract = new Contract(dexAddress, dexInterface);
+  const daiInterface = new ethers.utils.Interface(daiInfo.abi);
+  const daiAddressContract = new Contract(daiAddress, daiInterface);
+  const [input, setInput] = useState(false);
 
   const {
-    state: createStatus,
+    state: addLiquidityStatus,
     send: addLiquidity,
-    events: createEvents,
-  } = useContractFunction(dexAddressContract, "createPool");
+    events: addLiquidityEvents,
+  } = useContractFunction(dexAddressContract, "_addLiquidity");
+
+  const {
+    state: daiStatus,
+    send: approveUser,
+    events: daiEvents,
+  } = useContractFunction(daiAddressContract, "approve");
+
+  const addLiquidityFunc = () => {
+    console.log({ inputCheck: input });
+    const { liquidityPool, liquidityAdd } = input;
+    addLiquidity(0, liquidityAdd, {
+      value: ethers.utils.parseEther("1"),
+    });
+  };
 
   useEffect(() => {
-    console.log({ createStatus: createStatus.status });
+    console.log({ daiStatus: addLiquidityStatus });
+    if (daiStatus.status === "Success") {
+      console.log({ daiStatus });
+      addLiquidityFunc();
+    }
+  }, [daiStatus]);
 
-    if (createStatus.status === "Success") {
-      console.log({ createEvents: createEvents[0]?.args });
+  useEffect(() => {
+    console.log({ addLiquidityStatus: addLiquidityStatus });
+    if (addLiquidityStatus.status === "Success") {
+      console.log({ addLiquidityStatus });
+      console.log({ addLiquidityEvents: addLiquidityEvents[0] });
 
-      console.log({
-        createEventsIDSecond: createEvents[0]?.args?._id.toString(),
-      });
-      console.log({ createStatus });
-
-      setCreatePoolStatus({
-        createdId: createEvents[0]?.args._createBy,
-        createdBy: createEvents[0]?.args._id.toString(),
-        createdToken: createEvents[0]?.args._token,
+      setliquidityStatus({
+        liquidityid: addLiquidityEvents[0]?.args?._amount.toString(),
+        liquidityowner: addLiquidityEvents[0]?.args?._from,
+        amount: addLiquidityEvents[0]?.args?._mintedAmount.toString(),
+        token: daiAddress,
       });
     }
-  }, [createStatus]);
+  }, [addLiquidityStatus]);
 
-  const usePool = async () => {
-    addLiquidity(daiAddress);
+  const usePoolAdd = async (data) => {
+    console.log({ data });
+    const { liquidityPool, liquidityAdd } = data;
+    setInput(data);
+    console.log({ dexAddress });
+    approveUser("0x6F1216D1BFe15c98520CA1434FC1d9D57AC95321", liquidityAdd);
   };
-  return { usePool };
+  return { usePoolAdd };
 };
-export default Web3CreatePool;
+export default Web3CreatePoolAdd;

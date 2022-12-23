@@ -2,6 +2,7 @@ import {
   Liquidation,
   LiquidationAdd,
 } from "../components/liquidation/liquidationAdd";
+import { LiquidationApprove } from "../components/liquidation/liquidationApprove";
 import { LiquidationRemove } from "../components/liquidation/liquidationRemove";
 import { Navbar } from "../components/navbar";
 import Web3CreatePool from "../components/web3/useCreatePool";
