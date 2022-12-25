@@ -11,7 +11,7 @@ const AddLiquidity = async (req, res) => {
       Token: req.body.token,
     };
     console.log({ liquidityDoc });
-    await client.createIfNotExists(liquidityDoc);
+    await client.createOrReplace(liquidityDoc);
     console.log("Success !");
     res.status(200).send({ message: "success" });
   } catch (error) {

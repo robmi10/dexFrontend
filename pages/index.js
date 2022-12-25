@@ -25,6 +25,8 @@ export default function Home() {
             CREATE POOL
           </button>
         </div>
+        {/* 
+        <LiquidationApprove /> */}
         <LiquidationAdd />
         <LiquidationRemove />
       </div>

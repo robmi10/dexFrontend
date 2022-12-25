@@ -33,8 +33,8 @@ const Web3CreatePoolAdd = () => {
   const addLiquidityFunc = () => {
     console.log({ inputCheck: input });
     const { liquidityPool, liquidityAdd } = input;
-    addLiquidity(0, liquidityAdd, {
-      value: ethers.utils.parseEther("1"),
+    addLiquidity(parseInt(liquidityPool), liquidityAdd, {
+      value: liquidityAdd,
     });
   };
 
@@ -42,21 +42,38 @@ const Web3CreatePoolAdd = () => {
     console.log({ daiStatus: addLiquidityStatus });
     if (daiStatus.status === "Success") {
       console.log({ daiStatus });
+      console.log({ daiEvents });
       addLiquidityFunc();
     }
   }, [daiStatus]);
 
   useEffect(() => {
+    const { liquidityPool, liquidityAdd } = input;
     console.log({ addLiquidityStatus: addLiquidityStatus });
+
     if (addLiquidityStatus.status === "Success") {
       console.log({ addLiquidityStatus });
-      console.log({ addLiquidityEvents: addLiquidityEvents[0] });
+      console.log({ addLiquidityEvents });
+      console.log({
+        EventMintedamount:
+          addLiquidityEvents[0]?.args?._mintedAmount.toString(),
+      });
+      console.log({
+        LPamount: addLiquidityEvents[0]?.args?._amount.toString(),
+      });
+
+      console.log({
+        LpTokenBalance: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
+      });
 
       setliquidityStatus({
-        liquidityid: addLiquidityEvents[0]?.args?._amount.toString(),
+        liquidityid: liquidityPool,
         liquidityowner: addLiquidityEvents[0]?.args?._from,
-        amount: addLiquidityEvents[0]?.args?._mintedAmount.toString(),
+        amount: addLiquidityEvents[0]?.args?._amount.toString(),
         token: daiAddress,
+        totalamount:
+          parseInt(addLiquidityEvents[0]?.args?._amount.toString()) +
+          parseInt(addLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
       });
     }
   }, [addLiquidityStatus]);
@@ -66,7 +83,11 @@ const Web3CreatePoolAdd = () => {
     const { liquidityPool, liquidityAdd } = data;
     setInput(data);
     console.log({ dexAddress });
-    approveUser("0x6F1216D1BFe15c98520CA1434FC1d9D57AC95321", liquidityAdd);
+
+    // addLiquidity(2, liquidityAdd, {
+    //   value: ethers.utils.parseEther("2"),
+    // });
+    approveUser("0x57aD6B95508a96dfC6e17efD702360B5124f4680", liquidityAdd);
   };
   return { usePoolAdd };
 };

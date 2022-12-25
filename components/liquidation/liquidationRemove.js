@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { useForm } from "react-hook-form";
+import Web3CreatePoolRemove from "../web3/useRemoveLiquidity";
 
 export const LiquidationRemove = () => {
   const [address, setAddress] = useState(false);
   const { activateBrowserWallet, deactivate, account, error } = useEthers();
   const { register, handleSubmit } = useForm();
+  const { usePoolRemove } = Web3CreatePoolRemove();
 
   const onSubmitRemove = (data) => {
     console.log(data);
+    usePoolRemove(data);
   };
   useEffect(() => {
     console.log({ account });
@@ -27,7 +30,7 @@ export const LiquidationRemove = () => {
         <label>Amount</label>
         <input
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-          {...register("liquidityRemove", { required: true, maxLength: 40 })}
+          {...register("liquidityPool", { required: true, maxLength: 40 })}
         />
         <input
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"

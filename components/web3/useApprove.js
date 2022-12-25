@@ -35,7 +35,7 @@ const Web3Approve = () => {
   const useApprove = async (data) => {
     console.log({ data });
     const { liquidityPool, liquidityAdd } = data;
-    approveContract(dexAddress, liquidityAdd);
+    approveContract("0x8EFa1819Ff5B279077368d44B593a4543280e402", liquidityAdd);
   };
   return { useApprove };
 };

@@ -7,6 +7,7 @@ const DexProvider = ({ children }) => {
   const [createPoolStatus, setCreatePoolStatus] = useState(false);
   const [approveStatus, setCreateApproveStatus] = useState(false);
   const [liquidityStatus, setliquidityStatus] = useState(false);
+  const [liquidityRemoveStatus, setliquidityRemoveStatus] = useState(false);
 
   //   useEffect(() => {
   //     if (!voteList) {
@@ -25,6 +26,12 @@ const DexProvider = ({ children }) => {
       addLiquidity();
     }
   }, [liquidityStatus]);
+
+  useEffect(() => {
+    if (liquidityRemoveStatus) {
+      removeLiquidity();
+    }
+  }, [liquidityRemoveStatus]);
 
   const createPool = async () => {
     console.log({ createPoolStatus });
@@ -47,6 +54,10 @@ const DexProvider = ({ children }) => {
 
   const addLiquidity = async () => {
     console.log({ liquidityStatus });
+
+    console.log({
+      liquidityStatusAmount: liquidityStatus.totalamount.toString(),
+    });
     try {
       await fetch("api/db/addLiquidity", {
         method: "POST",
@@ -56,8 +67,29 @@ const DexProvider = ({ children }) => {
         body: JSON.stringify({
           liquidityid: liquidityStatus.liquidityid,
           liquidityowner: liquidityStatus.liquidityowner,
-          amount: liquidityStatus.amount,
+          amount: liquidityStatus.totalamount.toString(),
           token: liquidityStatus.token,
+          totalamount: liquidityStatus.totalamount,
+        }),
+      }).then(() => {});
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  const removeLiquidity = async () => {
+    console.log({ liquidityRemoveStatus });
+    try {
+      await fetch("api/db/removeLiquidity", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          liquidityid: liquidityRemoveStatus.liquidityid,
+          liquidityowner: liquidityRemoveStatus.liquidityowner,
+          amount: liquidityRemoveStatus.amount.toString(),
+          token: liquidityRemoveStatus.token,
         }),
       }).then(() => {});
     } catch (error) {
@@ -74,6 +106,8 @@ const DexProvider = ({ children }) => {
         setCreateApproveStatus,
         liquidityStatus,
         setliquidityStatus,
+        liquidityRemoveStatus,
+        setliquidityRemoveStatus,
       }}
     >
       {children}
