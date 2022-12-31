@@ -32,9 +32,15 @@ const Web3CreatePoolAdd = () => {
 
   const addLiquidityFunc = () => {
     console.log({ inputCheck: input });
-    const { liquidityPool, liquidityAdd } = input;
-    addLiquidity(parseInt(liquidityPool), liquidityAdd, {
-      value: liquidityAdd,
+    const { index, address } = input.poolInfo;
+    const { liquidity } = input;
+
+    console.log({ indexSecond: index });
+    console.log({ addressSecond: address });
+    console.log({ liquiditySecond: liquidity });
+
+    addLiquidity(index, liquidity, {
+      value: liquidity,
     });
   };
 
@@ -81,13 +87,17 @@ const Web3CreatePoolAdd = () => {
   const usePoolAdd = async (data) => {
     console.log({ data });
     const { liquidityPool, liquidityAdd } = data;
+    const { index, address } = data.poolInfo;
+    const { liquidity } = data;
     setInput(data);
-    console.log({ dexAddress });
+    // console.log({ dexAddress });
 
+    console.log({ liquidity });
+    console.log({ index });
     // addLiquidity(2, liquidityAdd, {
     //   value: ethers.utils.parseEther("2"),
     // });
-    approveUser("0x57aD6B95508a96dfC6e17efD702360B5124f4680", liquidityAdd);
+    approveUser(address, liquidity);
   };
   return { usePoolAdd };
 };

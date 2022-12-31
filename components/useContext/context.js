@@ -9,7 +9,7 @@ const DexProvider = ({ children }) => {
   const [approveStatus, setCreateApproveStatus] = useState(false);
   const [liquidityStatus, setliquidityStatus] = useState(false);
   const [liquidityRemoveStatus, setliquidityRemoveStatus] = useState(false);
-  const [poolList, setPoolList] = useState([]);
+  const [poolList, setPoolList] = useState(false);
 
   useEffect(() => {
     if (!poolList) {
@@ -37,7 +37,7 @@ const DexProvider = ({ children }) => {
 
   const getPoolList = async () => {
     const queryPoolTable = '*[_type=="poolTable"]';
-    console.log({ queryPoolTable });
+    console.log({ queryPoolTableCheck: queryPoolTable });
     try {
       await client.fetch(queryPoolTable).then((res) => {
         console.log({ resVote: res });

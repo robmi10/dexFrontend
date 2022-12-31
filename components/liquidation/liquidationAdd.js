@@ -8,27 +8,47 @@ import Select from "react-select";
 
 export const LiquidationAdd = () => {
   const { poolList } = useContext(DexContext);
-  const [address, setAddress] = useState(false);
-  const { activateBrowserWallet, deactivate, account, error } = useEthers();
+  const [selectedOption, setSelectedOption] = useState(false);
   const { register, handleSubmit } = useForm();
+  const { usePoolAdd } = Web3CreatePoolAdd();
 
   // const methods = useForm();
+
+  useEffect(() => {
+    // console.log({ poolList });
+  }, [poolList]);
+
+  if (!poolList) return false;
+
+  const filterPoolList = poolList.map((option, i) => ({
+    index: i,
+    address: option.Token,
+  }));
+
   const onSubmitAdd = (data) => {
-    const { usePoolAdd } = Web3CreatePoolAdd();
-    console.log(data);
-    usePoolAdd(data);
+    usePoolAdd({
+      poolInfo: filterPoolList[data.liquidityAddress],
+      liquidity: data.liquidityAdd,
+    });
   };
 
-  if (!poolList || poolList.length === 0) return false;
-  console.log({ poolList });
+  console.log({ filterPoolList });
+  console.log({ poolListSecond: poolList });
   return (
     <div className="bg-purple-800 w-3/4 p-4 text-white flex flex-col items-center gap-20">
       <h1>Add Liquidity</h1>
       <section>
         <label>Pool</label>
-        <select as={Select} name="Name" options={poolList}>
-          {poolList.map((options) => {
-            return <option>{options}</option>;
+        <select
+          className="w-full text-black p-2 rounded-md border flex justify-center"
+          {...register("liquidityAddress", { required: true, maxLength: 40 })}
+        >
+          {filterPoolList.map((option, i) => {
+            return (
+              <>
+                <option value={option.index}>{option.index}</option>;
+              </>
+            );
           })}
         </select>
       </section>
