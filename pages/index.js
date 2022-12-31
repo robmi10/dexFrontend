@@ -1,14 +1,11 @@
-import {
-  Liquidation,
-  LiquidationAdd,
-} from "../components/liquidation/liquidationAdd";
-import { LiquidationApprove } from "../components/liquidation/liquidationApprove";
+import { LiquidationAdd } from "../components/liquidation/liquidationadd";
 import { LiquidationRemove } from "../components/liquidation/liquidationRemove";
 import { Navbar } from "../components/navbar";
-import Web3CreatePool from "../components/web3/useCreatePool";
+import { Swap } from "../components/swap";
+import Web3CreatePool from "../components/web3/usecreatepool";
 
 export default function Home() {
-  const { usePool } = Web3CreatePool();
+  // const { usePool } = Web3CreatePool();
 
   return (
     <>
@@ -18,7 +15,7 @@ export default function Home() {
           <h1>DEX</h1>
           <button
             onClick={() => {
-              usePool();
+              // usePool();
             }}
             className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
           >
@@ -29,6 +26,7 @@ export default function Home() {
         <LiquidationApprove /> */}
         <LiquidationAdd />
         <LiquidationRemove />
+        <Swap />
       </div>
     </>
   );

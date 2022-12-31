@@ -1,5 +1,6 @@
 import React from "react";
 import { createContext, useState, useEffect } from "react";
+import { client } from "../../sanityClient/client";
 export const DexContext = createContext();
 // import { client } from "../../sanityclient/sanity";
 
@@ -8,12 +9,13 @@ const DexProvider = ({ children }) => {
   const [approveStatus, setCreateApproveStatus] = useState(false);
   const [liquidityStatus, setliquidityStatus] = useState(false);
   const [liquidityRemoveStatus, setliquidityRemoveStatus] = useState(false);
+  const [poolList, setPoolList] = useState([]);
 
-  //   useEffect(() => {
-  //     if (!voteList) {
-  //       getVote();
-  //     }
-  //   });
+  useEffect(() => {
+    if (!poolList) {
+      getPoolList();
+    }
+  });
 
   useEffect(() => {
     if (createPoolStatus) {
@@ -32,6 +34,20 @@ const DexProvider = ({ children }) => {
       removeLiquidity();
     }
   }, [liquidityRemoveStatus]);
+
+  const getPoolList = async () => {
+    const queryPoolTable = '*[_type=="poolTable"]';
+    console.log({ queryPoolTable });
+    try {
+      await client.fetch(queryPoolTable).then((res) => {
+        console.log({ resVote: res });
+        setPoolList(res);
+        console.log({ poolListInsideContext: poolList });
+      });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const createPool = async () => {
     console.log({ createPoolStatus });
@@ -108,6 +124,8 @@ const DexProvider = ({ children }) => {
         setliquidityStatus,
         liquidityRemoveStatus,
         setliquidityRemoveStatus,
+        poolList,
+        setPoolList,
       }}
     >
       {children}

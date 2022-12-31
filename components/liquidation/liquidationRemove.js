@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { useForm } from "react-hook-form";
-import Web3CreatePoolRemove from "../web3/useRemoveLiquidity";
+import Web3CreatePoolRemove from "../web3/useremoveliquidity";
 
 export const LiquidationRemove = () => {
   const [address, setAddress] = useState(false);
   const { activateBrowserWallet, deactivate, account, error } = useEthers();
   const { register, handleSubmit } = useForm();
-  const { usePoolRemove } = Web3CreatePoolRemove();
 
   const onSubmitRemove = (data) => {
+    const { usePoolRemove } = Web3CreatePoolRemove();
     console.log(data);
     usePoolRemove(data);
   };
-  useEffect(() => {
-    console.log({ account });
-    if (account) {
-      setAddress(account);
-    }
-  }, [account]);
 
   return (
     <div className="bg-green-800 w-3/4 p-4 text-white flex flex-col items-center gap-20">
