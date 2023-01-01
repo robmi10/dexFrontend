@@ -54,10 +54,10 @@ const Web3CreatePoolAdd = () => {
   }, [daiStatus]);
 
   useEffect(() => {
-    const { liquidityPool, liquidityAdd } = input;
     console.log({ addLiquidityStatus: addLiquidityStatus });
 
     if (addLiquidityStatus.status === "Success") {
+      const { index } = input.poolInfo;
       console.log({ addLiquidityStatus });
       console.log({ addLiquidityEvents });
       console.log({
@@ -73,13 +73,15 @@ const Web3CreatePoolAdd = () => {
       });
 
       setliquidityStatus({
-        liquidityid: liquidityPool,
+        liquidityid: index,
         liquidityowner: addLiquidityEvents[0]?.args?._from,
         amount: addLiquidityEvents[0]?.args?._amount.toString(),
         token: daiAddress,
         totalamount:
           parseInt(addLiquidityEvents[0]?.args?._amount.toString()) +
           parseInt(addLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
+        tokenamount: addLiquidityEvents[0]?.args?._amount.toString(),
+        ethamount: addLiquidityEvents[0]?.args?._amount.toString(),
       });
     }
   }, [addLiquidityStatus]);

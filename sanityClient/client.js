@@ -1,9 +1,9 @@
 const sanityClient = require("@sanity/client");
 export const client = sanityClient({
-  projectId: "locieskp",
+  projectId: "ka1wtdys",
   dataset: "production",
   apiVersion: "v1",
   token:
-    "sk35wXtkLzlnAHTi8CzjEJ5CnHVbKDBut3LfLCaxCF4YDBiuSrB7BlTn5iL7I8DxzKVuBXXBsdfq1daBiiITOMEnG9Qjk7FK6VhICoh48kV0OWhA1KQ3R8KDnBKx0Q8Et6yPZKJZZc5tsDzPBcbRGQZDW5GGDYqcrzW479FQ6oLCYNBh1pNN",
+    "sk54CjAA21YsSzvCNzYGFK6IHbmiUMvsaHhFuf489ENJLIdPEwrK6eiD8y5Q4BKBrdDGQ8kknTFmPqiYpLWOWpU7aD90H5oZgd9UNs247PR9CmFuKQlIUl10VA0yeAbj1k9YuAaWg05Fafj27NAexLgNojQNgfnEi44cuHgHIt3oQm3uh1v7",
   useCdn: false,
 });

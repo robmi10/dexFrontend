@@ -6,7 +6,6 @@ import Web3Approve from "../web3/useapprove";
 
 export const LiquidationApprove = () => {
   const [address, setAddress] = useState(false);
-  const { activateBrowserWallet, deactivate, account, error } = useEthers();
   const { register, handleSubmit } = useForm();
   const { useApprove } = Web3Approve();
 

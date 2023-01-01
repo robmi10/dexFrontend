@@ -62,7 +62,9 @@ const DexProvider = ({ children }) => {
           createdBy: createPoolStatus.createdBy,
           createdToken: createPoolStatus.createdToken,
         }),
-      }).then(() => {});
+      }).then(() => {
+        getPoolList();
+      });
     } catch (error) {
       console.log({ error });
     }
@@ -86,6 +88,8 @@ const DexProvider = ({ children }) => {
           amount: liquidityStatus.totalamount.toString(),
           token: liquidityStatus.token,
           totalamount: liquidityStatus.totalamount,
+          tokenamount: liquidityStatus.tokenamount,
+          ethamount: liquidityStatus.ethamount,
         }),
       }).then(() => {});
     } catch (error) {

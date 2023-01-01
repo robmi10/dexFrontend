@@ -1,18 +1,17 @@
 import { defineField, defineType } from "sanity";
-
 export default defineType({
-  name: "poolTable",
+  name: "liquidityTable",
   type: "document",
-  title: "PoolTable",
+  title: "LiquidityTable",
   fields: [
     defineField({
-      name: "PoolId",
-      title: "poolid",
+      name: "LiquidityOwner",
+      title: "liquidityowner",
       type: "string",
     }),
     defineField({
-      name: "PoolOwner",
-      title: "poolowner",
+      name: "LiquidityId",
+      title: "liquidityid",
       type: "string",
     }),
     defineField({
@@ -21,14 +20,9 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      name: "TokenAmount",
-      title: "tokenamount",
-      type: "number",
-    }),
-    defineField({
-      name: "EthAmount",
-      title: "ethamount",
-      type: "number",
+      name: "Amount",
+      title: "amount",
+      type: "string",
     }),
   ],
 });
