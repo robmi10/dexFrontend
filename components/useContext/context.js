@@ -112,6 +112,15 @@ const DexProvider = ({ children }) => {
           liquidityowner: liquidityRemoveStatus.liquidityowner,
           amount: liquidityRemoveStatus.amount.toString(),
           token: liquidityRemoveStatus.token,
+          totalamount: liquidityRemoveStatus.totalamount,
+          tokenamount: liquidityRemoveStatus.tokenamount,
+          ethamount: liquidityRemoveStatus.ethamount,
+          lptotalvalue: liquidityRemoveStatus.lpBalance,
+          ethtotalvalue:
+            liquidityRemoveStatus.ethBalance -
+            (liquidityRemoveStatus.ethBalance * liquidityRemoveStatus.amount) /
+              liquidityRemoveStatus.lpBalance,
+          //address(this).balance * _amount / lpToken._totalSupply()
         }),
       }).then(() => {});
     } catch (error) {

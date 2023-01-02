@@ -9,7 +9,6 @@ import { DexContext } from "../useContext/context";
 
 const Web3CreatePoolAdd = () => {
   const { liquidityStatus, setliquidityStatus } = useContext(DexContext);
-  const { account } = useEthers();
   const daiAddress = DaiTokenAddress;
   const dexAddress = DexAddress;
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
@@ -94,7 +93,6 @@ const Web3CreatePoolAdd = () => {
 
   const usePoolAdd = async (data) => {
     console.log({ data });
-    const { liquidityPool, liquidityAdd } = data;
     const { index, address } = data.poolInfo;
     const { liquidity } = data;
     setInput(data);

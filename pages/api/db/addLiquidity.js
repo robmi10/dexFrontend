@@ -7,7 +7,7 @@ const AddLiquidity = async (req, res) => {
       _id:
         req.body.liquidityowner +
         req.body.liquidityid.toString() +
-        +"poolTable",
+        +"liquidityTable",
       LiquidityId: req.body.liquidityid,
       LiquidityOwner: req.body.liquidityowner,
       Amount: req.body.amount,
