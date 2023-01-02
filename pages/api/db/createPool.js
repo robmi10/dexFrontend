@@ -4,12 +4,13 @@ const CreatePool = async (req, res) => {
   try {
     const poollDoc = {
       _type: "poolTable",
-      _id: req.body.createdBy + req.body.createdId,
-      PoolId: req.body.createdId,
+      _id: req.body.createdBy + req.body.createdId + "poolTable",
+      PoolId: parseInt(req.body.createdId),
       PoolOwner: req.body.createdBy,
       Token: req.body.createdToken,
     };
     console.log({ poollDoc });
+
     await client.createIfNotExists(poollDoc);
     console.log("Success !");
     res.status(200).send({ message: "success" });

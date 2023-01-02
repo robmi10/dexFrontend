@@ -72,6 +72,10 @@ const Web3CreatePoolAdd = () => {
         LpTokenBalance: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
       });
 
+      console.log({
+        _ethReserve: addLiquidityEvents[0]?.args?._ethBalance.toString(),
+      });
+
       setliquidityStatus({
         liquidityid: index,
         liquidityowner: addLiquidityEvents[0]?.args?._from,
@@ -80,6 +84,8 @@ const Web3CreatePoolAdd = () => {
         totalamount:
           parseInt(addLiquidityEvents[0]?.args?._amount.toString()) +
           parseInt(addLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
+        lpBalance: addLiquidityEvents[0]?.args?._lpTokenSupply.toString(),
+        ethBalance: addLiquidityEvents[0]?.args?._ethBalance.toString(),
         tokenamount: addLiquidityEvents[0]?.args?._amount.toString(),
         ethamount: addLiquidityEvents[0]?.args?._amount.toString(),
       });

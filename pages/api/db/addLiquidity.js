@@ -2,23 +2,29 @@ import { client } from "../../../sanityClient/client";
 
 const AddLiquidity = async (req, res) => {
   try {
-    const poolTabeId = req.body.liquidityowner + req.body.liquidityid;
     const liquidityDoc = {
       _type: "liquidityTable",
-      _id: req.body.liquidityowner + req.body.liquidityid,
+      _id:
+        req.body.liquidityowner +
+        req.body.liquidityid.toString() +
+        +"poolTable",
       LiquidityId: req.body.liquidityid,
       LiquidityOwner: req.body.liquidityowner,
       Amount: req.body.amount,
       Token: req.body.token,
     };
+
+    const poolTabeId =
+      req.body.liquidityowner + req.body.liquidityid + "poolTable";
+
     console.log({ liquidityDoc });
     await client.createOrReplace(liquidityDoc);
     console.log("Success!");
     await client
       .patch(poolTabeId)
       .set({
-        TokenAmount: parseInt(req.body.tokenamount),
-        EthAmount: parseInt(req.body.tokenamount),
+        TokenAmount: req.body.lptotalvalue,
+        EthAmount: req.body.ethtotalvalue,
       })
       .commit()
       .then((res) => {

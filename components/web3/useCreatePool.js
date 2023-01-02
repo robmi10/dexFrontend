@@ -32,7 +32,7 @@ const Web3CreatePool = () => {
       console.log({ createStatus });
 
       setCreatePoolStatus({
-        createdId: createEvents[0]?.args._id.toString(),
+        createdId: createEvents[0]?.args._id,
         createdBy: createEvents[0]?.args._createBy,
         createdToken: createEvents[0]?.args._token,
       });

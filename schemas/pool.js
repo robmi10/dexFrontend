@@ -8,7 +8,7 @@ export default defineType({
     defineField({
       name: "PoolId",
       title: "poolid",
-      type: "string",
+      type: "number",
     }),
     defineField({
       name: "PoolOwner",
@@ -23,12 +23,12 @@ export default defineType({
     defineField({
       name: "TokenAmount",
       title: "tokenamount",
-      type: "number",
+      type: "string",
     }),
     defineField({
       name: "EthAmount",
       title: "ethamount",
-      type: "number",
+      type: "string",
     }),
   ],
 });

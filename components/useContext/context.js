@@ -58,7 +58,7 @@ const DexProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          createdId: createPoolStatus.createdId,
+          createdId: createPoolStatus.createdId.toString(),
           createdBy: createPoolStatus.createdBy,
           createdToken: createPoolStatus.createdToken,
         }),
@@ -90,6 +90,8 @@ const DexProvider = ({ children }) => {
           totalamount: liquidityStatus.totalamount,
           tokenamount: liquidityStatus.tokenamount,
           ethamount: liquidityStatus.ethamount,
+          lptotalvalue: liquidityStatus.lpBalance,
+          ethtotalvalue: liquidityStatus.ethBalance,
         }),
       }).then(() => {});
     } catch (error) {
