@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { useForm, Controller } from "react-hook-form";
 import Web3CreatePoolAdd from "../web3/useaddliquidity";
-import Web3Approve from "../web3/useapprove";
 import { DexContext } from "../useContext/context";
 import Select from "react-select";
 
@@ -18,7 +17,7 @@ export const LiquidationAdd = () => {
 
   const filterPoolList = poolList.map((option, i) => ({
     index: i,
-    address: option.Token,
+    address: option.PoolAddress,
   }));
 
   const isPoolist = filterPoolList.length > 0;

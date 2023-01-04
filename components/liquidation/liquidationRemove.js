@@ -15,7 +15,7 @@ export const LiquidationRemove = () => {
 
   const filterPoolList = poolList.map((option, i) => ({
     index: i,
-    address: option.Token,
+    address: option.PoolAddress,
   }));
 
   const isPoolist = filterPoolList.length > 0;

@@ -5,7 +5,7 @@ const RemoveLiquidity = async (req, res) => {
     const poolTableId =
       req.body.liquidityowner + req.body.liquidityid + "poolTable";
 
-    console.log("current total eth ->", req.body.ethtotalvalue);
+    console.log("current total eth check->", req.body.ethtotalvalue);
 
     const liquidityTableId =
       req.body.liquidityowner +
@@ -15,7 +15,8 @@ const RemoveLiquidity = async (req, res) => {
       .patch(poolTableId)
       .set({
         TokenAmount: req.body.lptotalvalue,
-        EthAmount: req.body.ethtotalvalue,
+        EthAmount: req.body.ethtotalvalue.toString(),
+        LpAddress: req.body.lpaddress,
       })
       .commit()
       .then((res) => {

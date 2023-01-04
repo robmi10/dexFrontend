@@ -1,8 +1,17 @@
+import { useEtherBalance } from "@usedapp/core";
 import React from "react";
 import { createContext, useState, useEffect } from "react";
 import { client } from "../../sanityClient/client";
 export const DexContext = createContext();
 // import { client } from "../../sanityclient/sanity";
+export const getBalance = (address) => {
+  const useGetBalance = async (data) => {
+    const etherBalance = useEtherBalance(address);
+
+    return etherBalance;
+  };
+  return { useGetBalance };
+};
 
 const DexProvider = ({ children }) => {
   const [createPoolStatus, setCreatePoolStatus] = useState(false);
@@ -10,6 +19,7 @@ const DexProvider = ({ children }) => {
   const [liquidityStatus, setliquidityStatus] = useState(false);
   const [liquidityRemoveStatus, setliquidityRemoveStatus] = useState(false);
   const [poolList, setPoolList] = useState(false);
+  const { useGetBalance } = getBalance();
 
   useEffect(() => {
     if (!poolList) {
@@ -61,6 +71,7 @@ const DexProvider = ({ children }) => {
           createdId: createPoolStatus.createdId.toString(),
           createdBy: createPoolStatus.createdBy,
           createdToken: createPoolStatus.createdToken,
+          lpaddress: liquidityStatus.lpaddress,
         }),
       }).then(() => {
         getPoolList();
@@ -73,9 +84,11 @@ const DexProvider = ({ children }) => {
   const addLiquidity = async () => {
     console.log({ liquidityStatus });
 
-    console.log({
-      liquidityStatusAmount: liquidityStatus.totalamount.toString(),
-    });
+    // console.log({
+    //   liquidityStatusAmount: liquidityStatus.totalamount.toString(),
+    // });
+
+    
     try {
       await fetch("api/db/addLiquidity", {
         method: "POST",
@@ -91,7 +104,10 @@ const DexProvider = ({ children }) => {
           tokenamount: liquidityStatus.tokenamount,
           ethamount: liquidityStatus.ethamount,
           lptotalvalue: liquidityStatus.lpBalance,
-          ethtotalvalue: liquidityStatus.ethBalance,
+          ethtotalvalue: useEtherBalance(
+            liquidityStatus.poolAddress
+          ).toString(),
+          lpaddress: liquidityStatus.lpaddress,
         }),
       }).then(() => {});
     } catch (error) {
@@ -120,6 +136,7 @@ const DexProvider = ({ children }) => {
             liquidityRemoveStatus.ethBalance -
             (liquidityRemoveStatus.ethBalance * liquidityRemoveStatus.amount) /
               liquidityRemoveStatus.lpBalance,
+          lpaddress: liquidityRemoveStatus.lpaddress,
           //address(this).balance * _amount / lpToken._totalSupply()
         }),
       }).then(() => {});

@@ -35,6 +35,7 @@ const Web3CreatePool = () => {
         createdId: createEvents[0]?.args._id,
         createdBy: createEvents[0]?.args._createBy,
         createdToken: createEvents[0]?.args._token,
+        lpaddress: "0x",
       });
     }
   }, [createStatus]);

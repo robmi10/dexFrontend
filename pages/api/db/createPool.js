@@ -7,7 +7,8 @@ const CreatePool = async (req, res) => {
       _id: req.body.createdBy + req.body.createdId + "poolTable",
       PoolId: parseInt(req.body.createdId),
       PoolOwner: req.body.createdBy,
-      Token: req.body.createdToken,
+      PoolAddress: req.body.createdToken,
+      LpAddress: req.body.lpaddress,
     };
     console.log({ poollDoc });
 

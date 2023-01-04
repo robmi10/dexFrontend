@@ -1,6 +1,9 @@
+import { useEtherBalance } from "@usedapp/core";
 import { client } from "../../../sanityClient/client";
 
 const AddLiquidity = async (req, res) => {
+  const etherBalance = useEtherBalance(req.body.token);
+  console.log({ etherBalance });
   try {
     const liquidityDoc = {
       _type: "liquidityTable",
@@ -10,14 +13,13 @@ const AddLiquidity = async (req, res) => {
         +"liquidityTable",
       LiquidityId: req.body.liquidityid,
       LiquidityOwner: req.body.liquidityowner,
-      Amount: req.body.amount,
-      Token: req.body.token,
+      StakeAmount: req.body.tokenamount,
+      PoolAddress: req.body.token,
     };
 
     const poolTabeId =
       req.body.liquidityowner + req.body.liquidityid + "poolTable";
 
-    console.log({ liquidityDoc });
     await client.createOrReplace(liquidityDoc);
     console.log("Success!");
     await client
@@ -25,6 +27,7 @@ const AddLiquidity = async (req, res) => {
       .set({
         TokenAmount: req.body.lptotalvalue,
         EthAmount: req.body.ethtotalvalue,
+        LpAddress: req.body.lpaddress,
       })
       .commit()
       .then((res) => {

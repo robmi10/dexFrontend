@@ -53,41 +53,49 @@ const Web3CreatePoolAdd = () => {
   }, [daiStatus]);
 
   useEffect(() => {
-    console.log({ addLiquidityStatus: addLiquidityStatus });
+    console.log({ addLiquidityStatus });
 
     if (addLiquidityStatus.status === "Success") {
-      const { index } = input.poolInfo;
+      const { index, address } = input.poolInfo;
       console.log({ addLiquidityStatus });
       console.log({ addLiquidityEvents });
-      console.log({
-        EventMintedamount:
-          addLiquidityEvents[0]?.args?._mintedAmount.toString(),
-      });
-      console.log({
-        LPamount: addLiquidityEvents[0]?.args?._amount.toString(),
-      });
 
-      console.log({
-        LpTokenBalance: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
-      });
+      // console.log({
+      //   EventMintedamount:
+      //     addLiquidityEvents[0]?.args?._mintedAmount.toString(),
+      // });
+      // console.log({
+      //   LPamount: addLiquidityEvents[0]?.args?._amount.toString(),
+      // });
 
-      console.log({
-        _ethReserve: addLiquidityEvents[0]?.args?._ethBalance.toString(),
-      });
+      // console.log({
+      //   LpTokenBalance: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
+      // });
 
-      setliquidityStatus({
-        liquidityid: index,
-        liquidityowner: addLiquidityEvents[0]?.args?._from,
-        amount: addLiquidityEvents[0]?.args?._amount.toString(),
-        token: daiAddress,
-        totalamount:
-          parseInt(addLiquidityEvents[0]?.args?._amount.toString()) +
-          parseInt(addLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
-        lpBalance: addLiquidityEvents[0]?.args?._lpTokenSupply.toString(),
-        ethBalance: addLiquidityEvents[0]?.args?._ethBalance.toString(),
-        tokenamount: addLiquidityEvents[0]?.args?._amount.toString(),
-        ethamount: addLiquidityEvents[0]?.args?._amount.toString(),
-      });
+      // console.log({
+      //   _ethReserve: addLiquidityEvents[0]?.args?._ethBalance.toString(),
+      // });
+
+      // console.log({
+      //   _lpTokenBalance:
+      //     addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
+      // });
+
+      // setliquidityStatus({
+      //   liquidityid: index,
+      //   liquidityowner: addLiquidityEvents[0]?.args?._from,
+      //   amount: addLiquidityEvents[0]?.args?._amount.toString(),
+      //   token: daiAddress,
+      //   // totalamount:
+      //   //   parseInt(addLiquidityEvents[0]?.args?._amount.toString()) +
+      //   //   parseInt(addLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
+      //   lpBalance: addLiquidityEvents[0]?.args?._lpTokenSupply.toString(),
+      //   ethBalance: addLiquidityEvents[0]?.args?._ethBalance.toString(),
+      //   tokenamount: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
+      //   ethamount: addLiquidityEvents[0]?.args?._amount.toString(),
+      //   poolAddress: address,
+      //   lpaddress: addLiquidityEvents[0]?.args?._lpTokenBalance,
+      // });
     }
   }, [addLiquidityStatus]);
 
