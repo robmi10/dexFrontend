@@ -1,9 +1,6 @@
-import { useEtherBalance } from "@usedapp/core";
 import { client } from "../../../sanityClient/client";
 
 const AddLiquidity = async (req, res) => {
-  const etherBalance = useEtherBalance(req.body.token);
-  console.log({ etherBalance });
   try {
     const liquidityDoc = {
       _type: "liquidityTable",

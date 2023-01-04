@@ -88,7 +88,6 @@ const DexProvider = ({ children }) => {
     //   liquidityStatusAmount: liquidityStatus.totalamount.toString(),
     // });
 
-    
     try {
       await fetch("api/db/addLiquidity", {
         method: "POST",
@@ -98,15 +97,12 @@ const DexProvider = ({ children }) => {
         body: JSON.stringify({
           liquidityid: liquidityStatus.liquidityid,
           liquidityowner: liquidityStatus.liquidityowner,
-          amount: liquidityStatus.totalamount.toString(),
           token: liquidityStatus.token,
           totalamount: liquidityStatus.totalamount,
           tokenamount: liquidityStatus.tokenamount,
           ethamount: liquidityStatus.ethamount,
           lptotalvalue: liquidityStatus.lpBalance,
-          ethtotalvalue: useEtherBalance(
-            liquidityStatus.poolAddress
-          ).toString(),
+          ethtotalvalue: liquidityStatus.ethBalance,
           lpaddress: liquidityStatus.lpaddress,
         }),
       }).then(() => {});
