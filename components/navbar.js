@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useEthers } from "@usedapp/core";
+import { DexContext } from "./useContext/context";
 
 export const Navbar = () => {
-  const [address, setAddress] = useState(false);
+  const { address, setAddress } = useContext(DexContext);
   const { activateBrowserWallet, deactivate, account, error } = useEthers();
-  useEffect(() => {
-    console.log({ account });
-    if (account) {
-      setAddress(account);
-    }
-  }, [account]);
 
   return (
     <div className="flex justify-center">

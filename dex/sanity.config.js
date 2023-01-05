@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'default',
   title: 'dex',
 
-  projectId: '5z0gpx6n',
+  projectId: 'xner6lc0',
   dataset: 'production',
 
   plugins: [deskTool(), visionTool()],

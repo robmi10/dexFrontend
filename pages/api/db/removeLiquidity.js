@@ -8,14 +8,12 @@ const RemoveLiquidity = async (req, res) => {
     console.log("current total eth check->", req.body.ethtotalvalue);
 
     const liquidityTableId =
-      req.body.liquidityowner +
-      req.body.liquidityid.toString() +
-      +"liquidityTable";
+      req.body.liquidityowner + req.body.liquidityid + +"liquidityTable";
     await client
       .patch(poolTableId)
       .set({
         TokenAmount: req.body.lptotalvalue,
-        EthAmount: req.body.ethtotalvalue.toString(),
+        EthAmount: req.body.ethtotalvalue,
         LpAddress: req.body.lpaddress,
       })
       .commit()

@@ -30,24 +30,15 @@ const Web3CreatePoolAdd = () => {
   } = useContractFunction(daiAddressContract, "approve");
 
   const addLiquidityFunc = () => {
-    console.log({ inputCheck: input });
     const { index, address } = input.poolInfo;
     const { liquidity } = input;
-
-    console.log({ indexSecond: index });
-    console.log({ addressSecond: address });
-    console.log({ liquiditySecond: liquidity });
-
     addLiquidity(index, liquidity, {
       value: liquidity,
     });
   };
 
   useEffect(() => {
-    console.log({ daiStatus: addLiquidityStatus });
     if (daiStatus.status === "Success") {
-      console.log({ daiStatus });
-      console.log({ daiEvents });
       addLiquidityFunc();
     }
   }, [daiStatus]);
@@ -81,6 +72,11 @@ const Web3CreatePoolAdd = () => {
           addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
       });
 
+      console.log({
+        _lpTokenAddress:
+          addLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
+      });
+
       setliquidityStatus({
         liquidityid: index,
         liquidityowner: addLiquidityEvents[0]?.args?._from,
@@ -94,23 +90,15 @@ const Web3CreatePoolAdd = () => {
         tokenamount: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
         ethamount: addLiquidityEvents[0]?.args?._amount.toString(),
         poolAddress: address,
-        lpaddress: addLiquidityEvents[0]?.args?._lpTokenBalance,
+        lpaddress: addLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
       });
     }
   }, [addLiquidityStatus]);
 
   const usePoolAdd = async (data) => {
-    console.log({ data });
     const { index, address } = data.poolInfo;
     const { liquidity } = data;
     setInput(data);
-    // console.log({ dexAddress });
-
-    console.log({ liquidity });
-    console.log({ index });
-    // addLiquidity(2, liquidityAdd, {
-    //   value: ethers.utils.parseEther("2"),
-    // });
     approveUser(address, liquidity);
   };
   return { usePoolAdd };

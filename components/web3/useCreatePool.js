@@ -13,7 +13,7 @@ const Web3CreatePool = () => {
   const daiAddress = DaiTokenAddress;
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
   const dexAddressContract = new Contract(dexAddress, dexInterface);
-
+  const [input, setInput] = useState(false);
   const {
     state: createStatus,
     send: createPool,
@@ -24,7 +24,10 @@ const Web3CreatePool = () => {
     console.log({ createStatus: createStatus.status });
 
     if (createStatus.status === "Success") {
+      const { tokenPair } = input;
+
       console.log({ createEvents });
+      console.log({ tokenPair });
 
       console.log({
         createEventsIDSecond: createEvents[0]?.args?._id.toString(),
@@ -35,12 +38,15 @@ const Web3CreatePool = () => {
         createdId: createEvents[0]?.args._id,
         createdBy: createEvents[0]?.args._createBy,
         createdToken: createEvents[0]?.args._token,
+        tokenPair: tokenPair,
+        ethPair: "eth",
         lpaddress: "0x",
       });
     }
   }, [createStatus]);
 
-  const usePool = async () => {
+  const usePool = async (data) => {
+    setInput(data);
     createPool(daiAddress);
   };
   return { usePool };

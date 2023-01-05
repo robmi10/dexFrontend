@@ -35,18 +35,13 @@ const Web3CreatePoolRemove = () => {
     const { index } = input.poolInfo;
     const { liquidity } = input;
 
-    console.log({ indexRemove: index });
-    console.log({ liquidityRemove: liquidity });
-
     removeLiquidity(index, liquidity, {
       value: liquidity,
     });
   };
 
   useEffect(() => {
-    console.log({ daiStatus: removeLiquidityStatus });
     if (daiStatus.status === "Success") {
-      console.log({ daiStatus });
       removeLiquidityFunc();
     }
   }, [daiStatus]);
@@ -56,6 +51,7 @@ const Web3CreatePoolRemove = () => {
       const { index, address } = input.poolInfo;
       console.log({ removeLiquidityStatus });
       console.log({ removeLiquidityEvents });
+
       console.log({
         EventMintedamount:
           removeLiquidityEvents[0]?.args?._mintedAmount.toString(),
@@ -73,37 +69,33 @@ const Web3CreatePoolRemove = () => {
         _ethReserve: removeLiquidityEvents[0]?.args?._ethBalance.toString(),
       });
 
+      console.log({
+        _lpTokenBalance:
+          removeLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
+      });
+
       setliquidityRemoveStatus({
         liquidityid: index,
         liquidityowner: removeLiquidityEvents[0]?.args?._from,
         amount: removeLiquidityEvents[0]?.args?._amount.toString(),
         token: daiAddress,
-        totalamount:
-          parseInt(removeLiquidityEvents[0]?.args?._amount.toString()) +
-          parseInt(removeLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
+        // totalamount:
+        //   parseInt(removeLiquidityEvents[0]?.args?._amount.toString()) +
+        //   parseInt(removeLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
         lpBalance: removeLiquidityEvents[0]?.args?._lpTokenSupply.toString(),
         ethBalance: removeLiquidityEvents[0]?.args?._ethBalance.toString(),
-        tokenamount: removeLiquidityEvents[0]?.args?._amount.toString(),
+        tokenamount: removeLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
         ethamount: removeLiquidityEvents[0]?.args?._amount.toString(),
-        minted: removeLiquidityEvents[0]?.args?._mintedAmount.toString(),
-        lpaddress: removeLiquidityEvents[0]?.args?._lpTokenAddress,
+        poolAddress: address,
+        lpaddress: removeLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
       });
     }
   }, [removeLiquidityStatus]);
 
   const usePoolRemove = async (data) => {
-    console.log({ data });
     const { index, address } = data.poolInfo;
     const { liquidity } = data;
     setInput(data);
-    // console.log({ dexAddress });
-
-    console.log({ liquidity });
-    console.log({ address });
-    console.log({ index });
-    // addLiquidity(2, liquidityAdd, {
-    //   value: ethers.utils.parseEther("2"),
-    // });
     approveUser(address, liquidity);
   };
   return { usePoolRemove };

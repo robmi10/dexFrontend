@@ -1,9 +1,9 @@
 const sanityClient = require("@sanity/client");
 export const client = sanityClient({
-  projectId: "5z0gpx6n",
+  projectId: "xner6lc0",
   dataset: "production",
   apiVersion: "v1",
   token:
-    "skpokxjDNGflUzdUHX0p1ZvwuilWGrslhESTviFgrH1zT9aJjrZYCowh6O39tkJPiZ0H72n8ncNpRTBrYWWoGvuTZbatFhTMFYiMIaSCxpJw1Q1cZcrBFpr83fStuwNbv0RfRa6TUkxVlFj0G1l3TL0zQ2Dv4x4XnQll45KjB0oD5GXS1PMR",
+    "skOssTseMJu6SYaRdxXYmngMslJonmAzfMkhRuacZmeYhHou0hwTeBDhXbJbcIH6JyBVwrIGm5AjWIR8xmX4mng216pi9aJw7zgPJGWyQ3eNldTHmc2od1p8dpVJNIq37IaCchiIBDlwcrwYTWaqkkckkZjoMHzHzKfHvOLVP6IszrZq31eY",
   useCdn: false,
 });

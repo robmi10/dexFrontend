@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useEthers } from "@usedapp/core";
-import { useForm, Controller } from "react-hook-form";
+import React, { useContext, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import Web3CreatePoolAdd from "../web3/useaddliquidity";
 import { DexContext } from "../useContext/context";
-import Select from "react-select";
+import { formatEther } from "ethers/lib/utils";
 
 export const LiquidationAdd = () => {
-  const { poolList } = useContext(DexContext);
+  const { poolList, activePool, setActivePool } = useContext(DexContext);
   const { register, handleSubmit } = useForm();
   const { usePoolAdd } = Web3CreatePoolAdd();
-  const [activePool, setActivePool] = useState(0);
 
   useEffect(() => {}, [poolList, activePool]);
 
@@ -25,7 +23,6 @@ export const LiquidationAdd = () => {
   // filtrera så du kan få värdet
 
   const onSubmitAdd = (data) => {
-    console.log({ activePool });
     usePoolAdd({
       poolInfo: filterPoolList[activePool],
       liquidity: data.liquidityAdd,
@@ -33,16 +30,15 @@ export const LiquidationAdd = () => {
   };
 
   const updateValue = ({ target }) => {
-    console.log({ target: target.value });
     setActivePool(parseInt(target.value));
   };
 
   if (!activePool && activePool !== 0) return false;
-  console.log({ activePool });
   const poolListTokenValue = poolList.filter(
     (option) => option.PoolId === activePool
   );
-  console.log({ poolListTokenValue });
+
+  if (!poolListTokenValue) return false;
 
   return (
     <div className="bg-purple-800 w-3/4 p-4 text-white flex flex-col items-center gap-20">
@@ -52,11 +48,11 @@ export const LiquidationAdd = () => {
           <div className=" flex flex-row gap-4">
             <span>
               <h1>LP Token Balance</h1>
-              <h1>{poolListTokenValue[0]?.TokenAmount || 0}</h1>
+              <h1>{formatEther(poolListTokenValue[0]?.TokenAmount || 0)}</h1>
             </span>
             <span>
               <h1>Eth Balance</h1>
-              <h1>{poolListTokenValue[0]?.EthAmount || 0}</h1>
+              <h1>{formatEther(poolListTokenValue[0]?.EthAmount || 0)}</h1>
             </span>
           </div>
           <section>
@@ -64,7 +60,6 @@ export const LiquidationAdd = () => {
             <select
               onChange={updateValue}
               className="w-full text-black p-2 rounded-md border flex justify-center"
-              // {...register("liquidityAddress", { required: true, maxLength: 40 })}
             >
               {filterPoolList.map((option, i) => {
                 return (
