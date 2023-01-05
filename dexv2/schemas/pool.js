@@ -36,6 +36,11 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "TokenReserve",
+      title: "tokenreserve",
+      type: "string",
+    }),
+    defineField({
       name: "TokenPair",
       title: "tokenpair",
       type: "array",

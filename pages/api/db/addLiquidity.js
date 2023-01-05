@@ -12,6 +12,7 @@ const AddLiquidity = async (req, res) => {
       LiquidityOwner: req.body.liquidityowner,
       StakeAmount: req.body.tokenamount,
       PoolAddress: req.body.token,
+      TokenReserve: req.body.tokenReserve,
     };
 
     const poolTabeId =
@@ -25,6 +26,7 @@ const AddLiquidity = async (req, res) => {
         TokenAmount: req.body.lptotalvalue,
         EthAmount: req.body.ethtotalvalue,
         LpAddress: req.body.lpaddress,
+        TokenReserve: req.body.tokenReserve,
       })
       .commit()
       .then((res) => {

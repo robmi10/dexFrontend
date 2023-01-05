@@ -13,14 +13,15 @@ const Createpool = () => {
   const lpAddress = poolList[activePool]?.LpAddress;
   const { usePool } = Web3CreatePool();
   const daiBalance = useTokenBalance(DaiTokenAddress, account);
-  const liquidityBalance = useTokenBalance(lpAddress, account);
   const etherBalance = useEtherBalance(account);
   const { register, handleSubmit } = useForm();
+  const liquidityBalance = useTokenBalance(lpAddress, account);
 
   const createPool = (value) => {
     console.log({ value });
     usePool(value);
   };
+
   return (
     <div className="flex items-center w-full flex-col gap-4">
       <div className="bg-blue-600 w-3/4 p-4 text-white flex flex-col items-center gap-20">

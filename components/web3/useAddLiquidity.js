@@ -77,6 +77,10 @@ const Web3CreatePoolAdd = () => {
           addLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
       });
 
+      console.log({
+        _tokenReserve: addLiquidityEvents[0]?.args?._tokenReserve.toString(),
+      });
+
       setliquidityStatus({
         liquidityid: index,
         liquidityowner: addLiquidityEvents[0]?.args?._from,
@@ -91,6 +95,7 @@ const Web3CreatePoolAdd = () => {
         ethamount: addLiquidityEvents[0]?.args?._amount.toString(),
         poolAddress: address,
         lpaddress: addLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
+        tokenReserve: addLiquidityEvents[0]?.args?._tokenReserve.toString(),
       });
     }
   }, [addLiquidityStatus]);

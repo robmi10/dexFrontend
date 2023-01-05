@@ -40,7 +40,7 @@ const Web3CreatePool = () => {
         createdToken: createEvents[0]?.args._token,
         tokenPair: tokenPair,
         ethPair: "eth",
-        lpaddress: "0x",
+        lpaddress: "",
       });
     }
   }, [createStatus]);

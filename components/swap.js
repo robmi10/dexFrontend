@@ -7,11 +7,15 @@ import { BsArrowDownUp } from "react-icons/bs";
 
 export const Swap = () => {
   const { poolList, activePool, setActivePool } = useContext(DexContext);
-  const { register, handleSubmit } = useForm();
   const { usePoolAdd } = Web3CreatePoolAdd();
   const [switchPair, setSwitchPair] = useState(false);
+  const [calculatedAmount, setCalculatedAmount] = useState(0);
+  const [tokenFirst, setTokenFirst] = useState(0);
+  const [tokenSecond, setTokenSecond] = useState(0);
 
-  useEffect(() => {}, [poolList, activePool]);
+  useEffect(() => {
+    console.log({ calculatedAmount });
+  }, [poolList, activePool]);
 
   if (!poolList) return false;
 
@@ -25,10 +29,14 @@ export const Swap = () => {
   // filtrera så du kan få värdet
 
   const onSubmitAdd = (data) => {
-    usePoolAdd({
-      poolInfo: filterPoolList[activePool],
-      liquidity: data.liquidityAdd,
-    });
+    console.log({ data });
+
+    console.log({ tokenFirst });
+    console.log({ calculatedAmount });
+    // usePoolAdd({
+    //   poolInfo: filterPoolList[activePool],
+    //   liquidity: data.liquidityAdd,
+    // });
   };
 
   const updateValue = ({ target }) => {
@@ -42,10 +50,19 @@ export const Swap = () => {
 
   if (!poolListTokenValue) return false;
 
-  console.log({ poolListTokenValue: poolListTokenValue[0] });
+  const calculatePairSwitch = (val) => {
+    let amount = val.target.value;
+    console.log({ val: val.target.value });
 
-  const tokenPair = poolListTokenValue[0].TokenPair[0];
-  const ethPair = poolListTokenValue[0].TokenPair[1];
+    let inputAmountFee = amount * 99;
+    let outputAmount =
+      (inputAmountFee * poolListTokenValue[0]?.EthAmount) /
+      (amount + poolListTokenValue[0]?.TokenReserve);
+
+    setCalculatedAmount(outputAmount);
+  };
+  const tokenPair = poolListTokenValue[0]?.TokenPair[0];
+  const ethPair = poolListTokenValue[0]?.TokenPair[1];
 
   return (
     <div className="bg-purple-800 w-3/4 p-4 text-white flex flex-col items-center gap-20">
@@ -82,16 +99,16 @@ export const Swap = () => {
           </section>
         </>
       )}
-      <form
-        onSubmit={handleSubmit(onSubmitAdd)}
-        className="space-y-5 flex items-center flex-col"
-      >
+      <div className="space-y-5 flex items-center flex-col">
         <label>
-          {switchPair ? tokenPair.toUpperCase() : ethPair.toUpperCase()}
+          {switchPair ? tokenPair?.toUpperCase() : ethPair?.toUpperCase()}
         </label>
         <input
+          onChange={(e) => {
+            calculatePairSwitch(e);
+            setTokenFirst(e.target.value);
+          }}
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-          {...register("liquidityAdd", { required: true, maxLength: 40 })}
         />
         <button
           onClick={() => {
@@ -102,19 +119,22 @@ export const Swap = () => {
         </button>
 
         <label>
-          {switchPair ? ethPair.toUpperCase() : tokenPair.toUpperCase()}
+          {switchPair ? ethPair?.toUpperCase() : tokenPair?.toUpperCase()}
         </label>
         <input
+          onChange={() => {
+            setTokenSecond(e.target.value);
+          }}
+          value={calculatedAmount}
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-          {...register("liquidityAdd", { required: true, maxLength: 40 })}
         />
         <button
-          type="submit"
+          onClick={onSubmitAdd}
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
         >
           SUBMIT
         </button>
-      </form>
+      </div>
     </div>
   );
 };

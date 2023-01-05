@@ -99,6 +99,7 @@ const DexProvider = ({ children }) => {
           lptotalvalue: liquidityStatus.lpBalance,
           ethtotalvalue: liquidityStatus.ethBalance,
           lpaddress: liquidityStatus.lpaddress,
+          tokenReserve: liquidityStatus.tokenReserve,
         }),
       }).then(() => {});
     } catch (error) {
@@ -124,7 +125,7 @@ const DexProvider = ({ children }) => {
           lptotalvalue: liquidityRemoveStatus.lpBalance,
           ethtotalvalue: liquidityRemoveStatus.ethBalance,
           lpaddress: liquidityRemoveStatus.lpaddress,
-          //address(this).balance * _amount / lpToken._totalSupply()
+          tokenReserve: liquidityStatus.tokenReserve,
         }),
       }).then(() => {});
     } catch (error) {

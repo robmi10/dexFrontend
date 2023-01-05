@@ -15,6 +15,7 @@ const RemoveLiquidity = async (req, res) => {
         TokenAmount: req.body.lptotalvalue,
         EthAmount: req.body.ethtotalvalue,
         LpAddress: req.body.lpaddress,
+        TokenReserve: req.body.tokenReserve,
       })
       .commit()
       .then((res) => {
@@ -23,7 +24,9 @@ const RemoveLiquidity = async (req, res) => {
 
     await client
       .patch(liquidityTableId)
-      .set({ Amount: req.body.lptotalvalue })
+      .set({
+        Amount: req.body.lptotalvalue,
+      })
       .commit()
       .then((res) => {
         console.log("liquidityTableId Success!");

@@ -15,7 +15,6 @@ export default function Home() {
   return (
     <>
       <Navbar />
-
       <Createpool />
       <div className=" w-full flex flex-col  items-center">
         <LiquidationAdd key={1} />
