@@ -13,6 +13,7 @@ const DexProvider = ({ children }) => {
   const [liquidityRemoveStatus, setliquidityRemoveStatus] = useState(false);
   const [poolList, setPoolList] = useState(false);
   const [activePool, setActivePool] = useState(0);
+  const [setSwapStatus, setSetSwapStatus] = useState(0);
 
   useEffect(() => {
     if (!poolList) {
@@ -148,6 +149,8 @@ const DexProvider = ({ children }) => {
         setPoolList,
         activePool,
         setActivePool,
+        setSwapStatus,
+        setSetSwapStatus,
       }}
     >
       {children}

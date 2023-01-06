@@ -4,6 +4,8 @@ import Web3CreatePoolAdd from "../components/web3/useaddliquidity";
 import { formatEther } from "ethers/lib/utils";
 import { DexContext } from "./useContext/context";
 import { BsArrowDownUp } from "react-icons/bs";
+import Web3SwapToken from "./web3/useswaptotoken";
+import Web3SwapEth from "./web3/useswaptoeth";
 
 export const Swap = () => {
   const { poolList, activePool, setActivePool } = useContext(DexContext);
@@ -11,7 +13,9 @@ export const Swap = () => {
   const [switchPair, setSwitchPair] = useState(false);
   const [calculatedAmount, setCalculatedAmount] = useState(0);
   const [tokenFirst, setTokenFirst] = useState(0);
-  const [tokenSecond, setTokenSecond] = useState(0);
+  const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState(0);
+  const { useSwapToken } = Web3SwapToken();
+  const { useSwapEth } = Web3SwapEth();
 
   useEffect(() => {
     console.log({ calculatedAmount });
@@ -33,10 +37,10 @@ export const Swap = () => {
 
     console.log({ tokenFirst });
     console.log({ calculatedAmount });
-    // usePoolAdd({
-    //   poolInfo: filterPoolList[activePool],
-    //   liquidity: data.liquidityAdd,
-    // });
+
+    switchPair
+      ? useSwapToken(tokenFirst)
+      : useSwapEth({ amount: tokenFirst, estimatedAmount: calculatedAmount });
   };
 
   const updateValue = ({ target }) => {
@@ -50,17 +54,44 @@ export const Swap = () => {
 
   if (!poolListTokenValue) return false;
 
-  const calculatePairSwitch = (val) => {
+  const calculatePairEthToToken = (val) => {
     let amount = val.target.value;
     console.log({ val: val.target.value });
 
+    console.log("ETH TO TOKEN");
+
     let inputAmountFee = amount * 99;
     let outputAmount =
-      (inputAmountFee * poolListTokenValue[0]?.EthAmount) /
-      (amount + poolListTokenValue[0]?.TokenReserve);
-
+      (inputAmountFee * formatEther(poolListTokenValue[0]?.EthAmount)) /
+      (amount + formatEther(poolListTokenValue[0]?.TokenReserve));
     setCalculatedAmount(outputAmount);
+
+    if (amount > outputAmount) {
+      setIsExchangeNotAccepted(true);
+    } else {
+      setIsExchangeNotAccepted(false);
+    }
   };
+
+  const calculatePairTokenToEth = (val) => {
+    let amount = val.target.value;
+    console.log({ val: val.target.value });
+
+    console.log("insidePairTokenToEth");
+
+    let inputAmountFee = amount * 99;
+    let outputAmount =
+      (inputAmountFee * formatEther(poolListTokenValue[0]?.TokenReserve)) /
+      (amount + formatEther(poolListTokenValue[0]?.EthAmount));
+    setCalculatedAmount(outputAmount);
+
+    if (amount > outputAmount) {
+      setIsExchangeNotAccepted(true);
+    } else {
+      setIsExchangeNotAccepted(false);
+    }
+  };
+
   const tokenPair = poolListTokenValue[0]?.TokenPair[0];
   const ethPair = poolListTokenValue[0]?.TokenPair[1];
 
@@ -104,20 +135,28 @@ export const Swap = () => {
           {switchPair ? tokenPair?.toUpperCase() : ethPair?.toUpperCase()}
         </label>
         <input
+          value={tokenFirst}
           onChange={(e) => {
-            calculatePairSwitch(e);
+            switchPair
+              ? calculatePairTokenToEth(e)
+              : calculatePairEthToToken(e);
             setTokenFirst(e.target.value);
           }}
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
         />
         <button
+          className="hover:text-green-500"
           onClick={() => {
             setSwitchPair(!switchPair);
           }}
         >
           <BsArrowDownUp size={40} />
         </button>
-
+        {isExchangeNotAccepted && (
+          <p className="text-red-500 text-xs ">
+            Error To Little Amount For Swapping
+          </p>
+        )}
         <label>
           {switchPair ? ethPair?.toUpperCase() : tokenPair?.toUpperCase()}
         </label>
@@ -129,6 +168,7 @@ export const Swap = () => {
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
         />
         <button
+          disabled={isExchangeNotAccepted}
           onClick={onSubmitAdd}
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
         >
