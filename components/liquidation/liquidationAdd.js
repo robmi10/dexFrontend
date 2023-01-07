@@ -1,11 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Web3CreatePoolAdd from "../web3/useaddliquidity";
 import { DexContext } from "../useContext/context";
-import { formatEther } from "ethers/lib/utils";
+import { formatEther, parseUnits } from "ethers/lib/utils";
+import Web3GetLiquidityAmount from "../web3/useGetLiquidityAmount";
 
 export const LiquidationAdd = () => {
-  const { poolList, activePool, setActivePool } = useContext(DexContext);
+  const {
+    poolList,
+    activePool,
+    setActivePool,
+    liquidityStatus,
+    setliquidityStatus,
+  } = useContext(DexContext);
   const { register, handleSubmit } = useForm();
   const { usePoolAdd } = Web3CreatePoolAdd();
 
@@ -21,13 +28,6 @@ export const LiquidationAdd = () => {
   const isPoolist = filterPoolList.length > 0;
 
   // filtrera så du kan få värdet
-
-  const onSubmitAdd = (data) => {
-    usePoolAdd({
-      poolInfo: filterPoolList[activePool],
-      liquidity: data.liquidityAdd,
-    });
-  };
 
   const updateValue = ({ target }) => {
     setActivePool(parseInt(target.value));
@@ -55,6 +55,7 @@ export const LiquidationAdd = () => {
               <h1>{formatEther(poolListTokenValue[0]?.EthAmount || 0)}</h1>
             </span>
           </div>
+
           <section>
             <label>Pool</label>
             <select
@@ -75,22 +76,9 @@ export const LiquidationAdd = () => {
           </section>
         </>
       )}
-      <form
-        onSubmit={handleSubmit(onSubmitAdd)}
-        className="space-y-5 flex items-center flex-col"
-      >
-        <label>Amount</label>
-        <input
-          className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-          {...register("liquidityAdd", { required: true, maxLength: 40 })}
-        />
-        <button
-          type="submit"
-          className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
-        >
-          SUBMIT
-        </button>
-      </form>
+      <div className="space-y-5 flex items-center flex-col">
+        <Web3GetLiquidityAmount poolInfo={filterPoolList[activePool]} />
+      </div>
     </div>
   );
 };

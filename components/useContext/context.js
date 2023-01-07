@@ -105,7 +105,9 @@ const DexProvider = ({ children }) => {
           lpaddress: liquidityStatus.lpaddress,
           tokenReserve: liquidityStatus.tokenReserve,
         }),
-      }).then(() => {});
+      }).then(() => {
+        getPoolList();
+      });
     } catch (error) {
       console.log({ error });
     }
@@ -131,7 +133,9 @@ const DexProvider = ({ children }) => {
           lpaddress: liquidityRemoveStatus.lpaddress,
           tokenReserve: liquidityStatus.tokenReserve,
         }),
-      }).then(() => {});
+      }).then(() => {
+        getPoolList();
+      });
     } catch (error) {
       console.log({ error });
     }
