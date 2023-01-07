@@ -13,7 +13,10 @@ const DexProvider = ({ children }) => {
   const [liquidityRemoveStatus, setliquidityRemoveStatus] = useState(false);
   const [poolList, setPoolList] = useState(false);
   const [activePool, setActivePool] = useState(0);
-  const [setSwapStatus, setSetSwapStatus] = useState(0);
+  const [amountInput, setAmountInput] = useState(0);
+  const [swapStatus, setSetSwapStatus] = useState(0);
+  const [calculateEthToDai, setCalculateEthToDai] = useState(0);
+  const [calculateDaiToEth, setCalculateDaiToEth] = useState(0);
 
   useEffect(() => {
     if (!poolList) {
@@ -149,8 +152,14 @@ const DexProvider = ({ children }) => {
         setPoolList,
         activePool,
         setActivePool,
-        setSwapStatus,
+        swapStatus,
         setSetSwapStatus,
+        calculateEthToDai,
+        setCalculateEthToDai,
+        calculateDaiToEth,
+        setCalculateDaiToEth,
+        amountInput,
+        setAmountInput,
       }}
     >
       {children}

@@ -4,14 +4,10 @@ import { Navbar } from "../components/navbar";
 import { Swap } from "../components/swap";
 import Web3CreatePool from "../components/web3/usecreatepool";
 
-import { useEffect, useState, useContext } from "react";
-
+import { useState } from "react";
 import Createpool from "../components/liquidation/createpool";
 
 export default function Home() {
-  const { usePool } = Web3CreatePool();
-  const [daiBalanceCheck, setDaiBalanceCheck] = useState(false);
-
   return (
     <>
       <Navbar />

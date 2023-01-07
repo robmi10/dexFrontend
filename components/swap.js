@@ -1,25 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import Web3CreatePoolAdd from "../components/web3/useaddliquidity";
 import { formatEther } from "ethers/lib/utils";
 import { DexContext } from "./useContext/context";
 import { BsArrowDownUp } from "react-icons/bs";
-import Web3SwapToken from "./web3/useswaptotoken";
-import Web3SwapEth from "./web3/useswaptoeth";
+
+import Web3GetSwapAmount from "./web3/useGetSwapAmount";
 
 export const Swap = () => {
-  const { poolList, activePool, setActivePool } = useContext(DexContext);
+  const {
+    poolList,
+    activePool,
+    setActivePool,
+    calculateEthToDai,
+    calculateDaiToEth,
+  } = useContext(DexContext);
   const { usePoolAdd } = Web3CreatePoolAdd();
   const [switchPair, setSwitchPair] = useState(false);
-  const [calculatedAmount, setCalculatedAmount] = useState(0);
   const [tokenFirst, setTokenFirst] = useState(0);
-  const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState(0);
-  const { useSwapToken } = Web3SwapToken();
-  const { useSwapEth } = Web3SwapEth();
+  const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
 
-  useEffect(() => {
-    console.log({ calculatedAmount });
-  }, [poolList, activePool]);
+  useEffect(() => {}, [
+    poolList,
+    activePool,
+    calculateEthToDai,
+    calculateDaiToEth,
+  ]);
 
   if (!poolList) return false;
 
@@ -29,19 +34,6 @@ export const Swap = () => {
   }));
 
   const isPoolist = filterPoolList.length > 0;
-
-  // filtrera så du kan få värdet
-
-  const onSubmitAdd = (data) => {
-    console.log({ data });
-
-    console.log({ tokenFirst });
-    console.log({ calculatedAmount });
-
-    switchPair
-      ? useSwapToken(tokenFirst)
-      : useSwapEth({ amount: tokenFirst, estimatedAmount: calculatedAmount });
-  };
 
   const updateValue = ({ target }) => {
     setActivePool(parseInt(target.value));
@@ -54,46 +46,9 @@ export const Swap = () => {
 
   if (!poolListTokenValue) return false;
 
-  const calculatePairEthToToken = (val) => {
-    let amount = val.target.value;
-    console.log({ val: val.target.value });
-
-    console.log("ETH TO TOKEN");
-
-    let inputAmountFee = amount * 99;
-    let outputAmount =
-      (inputAmountFee * formatEther(poolListTokenValue[0]?.EthAmount)) /
-      (amount + formatEther(poolListTokenValue[0]?.TokenReserve));
-    setCalculatedAmount(outputAmount);
-
-    if (amount > outputAmount) {
-      setIsExchangeNotAccepted(true);
-    } else {
-      setIsExchangeNotAccepted(false);
-    }
-  };
-
-  const calculatePairTokenToEth = (val) => {
-    let amount = val.target.value;
-    console.log({ val: val.target.value });
-
-    console.log("insidePairTokenToEth");
-
-    let inputAmountFee = amount * 99;
-    let outputAmount =
-      (inputAmountFee * formatEther(poolListTokenValue[0]?.TokenReserve)) /
-      (amount + formatEther(poolListTokenValue[0]?.EthAmount));
-    setCalculatedAmount(outputAmount);
-
-    if (amount > outputAmount) {
-      setIsExchangeNotAccepted(true);
-    } else {
-      setIsExchangeNotAccepted(false);
-    }
-  };
-
   const tokenPair = poolListTokenValue[0]?.TokenPair[0];
   const ethPair = poolListTokenValue[0]?.TokenPair[1];
+  const pooladdress = poolListTokenValue[0]?.PoolAddress;
 
   return (
     <div className="bg-purple-800 w-3/4 p-4 text-white flex flex-col items-center gap-20">
@@ -137,43 +92,40 @@ export const Swap = () => {
         <input
           value={tokenFirst}
           onChange={(e) => {
-            switchPair
-              ? calculatePairTokenToEth(e)
-              : calculatePairEthToToken(e);
             setTokenFirst(e.target.value);
           }}
           className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
         />
         <button
-          className="hover:text-green-500"
+          className="hover:text-yellow-500"
           onClick={() => {
             setSwitchPair(!switchPair);
           }}
         >
           <BsArrowDownUp size={40} />
         </button>
+
         {isExchangeNotAccepted && (
           <p className="text-red-500 text-xs ">
             Error To Little Amount For Swapping
           </p>
         )}
+
         <label>
           {switchPair ? ethPair?.toUpperCase() : tokenPair?.toUpperCase()}
         </label>
-        <input
-          onChange={() => {
-            setTokenSecond(e.target.value);
-          }}
-          value={calculatedAmount}
-          className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-        />
-        <button
-          disabled={isExchangeNotAccepted}
-          onClick={onSubmitAdd}
-          className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
-        >
-          SUBMIT
-        </button>
+
+        {
+          <Web3GetSwapAmount
+            activePool={activePool}
+            tokenFirst={tokenFirst}
+            switchPair={switchPair}
+            tokenPair={tokenPair}
+            ethPair={ethPair}
+            pooladdress={pooladdress}
+            isExchangeNotAccepted={isExchangeNotAccepted}
+          />
+        }
       </div>
     </div>
   );

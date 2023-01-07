@@ -18,7 +18,6 @@ const Createpool = () => {
   const liquidityBalance = useTokenBalance(lpAddress, account);
 
   const createPool = (value) => {
-    console.log({ value });
     usePool(value);
   };
 

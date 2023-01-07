@@ -88,7 +88,7 @@ const Web3CreatePoolRemove = () => {
         ethamount: removeLiquidityEvents[0]?.args?._amount.toString(),
         poolAddress: address,
         lpaddress: removeLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
-        tokenReserve: addLiquidityEvents[0]?.args?._tokenReserve.toString(),
+        tokenReserve: removeLiquidityEvents[0]?.args?._tokenReserve.toString(),
       });
     }
   }, [removeLiquidityStatus]);

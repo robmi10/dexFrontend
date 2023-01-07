@@ -33,12 +33,10 @@ export default function App({ Component, pageProps }) {
     <DexProvider>
       <DAppProvider
         config={{
-          networks: [Avalanche, Localhost, Hardhat],
-          readOnlyChainId: ChainId.Hardhat,
+          networks: [Localhost],
+          readOnlyChainId: ChainId.Localhost,
           readOnlyUrls: {
-            [ChainId.Avalanche]: "https://api.avax.network/ext/bc/C/rpc",
-            [ChainId.Localhost]: "http://localhost:8545",
-            [ChainId.Hardhat]: "http://localhost:8545",
+            [ChainId.Localhost]: "http://localhost:7545",
           },
         }}
       >
