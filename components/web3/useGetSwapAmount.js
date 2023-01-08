@@ -148,7 +148,7 @@ const Web3GetSwapAmount = ({
               ? parseFloat(formatEther(swapToDai?.value?.toString())).toFixed(2)
               : 0
           }
-          className="h-24 flex w-full bg-slate-600 items-center p-4 text-white rounded-2xl text-4xl"
+          className="h-24 flex w-full bg-slate-800 items-center p-4 text-white rounded-2xl text-4xl"
         />
         <button className="absolute right-2 bg-white text-xl text-gray-500 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3">
           <Image src={eth} className=" w-12 h-8" alt="btc" />
@@ -160,11 +160,13 @@ const Web3GetSwapAmount = ({
         </button>
       </div>
 
-      {isExchangeNotAccepted && (
-        <p className=" text-red-500 text-xs mt-1">
-          Error To Little Amount For Swapping
-        </p>
-      )}
+      <div className="h-6">
+        {isExchangeNotAccepted && (
+          <p className=" text-red-500 text-xs mt-1">
+            Error To Little Amount For Swapping
+          </p>
+        )}
+      </div>
       <button
         disabled={isExchangeNotAccepted}
         onClick={onSubmitAdd}

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 import Web3CreatePool from "../web3/usecreatepool";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 const Createpool = () => {
   const { address, activePool, poolList } = useContext(DexContext);
@@ -22,44 +23,34 @@ const Createpool = () => {
   };
 
   return (
-    <div className="flex items-center w-full flex-col gap-4">
-      <div className="bg-blue-600 w-3/4 p-4 text-white flex flex-col items-center gap-20">
-        <h1>DEX</h1>
-        <h1>ACCOUNT</h1>
-        <h1>{account}</h1>
-        {daiBalance && etherBalance && liquidityBalance && (
-          <div>
-            <span>
-              <h1>Dai Balance</h1>
-              <h1>{formatEther(daiBalance?.toString())}</h1>
-            </span>
-            <span>
-              <h1>LP Token Balance</h1>
-              <h1>{formatEther(liquidityBalance?.toString())}</h1>
-            </span>
-            <span>
-              <h1>ETH Balance</h1>
-              <h1>{formatEther(etherBalance?.toString())}</h1>
-            </span>
+    <div className="flex h-full w-full flex-col gap-4 justify-center items-center">
+      <div className="w-2/4 gap-1 h-2/3 text-white flex flex-col items-center  ">
+        <div className="w-full h-1/5  justify-between flex items-center p-4">
+          <h1 className=" text-3xl">Pools</h1>
+          <div className=" flex flex-row items-center rounded-full border border-gray-700 bg-slate-900 p-2 hover:cursor-pointer">
+            <h1 className=" text-lg ">More</h1>
+            <MdOutlineKeyboardArrowDown size={20} />
           </div>
-        )}
+        </div>
 
-        <form
-          onSubmit={handleSubmit(createPool)}
-          className="space-y-5 flex items-center flex-col"
-        >
-          <label>Token</label>
-          <input
-            className="h-10 flex p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-            {...register("tokenPair", { required: true, maxLength: 40 })}
-          />
-          <button
-            type="submit"
-            className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
+        <div className=" bg-slate-900 w-full h-2/3 rounded-3xl border border-gray-600 justify-center items-center flex">
+          <form
+            onSubmit={handleSubmit(createPool)}
+            className="space-y-5 flex items-center flex-col"
           >
-            CREATE POOL
-          </button>
-        </form>
+            <label>TOKEN</label>
+            <input
+              className="bg-slate-800 w-full items-center p-4 text-white rounded-2xl text-4xl"
+              {...register("tokenPair", { required: true, maxLength: 40 })}
+            />
+            <button
+              type="submit"
+              className="w-full justify-center mt-2 h-16 flex items-center border-2 bg-indigo-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
+            >
+              CREATE POOL
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

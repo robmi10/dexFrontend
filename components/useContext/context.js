@@ -17,6 +17,7 @@ const DexProvider = ({ children }) => {
   const [swapStatus, setSetSwapStatus] = useState(0);
   const [calculateEthToDai, setCalculateEthToDai] = useState(0);
   const [calculateDaiToEth, setCalculateDaiToEth] = useState(0);
+  const [modal, setModal] = useState(0);
 
   useEffect(() => {
     if (!poolList) {
@@ -164,6 +165,8 @@ const DexProvider = ({ children }) => {
         setCalculateDaiToEth,
         amountInput,
         setAmountInput,
+        modal,
+        setModal,
       }}
     >
       {children}

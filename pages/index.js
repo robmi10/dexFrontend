@@ -1,12 +1,10 @@
-import { LiquidationAdd } from "../components/liquidation/liquidationadd";
-import { LiquidationRemove } from "../components/liquidation/liquidationremove";
-import { Navbar } from "../components/navbar";
-import { Swap } from "../components/swap";
-import Web3CreatePool from "../components/web3/usecreatepool";
-
-import { useState } from "react";
-import Createpool from "../components/liquidation/createpool";
+import { useState, useEffect, useContext } from "react";
+import Modal from "../components/modal/modal";
+import { DexContext } from "../components/useContext/context";
 
 export default function Home() {
-  return <div></div>;
+  const { modal } = useContext(DexContext);
+  useEffect(() => {}, [modal]);
+
+  return <div className="h-screen w-screen bg-red-400"></div>;
 }

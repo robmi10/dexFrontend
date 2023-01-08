@@ -13,8 +13,12 @@ import { DexContext } from "../useContext/context";
 import { formatEther } from "ethers/lib/utils";
 import Web3SwapToken from "./useswaptotoken";
 import Web3SwapEth from "./useswaptoeth";
-const Web3GetLiquidityAmount = ({ _amount }) => {
-  const { setCalculateEthToDai, setCalculateDaiToEth, activePool } =
+import btc from "../svg/btc.svg";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import Image from "next/image";
+
+const Web3GetLiquidityAmount = ({ _amount, remove }) => {
+  const { setCalculateEthToDai, setCalculateDaiToEth, activePool, setModal } =
     useContext(DexContext);
   const { account } = useEthers();
 
@@ -43,22 +47,34 @@ const Web3GetLiquidityAmount = ({ _amount }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-5 justify-center items-center">
-      <label>Amount</label>
-      <input
-        className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-        onChange={(e) => {
-          setAmount(e.target.value);
-        }}
-      />
+    <div className="w-full flex h-full flex-col gap-2 justify-center items-center">
+      <label className="w-full  ">Deposit Amount</label>
+      <div className="h-24 flex w-full relative">
+        <input
+          className="bg-slate-800 w-full items-center p-4 text-white rounded-2xl text-4xl"
+          onChange={(e) => {
+            setAmount(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            setModal(true);
+          }}
+          className="absolute right-2 bg-slate-900 border  text-xl text-gray-500 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
+        >
+          <Image src={btc} className=" w-12 h-8" alt="btc" />
+          <h1 className=" text-white text-2xl">BTC</h1>
+          <MdOutlineKeyboardArrowDown size={30} />
+        </button>
+      </div>
       <button
         disabled={isExchangeNotAccepted}
         onClick={() => {
           onSubmitAdd();
         }}
-        className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
+        className="w-full justify-center mt-2 h-2/6 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
       >
-        SUBMIT
+        {remove ? <h1>Remove Liquidation</h1> : <h1>Add Liquidation </h1>}
       </button>
       {isExchangeNotAccepted && (
         <p className="text-red-500 text-xs ">Error To Not Accepted Liquidity</p>
