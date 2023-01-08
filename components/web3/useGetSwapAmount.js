@@ -14,11 +14,17 @@ import { DexContext } from "../useContext/context";
 import { formatEther } from "ethers/lib/utils";
 import Web3SwapToken from "./useswaptotoken";
 import Web3SwapEth from "./useswaptoeth";
+import eth from "../svg/eth.svg";
+import Image from "next/image";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+
 const Web3GetSwapAmount = ({
   activePool,
   tokenFirst,
   switchPair,
   pooladdress,
+  tokenPair,
+  ethPair,
 }) => {
   const { setCalculateEthToDai, setCalculateDaiToEth } = useContext(DexContext);
   const { account } = useEthers();
@@ -120,41 +126,51 @@ const Web3GetSwapAmount = ({
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      {etherBalance && daiBalance && (
+    <div className="w-full flex flex-col justify-center items-center ">
+      {/* {etherBalance && daiBalance && (
         <>
           <h1>Pool Eth Balance</h1>
           <h1>{formatEther(etherBalance.toString())}</h1>
           <h1>Pool DAI Balance</h1>
           <h1>{formatEther(daiBalance.toString())}</h1>
         </>
-      )}
-      <input
-        onChange={() => {
-          setTokenSecond(e.target.value);
-          handleToken(e.target.value);
-        }}
-        value={
-          switchPair && swapToEth?.value?.toString()
-            ? formatEther(swapToEth?.value?.toString())
-            : !switchPair && swapToDai?.value?.toString()
-            ? formatEther(swapToDai?.value?.toString())
-            : 0
-        }
-        className="h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full text-black"
-      />
+      )} */}
+      <div className="h-24 flex w-full relative z-0">
+        <input
+          onChange={() => {
+            setTokenSecond(e.target.value);
+            handleToken(e.target.value);
+          }}
+          value={
+            switchPair && swapToEth?.value?.toString()
+              ? parseFloat(formatEther(swapToEth?.value?.toString())).toFixed(2)
+              : !switchPair && swapToDai?.value?.toString()
+              ? parseFloat(formatEther(swapToDai?.value?.toString())).toFixed(2)
+              : 0
+          }
+          className="h-24 flex w-full bg-slate-600 items-center p-4 text-white rounded-2xl text-4xl"
+        />
+        <button className="absolute right-2 bg-white text-xl text-gray-500 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3">
+          <Image src={eth} className=" w-12 h-8" alt="btc" />
+
+          <h1 className=" font-bold text-2xl">
+            {switchPair ? tokenPair?.toUpperCase() : ethPair?.toUpperCase()}
+          </h1>
+          <MdOutlineKeyboardArrowDown size={30} />
+        </button>
+      </div>
 
       {isExchangeNotAccepted && (
-        <p className="text-red-500 text-xs ">
+        <p className=" text-red-500 text-xs mt-1">
           Error To Little Amount For Swapping
         </p>
       )}
       <button
         disabled={isExchangeNotAccepted}
         onClick={onSubmitAdd}
-        className="w-2/4 justify-center mt-8 h-10 flex items-center p-4 border-2 border-green-500 hover:bg-green-500 rounded-full"
+        className="w-2/4 justify-center mt-2 h-16 flex items-center border-2 bg-indigo-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
       >
-        SUBMIT
+        SWAP
       </button>
     </div>
   );

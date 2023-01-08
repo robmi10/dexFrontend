@@ -3,6 +3,7 @@ import { ChainId } from "@thirdweb-dev/react";
 import { Avalanche, DAppProvider, Hardhat, Localhost } from "@usedapp/core";
 import DexProvider from "../components/useContext/context";
 import { getDefaultProvider } from "ethers";
+import { Navbar } from "../components/navbar";
 
 const config = {
   // autoConnect: true,
@@ -40,7 +41,10 @@ export default function App({ Component, pageProps }) {
           },
         }}
       >
-        <Component {...pageProps} />
+        <Navbar />
+        <div className="h-screen w-screen bg-indigo-900">
+          <Component {...pageProps} />
+        </div>
       </DAppProvider>
     </DexProvider>
   );

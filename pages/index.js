@@ -8,15 +8,5 @@ import { useState } from "react";
 import Createpool from "../components/liquidation/createpool";
 
 export default function Home() {
-  return (
-    <>
-      <Navbar />
-      <Createpool />
-      <div className=" w-full flex flex-col  items-center">
-        <LiquidationAdd key={1} />
-        <LiquidationRemove key={2} />
-        <Swap key={3} />
-      </div>
-    </>
-  );
+  return <div></div>;
 }
