@@ -74,7 +74,7 @@ const ModalToken = () => {
                       {!option.TokenStatus && (
                         <button
                           onClick={() => {
-                            setActiveToken(option.TokenId);
+                            setActivePool(option.TokenId);
                             setModal(false);
                           }}
                           className="flex flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12"
@@ -87,7 +87,13 @@ const ModalToken = () => {
                         </button>
                       )}
                       {option.TokenStatus > 0 && (
-                        <button className="flex opacity-20 flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12">
+                        <button
+                          onClick={() => {
+                            setActivePool(option.TokenId);
+                            setModal(false);
+                          }}
+                          className="flex opacity-20 flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12"
+                        >
                           <img
                             className="w-8 h-8"
                             src={urlFor(option.TokenImage)}
@@ -108,7 +114,7 @@ const ModalToken = () => {
                   {!option.TokenStatus && (
                     <button
                       onClick={() => {
-                        setActiveToken(option.TokenId);
+                        setActivePool(option.TokenId);
                         setModal(false);
                         console.log({ currentiD: option.TokenId });
                       }}
@@ -125,7 +131,7 @@ const ModalToken = () => {
                     <button
                       disabled
                       onClick={() => {
-                        setActiveToken(option.TokenId);
+                        setActivePool(option.TokenId);
                         setModal(false);
                         console.log({ currentiD: option.TokenId });
                       }}

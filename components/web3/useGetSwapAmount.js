@@ -19,6 +19,7 @@ import Image from "next/image";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
+import { VscPinned } from "react-icons/vsc";
 
 const builder = imageUrlBuilder(client);
 
@@ -170,7 +171,7 @@ const Web3GetSwapAmount = ({
           <button className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3">
             <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
             <h1 className="text-2xl">{ethPair[0]?.Token?.toUpperCase()}</h1>
-            <MdOutlineKeyboardArrowDown size={30} />
+            <VscPinned size={25} />
           </button>
         )}
       </div>

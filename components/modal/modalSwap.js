@@ -67,7 +67,14 @@ const ModalSwap = () => {
               <div className="w-full h-auto flex flex-wrap gap-4">
                 {latestTokenFilter?.map((option) => {
                   return (
-                    <button className="flex flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12">
+                    <button
+                      onClick={() => {
+                        setActivePool(option.TokenId);
+                        setModal(false);
+                        console.log({ currentiD: option.TokenId });
+                      }}
+                      className="flex flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12"
+                    >
                       <img
                         className="w-8 h-8"
                         src={urlFor(option.TokenImage)}

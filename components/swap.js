@@ -4,6 +4,8 @@ import { formatEther } from "ethers/lib/utils";
 import { DexContext } from "./useContext/context";
 import { BsArrowDownUp } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { VscPinned } from "react-icons/vsc";
+
 import Web3GetSwapAmount from "./web3/useGetSwapAmount";
 import btc from "./svg/btc.svg";
 import Image from "next/image";
@@ -101,7 +103,7 @@ export const Swap = () => {
             >
               <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
               <h1 className="  text-2xl">{ethPair[0]?.Token?.toUpperCase()}</h1>
-              <MdOutlineKeyboardArrowDown size={30} />
+              <VscPinned size={25} />
             </button>
           )}
 

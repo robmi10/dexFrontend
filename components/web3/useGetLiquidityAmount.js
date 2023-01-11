@@ -56,16 +56,6 @@ const Web3GetLiquidityAmount = ({ _amount, remove }) => {
             setAmount(e.target.value);
           }}
         />
-        <button
-          onClick={() => {
-            setModal(true);
-          }}
-          className="absolute right-2 bg-slate-900 border  text-xl text-gray-500 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
-        >
-          <Image src={btc} className=" w-12 h-8" alt="btc" />
-          <h1 className=" text-white text-2xl">BTC</h1>
-          <MdOutlineKeyboardArrowDown size={30} />
-        </button>
       </div>
       <button
         disabled={isExchangeNotAccepted}
