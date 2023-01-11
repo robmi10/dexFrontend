@@ -70,13 +70,32 @@ const ModalToken = () => {
               <div className="w-full h-auto flex flex-wrap gap-4">
                 {latestTokenFilter?.map((option) => {
                   return (
-                    <button className="flex flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12">
-                      <img
-                        className="w-8 h-8"
-                        src={urlFor(option.TokenImage)}
-                      />
-                      <h1>{option.Token}</h1>
-                    </button>
+                    <>
+                      {!option.TokenStatus && (
+                        <button
+                          onClick={() => {
+                            setActiveToken(option.TokenId);
+                            setModal(false);
+                          }}
+                          className="flex flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12"
+                        >
+                          <img
+                            className="w-8 h-8"
+                            src={urlFor(option.TokenImage)}
+                          />
+                          <h1>{option.Token}</h1>
+                        </button>
+                      )}
+                      {option.TokenStatus > 0 && (
+                        <button className="flex opacity-20 flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12">
+                          <img
+                            className="w-8 h-8"
+                            src={urlFor(option.TokenImage)}
+                          />
+                          <h1>{option.Token}</h1>
+                        </button>
+                      )}
+                    </>
                   );
                 })}
               </div>
@@ -86,9 +105,8 @@ const ModalToken = () => {
             {listSearch?.map((option) => {
               return (
                 <>
-                  {option.TokenStatus && (
+                  {!option.TokenStatus && (
                     <button
-                      disabled
                       onClick={() => {
                         setActiveToken(option.TokenId);
                         setModal(false);
@@ -103,8 +121,9 @@ const ModalToken = () => {
                       <h1>{option.Token}</h1>
                     </button>
                   )}
-                  {!option.TokenStatus && (
+                  {option.TokenStatus > 0 && (
                     <button
+                      disabled
                       onClick={() => {
                         setActiveToken(option.TokenId);
                         setModal(false);

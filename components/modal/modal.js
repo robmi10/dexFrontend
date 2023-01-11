@@ -4,12 +4,12 @@ import ModalSwap from "./modalSwap";
 import ModalToken from "./modalToken";
 
 const Modal = () => {
-  const { modal, setModal, setActivePool, tokenlist, activePool } =
+  const { modal, tokenlist, setModal, setActivePool, activePool } =
     useContext(DexContext);
 
   useEffect(() => {
     console.log({ modalCheck: modal });
-  }, [modal, activePool]);
+  }, [modal, activePool, tokenlist]);
 
   return (
     <div className="fixed h-full w-full bg-black bg-opacity-75 top-0 left-0 flex justify-center items-center z-10">

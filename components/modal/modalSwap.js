@@ -83,7 +83,7 @@ const ModalSwap = () => {
             {listSearch?.map((option) => {
               return (
                 <>
-                  {option.TokenStatus && (
+                  {option.TokenStatus > 0 && (
                     <button
                       onClick={() => {
                         setActivePool(option.TokenId);

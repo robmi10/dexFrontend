@@ -98,6 +98,7 @@ const DexProvider = ({ children }) => {
         }),
       }).then(() => {
         getPoolList();
+        getTokenList()
       });
     } catch (error) {
       console.log({ error });

@@ -20,7 +20,7 @@ const CreatePool = async (req, res) => {
     await client
       .patch(req.body.tokenId)
       .set({
-        TokenStatus: true,
+        TokenStatus: 1,
       })
       .commit()
       .then((res) => {

@@ -156,7 +156,7 @@ const Web3GetSwapAmount = ({
         {switchPair && (
           <button
             onClick={() => {
-              setModal(true);
+              setModal("swap");
             }}
             className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
           >
