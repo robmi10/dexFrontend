@@ -17,6 +17,14 @@ import Web3SwapEth from "./useswaptoeth";
 import eth from "../svg/eth.svg";
 import Image from "next/image";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import imageUrlBuilder from "@sanity/image-url";
+import { client } from "../../sanityClient/client";
+
+const builder = imageUrlBuilder(client);
+
+function urlFor(source) {
+  return builder.image(source);
+}
 
 const Web3GetSwapAmount = ({
   activePool,
@@ -26,7 +34,8 @@ const Web3GetSwapAmount = ({
   tokenPair,
   ethPair,
 }) => {
-  const { setCalculateEthToDai, setCalculateDaiToEth } = useContext(DexContext);
+  const { setCalculateEthToDai, setCalculateDaiToEth, setModal } =
+    useContext(DexContext);
   const { account } = useEthers();
   const amount = tokenFirst;
   const currentPool = activePool;
@@ -48,6 +57,8 @@ const Web3GetSwapAmount = ({
   );
   // console.log({ swapToEth: swapToEth?.value?.toString() });
   setCalculateDaiToEth(swapToEth?.value?.toString());
+
+  console.log({ INSIDETOKENPAIR: ethPair });
 
   const swapToDai = useCall(
     DexAddress &&
@@ -127,14 +138,6 @@ const Web3GetSwapAmount = ({
 
   return (
     <div className="w-full flex flex-col justify-center items-center ">
-      {/* {etherBalance && daiBalance && (
-        <>
-          <h1>Pool Eth Balance</h1>
-          <h1>{formatEther(etherBalance.toString())}</h1>
-          <h1>Pool DAI Balance</h1>
-          <h1>{formatEther(daiBalance.toString())}</h1>
-        </>
-      )} */}
       <div className="h-24 flex w-full relative z-0">
         <input
           onChange={() => {
@@ -150,14 +153,26 @@ const Web3GetSwapAmount = ({
           }
           className="h-24 flex w-full bg-slate-800 items-center p-4 text-white rounded-2xl text-4xl"
         />
-        <button className="absolute right-2 bg-white text-xl text-gray-500 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3">
-          <Image src={eth} className=" w-12 h-8" alt="btc" />
+        {switchPair && (
+          <button
+            onClick={() => {
+              setModal(true);
+            }}
+            className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
+          >
+            <img className="w-8 h-8" src={urlFor(tokenPair[0]?.TokenImage)} />
+            <h1 className="text-2xl">{tokenPair[0]?.Token?.toUpperCase()}</h1>
+            <MdOutlineKeyboardArrowDown size={30} />
+          </button>
+        )}
 
-          <h1 className=" font-bold text-2xl">
-            {switchPair ? tokenPair?.toUpperCase() : ethPair?.toUpperCase()}
-          </h1>
-          <MdOutlineKeyboardArrowDown size={30} />
-        </button>
+        {!switchPair && (
+          <button className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3">
+            <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
+            <h1 className="text-2xl">{ethPair[0]?.Token?.toUpperCase()}</h1>
+            <MdOutlineKeyboardArrowDown size={30} />
+          </button>
+        )}
       </div>
 
       <div className="h-6">

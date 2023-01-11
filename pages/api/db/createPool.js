@@ -13,8 +13,19 @@ const CreatePool = async (req, res) => {
     };
     console.log({ poollDoc });
 
+    console.log({ TokenId: req.body.tokenId });
+
     await client.createIfNotExists(poollDoc);
     console.log("Success !");
+    await client
+      .patch(req.body.tokenId)
+      .set({
+        TokenStatus: true,
+      })
+      .commit()
+      .then((res) => {
+        console.log({ "changeToken status": res });
+      });
     res.status(200).send({ message: "success" });
   } catch (error) {
     res.status(500).send({ message: "error", data: error.message });

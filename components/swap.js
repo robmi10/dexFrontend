@@ -7,6 +7,13 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import Web3GetSwapAmount from "./web3/useGetSwapAmount";
 import btc from "./svg/btc.svg";
 import Image from "next/image";
+import { client } from "../sanityClient/client";
+import imageUrlBuilder from "@sanity/image-url";
+const builder = imageUrlBuilder(client);
+
+function urlFor(source) {
+  return builder.image(source);
+}
 
 export const Swap = () => {
   const {
@@ -16,6 +23,7 @@ export const Swap = () => {
     calculateEthToDai,
     calculateDaiToEth,
     setModal,
+    tokenlist,
   } = useContext(DexContext);
   const { usePoolAdd } = Web3CreatePoolAdd();
   const [switchPair, setSwitchPair] = useState(false);
@@ -27,6 +35,7 @@ export const Swap = () => {
     activePool,
     calculateEthToDai,
     calculateDaiToEth,
+    activePool,
   ]);
 
   if (!poolList) return false;
@@ -49,9 +58,22 @@ export const Swap = () => {
 
   if (!poolListTokenValue) return false;
 
-  const tokenPair = poolListTokenValue[0]?.TokenPair[0];
-  const ethPair = poolListTokenValue[0]?.TokenPair[1];
+  if (!tokenlist) return false;
+
+  const tokenPair = tokenlist.filter((option) => option.TokenId === activePool);
+
+  console.log({ tokenPair });
+  console.log({ tokenPairToken: tokenPair[0]?.Token });
+  // const ethPair = poolListTokenValue[0]?.TokenPair[1];
   const pooladdress = poolListTokenValue[0]?.PoolAddress;
+
+  console.log({ tokenlist });
+
+  const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
+
+  console.log({ ethPair });
+
+  if (!tokenPair) return false;
 
   return (
     <div className=" bg-slate-900 h-3/6 w-4/12 rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
@@ -69,18 +91,34 @@ export const Swap = () => {
             }}
           ></input>
 
-          <button
-            onClick={() => {
-              setModal(true);
-            }}
-            className="absolute right-2 bg-white text-xl text-gray-500 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
-          >
-            <Image src={btc} className=" w-12 h-8" alt="btc" />
-            <h1 className=" font-bold text-2xl">
-              {switchPair ? ethPair?.toUpperCase() : tokenPair?.toUpperCase()}
-            </h1>
-            <MdOutlineKeyboardArrowDown size={30} />
-          </button>
+          {switchPair && (
+            <button
+              disabled
+              onClick={() => {
+                setModal("swap");
+              }}
+              className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
+            >
+              <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
+              <h1 className="  text-2xl">{ethPair[0]?.Token?.toUpperCase()}</h1>
+              <MdOutlineKeyboardArrowDown size={30} />
+            </button>
+          )}
+
+          {!switchPair && (
+            <button
+              onClick={() => {
+                setModal("swap");
+              }}
+              className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
+            >
+              <img className="w-8 h-8" src={urlFor(tokenPair[0]?.TokenImage)} />
+              <h1 className="  text-2xl">
+                {tokenPair[0]?.Token?.toUpperCase()}
+              </h1>
+              <MdOutlineKeyboardArrowDown size={30} />
+            </button>
+          )}
         </div>
 
         <div className="absolute z-10 h-12 w-12 rounded-xl bg-gray-800 border-4 border-slate-900 flex justify-center top-44">

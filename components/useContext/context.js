@@ -18,6 +18,8 @@ const DexProvider = ({ children }) => {
   const [calculateEthToDai, setCalculateEthToDai] = useState(0);
   const [calculateDaiToEth, setCalculateDaiToEth] = useState(0);
   const [modal, setModal] = useState(0);
+  const [tokenlist, setTokenList] = useState(false);
+  const [activeToken, setActiveToken] = useState(false);
 
   useEffect(() => {
     if (!poolList) {
@@ -42,6 +44,26 @@ const DexProvider = ({ children }) => {
       removeLiquidity();
     }
   }, [liquidityRemoveStatus]);
+
+  useEffect(() => {
+    if (!tokenlist) {
+      getTokenList();
+    }
+  });
+
+  const getTokenList = async () => {
+    const queryTokenTable = '*[_type=="TokenTable"]';
+    console.log({ queryTokenTable });
+    try {
+      await client.fetch(queryTokenTable).then((res) => {
+        console.log({ resVote: res });
+        setTokenList(res);
+        console.log({ tokenlist });
+      });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   const getPoolList = async () => {
     const queryPoolTable = '*[_type=="poolTable"]';
@@ -71,6 +93,7 @@ const DexProvider = ({ children }) => {
           createdToken: createPoolStatus.createdToken,
           lpaddress: createPoolStatus.lpaddress,
           tokenPair: createPoolStatus.tokenPair,
+          tokenId: createPoolStatus.tokenId,
           ethPair: createPoolStatus.ethPair,
         }),
       }).then(() => {
@@ -167,6 +190,10 @@ const DexProvider = ({ children }) => {
         setAmountInput,
         modal,
         setModal,
+        tokenlist,
+        setTokenList,
+        activeToken,
+        setActiveToken,
       }}
     >
       {children}

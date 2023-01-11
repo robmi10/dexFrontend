@@ -24,10 +24,9 @@ const Web3CreatePool = () => {
     console.log({ createStatus: createStatus.status });
 
     if (createStatus.status === "Success") {
-      const { tokenPair } = input;
+      const { Token, _id } = input;
 
       console.log({ createEvents });
-      console.log({ tokenPair });
 
       console.log({
         createEventsIDSecond: createEvents[0]?.args?._id.toString(),
@@ -38,7 +37,8 @@ const Web3CreatePool = () => {
         createdId: createEvents[0]?.args._id,
         createdBy: createEvents[0]?.args._createBy,
         createdToken: createEvents[0]?.args._token,
-        tokenPair: tokenPair,
+        tokenPair: Token,
+        tokenId: _id,
         ethPair: "eth",
         lpaddress: "",
       });
@@ -46,6 +46,7 @@ const Web3CreatePool = () => {
   }, [createStatus]);
 
   const usePool = async (data) => {
+    console.log({ data });
     setInput(data);
     createPool(daiAddress);
   };
