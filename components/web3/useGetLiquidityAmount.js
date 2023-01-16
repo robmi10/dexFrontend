@@ -6,18 +6,15 @@ import {
 } from "@usedapp/core";
 import { Contract, ethers } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
-import React, { useContext, useState, useEffect } from "react";
-import { DaiTokenAddress, DexAddress } from "../../address";
+import React, { useContext, useState } from "react";
+import { DexAddress } from "../../address";
 import dexInfo from "../../constants/Dex.json";
 import { DexContext } from "../useContext/context";
-import { formatEther } from "ethers/lib/utils";
-import Web3SwapToken from "./useswaptotoken";
-import Web3SwapEth from "./useswaptoeth";
-import btc from "../svg/btc.svg";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import Image from "next/image";
 
-const Web3GetLiquidityAmount = ({ _amount, remove }) => {
+import Web3CreatePoolAdd from "./useaddliquidity";
+
+const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo }) => {
+  const { usePoolAdd } = Web3CreatePoolAdd();
   const { setCalculateEthToDai, setCalculateDaiToEth, activePool, setModal } =
     useContext(DexContext);
   const { account } = useEthers();
@@ -39,11 +36,15 @@ const Web3GetLiquidityAmount = ({ _amount, remove }) => {
   // setCalculateDaiToEth(swapToEth?.value?.toString());
 
   const onSubmitAdd = (data) => {
-    console.log({ liquidityAdd: parseUnits(liquidityAdd, 18) });
-    usePoolAdd({
-      poolInfo: filterPoolList[activePool],
-      liquidity: parseUnits(_amount, 18),
-    });
+    // console.log({ amount });
+    console.log({ liquidityAdd: parseUnits(amount, 18).toString() });
+
+    console.log({ poolInfo });
+
+    // usePoolAdd({
+    //   poolInfo: poolInfo,
+    //   liquidity: parseUnits(amount, 18).toString(),
+    // });
   };
 
   return (
@@ -51,6 +52,7 @@ const Web3GetLiquidityAmount = ({ _amount, remove }) => {
       <label className="w-full  ">Deposit Amount</label>
       <div className="h-24 flex w-full relative">
         <input
+          placeholder="ETH"
           className="bg-slate-800 w-full items-center p-4 text-white rounded-2xl text-4xl"
           onChange={(e) => {
             setAmount(e.target.value);

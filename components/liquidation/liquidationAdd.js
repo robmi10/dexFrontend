@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Web3CreatePoolAdd from "../web3/useaddliquidity";
+
 import { DexContext } from "../useContext/context";
 import { formatEther, parseUnits } from "ethers/lib/utils";
 import Web3GetLiquidityAmount from "../web3/useGetLiquidityAmount";
@@ -14,6 +14,7 @@ import eth from "../svg/eth.svg";
 import Link from "next/link";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
+import Web3CreatePoolAdd from "../web3/useaddliquidity";
 
 const builder = imageUrlBuilder(client);
 
@@ -31,16 +32,23 @@ export const LiquidationAdd = () => {
     activeToken,
   } = useContext(DexContext);
   const { register, handleSubmit } = useForm();
-  const { usePoolAdd } = Web3CreatePoolAdd();
+  // const { usePoolAdd } = Web3CreatePoolAdd();
 
-  useEffect(() => {}, [poolList, activePool]);
+  useEffect(() => {}, [poolList, activeToken]);
+
+  console.log("first inside add");
 
   if (!poolList) return false;
+
+  console.log("second inside add");
 
   const filterPoolList = poolList.map((option, i) => ({
     index: i,
     address: option.PoolAddress,
   }));
+
+  console.log({ activePool });
+  console.log({ filterPoolList });
 
   const isPoolist = filterPoolList.length > 0;
 
@@ -50,14 +58,25 @@ export const LiquidationAdd = () => {
     setActivePool(parseInt(target.value));
   };
 
-  if (!activePool && activePool !== 0) return false;
+  console.log({ activePool });
+
+  // if (!activeToken  ) return false;
   const poolListTokenValue = poolList.filter(
     (option) => option.PoolId === activePool
   );
 
+  console.log("third inside add");
+
+  console.log({ poolListTokenValue });
   if (!poolListTokenValue) return false;
+  if (!tokenlist) return false;
+
+  console.log({ activePool });
+  console.log({ tokenlist });
 
   const tokenPair = tokenlist.filter((option) => option.TokenId === activePool);
+
+  console.log({ tokenPair });
 
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
 
@@ -84,10 +103,10 @@ export const LiquidationAdd = () => {
                 <h1 className="text-2xl">{ethPair[0]?.Token}</h1>
                 <VscPinned size={25} />
               </button>
-              {tokenPair[0].TokenStatus > 0 && (
+              {!tokenPair[0]?.TokenStatus && (
                 <button
                   onClick={() => {
-                    setModal("token");
+                    setModal("swap");
                   }}
                   className="h-16 w-full bg-blue-600 text-xl text-white rounded-full flex flex-row justify-center items-center gap-2"
                 >
@@ -96,10 +115,10 @@ export const LiquidationAdd = () => {
                 </button>
               )}
 
-              {!tokenPair[0].TokenStatus > 0 && (
+              {tokenPair[0]?.TokenStatus && (
                 <button
                   onClick={() => {
-                    setModal("token");
+                    setModal("swap");
                   }}
                   className="h-16 w-full disabled bg-slate-800 text-xl text-white rounded-full  flex flex-row justify-between p-4 items-center gap-2"
                 >

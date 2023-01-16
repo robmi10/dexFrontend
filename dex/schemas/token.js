@@ -24,5 +24,10 @@ export default defineType({
       title: "tokenstatus",
       type: "number",
     }),
+    defineField({
+      name: "PoolId",
+      title: "poolid",
+      type: "number",
+    }),
   ],
 });

@@ -74,7 +74,7 @@ const ModalToken = () => {
                       {!option.TokenStatus && (
                         <button
                           onClick={() => {
-                            setActivePool(option.TokenId);
+                            setActiveToken(option.TokenId);
                             setModal(false);
                           }}
                           className="flex flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12"
@@ -89,7 +89,7 @@ const ModalToken = () => {
                       {option.TokenStatus > 0 && (
                         <button
                           onClick={() => {
-                            setActivePool(option.TokenId);
+                            setActiveToken(option.TokenId);
                             setModal(false);
                           }}
                           className="flex opacity-20 flex-row items-center border hover:bg-gray-700 border-gray-700 p-4 rounded-full w-4/12  gap-4 h-12"
@@ -114,7 +114,7 @@ const ModalToken = () => {
                   {!option.TokenStatus && (
                     <button
                       onClick={() => {
-                        setActivePool(option.TokenId);
+                        setActiveToken(option.TokenId);
                         setModal(false);
                         console.log({ currentiD: option.TokenId });
                       }}

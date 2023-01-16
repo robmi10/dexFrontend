@@ -19,7 +19,7 @@ const DexProvider = ({ children }) => {
   const [calculateDaiToEth, setCalculateDaiToEth] = useState(0);
   const [modal, setModal] = useState(0);
   const [tokenlist, setTokenList] = useState(false);
-  const [activeToken, setActiveToken] = useState(false);
+  const [activeToken, setActiveToken] = useState(0);
 
   useEffect(() => {
     if (!poolList) {
@@ -98,7 +98,7 @@ const DexProvider = ({ children }) => {
         }),
       }).then(() => {
         getPoolList();
-        getTokenList()
+        getTokenList();
       });
     } catch (error) {
       console.log({ error });
