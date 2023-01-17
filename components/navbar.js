@@ -48,13 +48,13 @@ export const Navbar = () => {
             {dropdown && (
               <div className="absolute mt-2 bg-indigo-700 rounded-md z-10 flex flex-col justify-between w-36 h-24 gap-2 -ml-8 ">
                 <Link
-                  href="/liquidation/add"
+                  href="/add"
                   className=" justify-center text-gray-400 rounded-md h-full items-center flex hover:text-white  w-full"
                 >
                   Add
                 </Link>
                 <Link
-                  href="/liquidation/remove"
+                  href="/remove"
                   className=" justify-center text-gray-400 rounded-md h-full items-center flex hover:text-white  w-full"
                 >
                   Remove

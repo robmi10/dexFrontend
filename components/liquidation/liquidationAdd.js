@@ -1,21 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-
+import React, { useContext, useEffect } from "react";
 import { DexContext } from "../useContext/context";
-import { formatEther, parseUnits } from "ethers/lib/utils";
 import Web3GetLiquidityAmount from "../web3/useGetLiquidityAmount";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { VscPinned } from "react-icons/vsc";
-
-import Image from "next/image";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import btc from "../svg/btc.svg";
-import eth from "../svg/eth.svg";
 import Link from "next/link";
-import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
-import Web3CreatePoolAdd from "../web3/useaddliquidity";
 
+import { useToast } from "@chakra-ui/react";
+import imageUrlBuilder from "@sanity/image-url";
 const builder = imageUrlBuilder(client);
 
 function urlFor(source) {
@@ -23,60 +16,28 @@ function urlFor(source) {
 }
 
 export const LiquidationAdd = () => {
-  const {
-    poolList,
-    activePool,
-    setActivePool,
-    tokenlist,
-    setModal,
-    activeToken,
-  } = useContext(DexContext);
-  const { register, handleSubmit } = useForm();
-  // const { usePoolAdd } = Web3CreatePoolAdd();
+  const { poolList, tokenlist, setModal, activeToken } = useContext(DexContext);
 
   useEffect(() => {}, [poolList, activeToken]);
-
-  console.log("first inside add");
-
   if (!poolList) return false;
-
-  console.log("second inside add");
 
   const filterPoolList = poolList.map((option, i) => ({
     index: i,
     address: option.PoolAddress,
   }));
 
-  console.log({ activePool });
-  console.log({ filterPoolList });
+  const tokenPair = tokenlist.filter(
+    (option) => option.TokenId === activeToken
+  );
+  console.log({ tokenPair });
 
-  const isPoolist = filterPoolList.length > 0;
+  if (!tokenPair) return false;
 
-  // filtrera så du kan få värdet
-
-  const updateValue = ({ target }) => {
-    setActivePool(parseInt(target.value));
-  };
-
-  console.log({ activePool });
-
-  // if (!activeToken  ) return false;
-  const poolListTokenValue = poolList.filter(
-    (option) => option.PoolId === activePool
+  const filterPoolToken = filterPoolList.filter(
+    (option, index) => option.index === tokenPair[0].PoolId
   );
 
-  console.log("third inside add");
-
-  console.log({ poolListTokenValue });
-  if (!poolListTokenValue) return false;
-  if (!tokenlist) return false;
-
-  console.log({ activePool });
-  console.log({ tokenlist });
-
-  const tokenPair = tokenlist.filter((option) => option.TokenId === activePool);
-
-  console.log({ tokenPair });
+  console.log({ filterPoolToken });
 
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
 
@@ -145,7 +106,10 @@ export const LiquidationAdd = () => {
             </div>
           </div>
           <div className="w-2/4 h-2/4">
-            <Web3GetLiquidityAmount poolInfo={filterPoolList[activePool]} />
+            <Web3GetLiquidityAmount
+              tokenPair={tokenPair}
+              poolInfo={filterPoolToken[0]}
+            />
           </div>
         </div>
       </div>

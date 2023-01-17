@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import { LiquidationAdd } from "../../components/liquidation/liquidationadd";
+import { LiquidationAdd } from "../components/liquidation/liquidationadd";
 
-import Modal from "../../components/modal/modal";
-import { DexContext } from "../../components/useContext/context";
+import Modal from "../components/modal/modal";
+import { DexContext } from "../components/useContext/context";
 
 const Addliquidation = () => {
   const { modal } = useContext(DexContext);

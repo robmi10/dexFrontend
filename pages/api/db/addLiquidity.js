@@ -15,13 +15,13 @@ const AddLiquidity = async (req, res) => {
       TokenReserve: req.body.tokenReserve,
     };
 
-    const poolTabeId =
+    const poolTableId =
       req.body.liquidityowner + req.body.liquidityid + "poolTable";
 
     await client.createOrReplace(liquidityDoc);
     console.log("Success!");
     await client
-      .patch(poolTabeId)
+      .patch(poolTableId)
       .set({
         TokenAmount: req.body.lptotalvalue,
         EthAmount: req.body.ethtotalvalue,

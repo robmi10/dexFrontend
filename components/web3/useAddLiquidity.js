@@ -48,6 +48,7 @@ const Web3CreatePoolAdd = () => {
 
     if (addLiquidityStatus.status === "Success") {
       const { index, address } = input.poolInfo;
+
       console.log({ addLiquidityStatus });
       console.log({ addLiquidityEvents });
 
@@ -86,9 +87,6 @@ const Web3CreatePoolAdd = () => {
         liquidityowner: addLiquidityEvents[0]?.args?._from,
         amount: addLiquidityEvents[0]?.args?._amount.toString(),
         token: daiAddress,
-        // totalamount:
-        //   parseInt(addLiquidityEvents[0]?.args?._amount.toString()) +
-        //   parseInt(addLiquidityEvents[0]?.args?._lpTokenBalance.toString()),
         lpBalance: addLiquidityEvents[0]?.args?._lpTokenSupply.toString(),
         ethBalance: addLiquidityEvents[0]?.args?._ethBalance.toString(),
         tokenamount: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),

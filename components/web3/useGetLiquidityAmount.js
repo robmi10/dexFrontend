@@ -12,9 +12,11 @@ import dexInfo from "../../constants/Dex.json";
 import { DexContext } from "../useContext/context";
 
 import Web3CreatePoolAdd from "./useaddliquidity";
+import Web3CreatePoolRemove from "./useremoveliquidity";
 
-const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo }) => {
+const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
   const { usePoolAdd } = Web3CreatePoolAdd();
+  const { usePoolRemove } = Web3CreatePoolRemove();
   const { setCalculateEthToDai, setCalculateDaiToEth, activePool, setModal } =
     useContext(DexContext);
   const { account } = useEthers();
@@ -36,20 +38,32 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo }) => {
   // setCalculateDaiToEth(swapToEth?.value?.toString());
 
   const onSubmitAdd = (data) => {
-    // console.log({ amount });
+    console.log({ liquidityAdd: parseUnits(amount, 18).toString() });
+
+    console.log({ poolInfo });
+    usePoolAdd({
+      token: tokenPair,
+      poolInfo: poolInfo,
+      liquidity: parseUnits(amount, 18).toString(),
+    });
+  };
+
+  const onSubmitRemove = (data) => {
+    console.log("onsubmit remove");
     console.log({ liquidityAdd: parseUnits(amount, 18).toString() });
 
     console.log({ poolInfo });
 
-    // usePoolAdd({
-    //   poolInfo: poolInfo,
-    //   liquidity: parseUnits(amount, 18).toString(),
-    // });
+    usePoolRemove({
+      token: tokenPair,
+      poolInfo: poolInfo,
+      liquidity: parseUnits(amount, 18).toString(),
+    });
   };
 
   return (
     <div className="w-full flex h-full flex-col gap-2 justify-center items-center">
-      <label className="w-full  ">Deposit Amount</label>
+      <label className="w-full">Deposit Amount</label>
       <div className="h-24 flex w-full relative">
         <input
           placeholder="ETH"
@@ -62,7 +76,7 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo }) => {
       <button
         disabled={isExchangeNotAccepted}
         onClick={() => {
-          onSubmitAdd();
+          remove ? onSubmitRemove() : onSubmitAdd();
         }}
         className="w-full justify-center mt-2 h-2/6 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
       >

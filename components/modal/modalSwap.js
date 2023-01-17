@@ -12,8 +12,14 @@ function urlFor(source) {
 }
 
 const ModalSwap = () => {
-  const { modal, setModal, setActivePool, tokenlist, activePool } =
-    useContext(DexContext);
+  const {
+    modal,
+    setModal,
+    setActivePool,
+    tokenlist,
+    activePool,
+    setActiveToken,
+  } = useContext(DexContext);
   const [searchInput, setSearchInput] = useState(false);
 
   useEffect(() => {
@@ -69,6 +75,7 @@ const ModalSwap = () => {
                   return (
                     <button
                       onClick={() => {
+                        setActiveToken(option.TokenId);
                         setActivePool(option.TokenId);
                         setModal(false);
                         console.log({ currentiD: option.TokenId });
@@ -93,6 +100,7 @@ const ModalSwap = () => {
                   {option.TokenStatus > 0 && (
                     <button
                       onClick={() => {
+                        setActiveToken(option.TokenId);
                         setActivePool(option.TokenId);
                         setModal(false);
                         console.log({ currentiD: option.TokenId });
@@ -110,6 +118,7 @@ const ModalSwap = () => {
                     <button
                       disabled
                       onClick={() => {
+                        setActiveToken(option.TokenId);
                         setActivePool(option.TokenId);
                         setModal(false);
                         console.log({ currentiD: option.TokenId });

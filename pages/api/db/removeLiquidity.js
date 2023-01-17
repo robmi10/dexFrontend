@@ -25,7 +25,7 @@ const RemoveLiquidity = async (req, res) => {
     await client
       .patch(liquidityTableId)
       .set({
-        Amount: req.body.lptotalvalue,
+        StakeAmount: req.body.lptotalvalue,
       })
       .commit()
       .then((res) => {

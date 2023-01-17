@@ -21,6 +21,7 @@ const CreatePool = async (req, res) => {
       .patch(req.body.tokenId)
       .set({
         TokenStatus: 1,
+        PoolId: parseInt(req.body.createdId),
       })
       .commit()
       .then((res) => {
