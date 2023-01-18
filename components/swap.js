@@ -11,6 +11,7 @@ import btc from "./svg/btc.svg";
 import Image from "next/image";
 import { client } from "../sanityClient/client";
 import imageUrlBuilder from "@sanity/image-url";
+import { useToast } from "@chakra-ui/toast";
 const builder = imageUrlBuilder(client);
 
 function urlFor(source) {
@@ -26,11 +27,50 @@ export const Swap = () => {
     calculateDaiToEth,
     setModal,
     tokenlist,
+    toastNotifcation,
+    setToastNotifcation,
   } = useContext(DexContext);
   const { usePoolAdd } = Web3CreatePoolAdd();
   const [switchPair, setSwitchPair] = useState(false);
   const [tokenFirst, setTokenFirst] = useState(0);
   const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
+  const toast = useToast();
+
+  useEffect(() => {
+    if (toastNotifcation) {
+      // type: "swapEth",
+      // swappedBy: account,
+      // tokenFrom: tokenPair.Token,
+      // tokenTo: "ETH",
+      // amount: amount,
+      // time: Date.now(), estimatedAmount
+      toastNotifcation.type === "swapToken" &&
+        toast({
+          title: "Swap",
+          description: `${toastNotifcation.swappedBy} swapped ${formatEther(
+            toastNotifcation.amount
+          )} \n ${toastNotifcation.tokenFrom}  To  ${formatEther(
+            toastNotifcation.estimatedAmount
+          )} ${toastNotifcation.tokenTo}.`,
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+      toastNotifcation.type === "swapEth" &&
+        toast({
+          title: "Swap",
+          description: `${toastNotifcation.swappedBy} swapped ${formatEther(
+            toastNotifcation.amount
+          )} \n ${toastNotifcation.tokenFrom}  To ${formatEther(
+            toastNotifcation.estimatedAmount
+          )} ${toastNotifcation.tokenTo}.`,
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+      setToastNotifcation(false);
+    }
+  }, [toastNotifcation]);
 
   useEffect(() => {}, [
     poolList,
@@ -139,7 +179,7 @@ export const Swap = () => {
             activePool={activePool}
             tokenFirst={tokenFirst}
             switchPair={switchPair}
-            tokenPair={tokenPair}
+            tokenPair={tokenPair[0]}
             ethPair={ethPair}
             pooladdress={pooladdress}
             isExchangeNotAccepted={isExchangeNotAccepted}

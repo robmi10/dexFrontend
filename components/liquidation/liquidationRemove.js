@@ -12,7 +12,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { VscPinned } from "react-icons/vsc";
 
 import Web3GetLiquidityAmount from "../web3/useGetLiquidityAmount";
-
+import { useToast } from "@chakra-ui/react";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
 const builder = imageUrlBuilder(client);
@@ -29,7 +29,25 @@ export const LiquidationRemove = () => {
     setActivePool,
     setModal,
     activeToken,
+    toastNotifcation,
+    setToastNotifcation,
   } = useContext(DexContext);
+  const toast = useToast();
+  useEffect(() => {
+    if (toastNotifcation) {
+      toastNotifcation.type === "remove" &&
+        toast({
+          title: "Remove Liquidity",
+          description: `${toastNotifcation.provider} removed ${formatEther(
+            toastNotifcation.amount
+          )} ${toastNotifcation.token}\n From pool ${toastNotifcation.pool}.`,
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+      setToastNotifcation(false);
+    }
+  }, [toastNotifcation]);
 
   useEffect(() => {}, [poolList, activePool]);
 

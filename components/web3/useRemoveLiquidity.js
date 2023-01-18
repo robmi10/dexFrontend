@@ -49,30 +49,11 @@ const Web3CreatePoolRemove = () => {
   useEffect(() => {
     if (removeLiquidityStatus.status === "Success") {
       const { index, address } = input.poolInfo;
+      const { tokenPair } = input;
+
+      console.log({ tokenPair });
       console.log({ removeLiquidityStatus });
       console.log({ removeLiquidityEvents });
-
-      console.log({
-        EventMintedamount:
-          removeLiquidityEvents[0]?.args?._mintedAmount.toString(),
-      });
-      console.log({
-        LPamount: removeLiquidityEvents[0]?.args?._amount.toString(),
-      });
-
-      console.log({
-        LpTokenBalance:
-          removeLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
-      });
-
-      console.log({
-        _ethReserve: removeLiquidityEvents[0]?.args?._ethBalance.toString(),
-      });
-
-      console.log({
-        _lpTokenBalance:
-          removeLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
-      });
 
       setliquidityRemoveStatus({
         liquidityid: index,
@@ -89,13 +70,15 @@ const Web3CreatePoolRemove = () => {
         poolAddress: address,
         lpaddress: removeLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
         tokenReserve: removeLiquidityEvents[0]?.args?._tokenReserve.toString(),
+        tokenPair: tokenPair[0].Token,
       });
     }
   }, [removeLiquidityStatus]);
 
   const usePoolRemove = async (data) => {
     const { index, address } = data.poolInfo;
-    const { liquidity } = data;
+    const { liquidity, tokenPair } = data;
+    console.log({ tokenPair });
     setInput(data);
     approveUser(address, liquidity);
   };

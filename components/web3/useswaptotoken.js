@@ -14,7 +14,7 @@ import { DexContext } from "../useContext/context";
 import { parseUnits } from "ethers/lib/utils";
 
 const Web3SwapToken = () => {
-  const { setSetSwapStatus, activePool } = useContext(DexContext);
+  const { activePool, setToastNotifcation } = useContext(DexContext);
   const { account } = useEthers();
   const dexAddress = DexAddress;
   const daiAddress = DaiTokenAddress;
@@ -37,7 +37,7 @@ const Web3SwapToken = () => {
   } = useContractFunction(daiAddressContract, "approve");
 
   const SwapToToken = () => {
-    const { amount, estimatedAmount, pooladdress } = input;
+    const { amount, estimatedAmount } = input;
     console.log("inside useSwapToken function");
 
     console.log({ insideamount: amount });
@@ -60,23 +60,29 @@ const Web3SwapToken = () => {
     console.log({ swapToTokenStatus: swapToTokenStatus.status });
 
     if (swapToTokenStatus.status === "Success") {
-      const amount = input;
-      console.log({ swapFromTokenEvents });
+      const { tokenPair, amount, estimatedAmount } = input;
 
-      // setSetSwapStatus({
-      //   amount: amount,
-      //   from: account,
-      // });
+      setToastNotifcation({
+        type: "swapToken",
+        swappedBy: account,
+        tokenFrom: tokenPair.Token,
+        tokenTo: "ETH",
+        amount: amount,
+        estimatedAmount: estimatedAmount,
+        time: Date.now(),
+      });
     }
   }, [swapToTokenStatus]);
 
   const useSwapToken = async (data) => {
-    const { amount, estimatedAmount, pooladdress } = data;
+    const { amount, estimatedAmount, pooladdress, tokenPair } = data;
     console.log("inside useSwapToken");
     console.log({ data });
     console.log({ amountWei: parseUnits(amount, 18).toString() });
     console.log({ amount });
     console.log({ estimatedAmount });
+
+    console.log({ tokenPair });
     setInput(data);
 
     approveUser(pooladdress, amount);

@@ -20,6 +20,7 @@ const DexProvider = ({ children }) => {
   const [modal, setModal] = useState(0);
   const [tokenlist, setTokenList] = useState(false);
   const [activeToken, setActiveToken] = useState(0);
+  const [toastNotifcation, setToastNotifcation] = useState(0);
 
   useEffect(() => {
     if (!poolList) {
@@ -97,6 +98,13 @@ const DexProvider = ({ children }) => {
           ethPair: createPoolStatus.ethPair,
         }),
       }).then(() => {
+        setToastNotifcation({
+          type: "create",
+          createdBy: createPoolStatus.createdBy,
+          pool: liquidityStatus.lpaddress,
+          tokenPair: createPoolStatus.tokenPair,
+          time: Date.now(),
+        });
         getPoolList();
         getTokenList();
       });
@@ -131,6 +139,14 @@ const DexProvider = ({ children }) => {
           tokenReserve: liquidityStatus.tokenReserve,
         }),
       }).then(() => {
+        setToastNotifcation({
+          type: "add",
+          provider: liquidityStatus.liquidityowner,
+          amount: liquidityStatus.ethamount,
+          pool: liquidityStatus.liquidityid,
+          token: liquidityStatus.tokenPair,
+          time: Date.now(),
+        });
         getPoolList();
       });
     } catch (error) {
@@ -159,6 +175,14 @@ const DexProvider = ({ children }) => {
           tokenReserve: liquidityStatus.tokenReserve,
         }),
       }).then(() => {
+        setToastNotifcation({
+          type: "remove",
+          provider: liquidityStatus.liquidityowner,
+          amount: liquidityStatus.ethamount,
+          pool: liquidityStatus.liquidityid,
+          token: liquidityStatus.tokenPair,
+          time: Date.now(),
+        });
         getPoolList();
       });
     } catch (error) {
@@ -195,6 +219,8 @@ const DexProvider = ({ children }) => {
         setTokenList,
         activeToken,
         setActiveToken,
+        setToastNotifcation,
+        toastNotifcation,
       }}
     >
       {children}

@@ -9,6 +9,7 @@ import { client } from "../../sanityClient/client";
 
 import { useToast } from "@chakra-ui/react";
 import imageUrlBuilder from "@sanity/image-url";
+import { formatEther } from "ethers/lib/utils";
 const builder = imageUrlBuilder(client);
 
 function urlFor(source) {
@@ -16,7 +17,31 @@ function urlFor(source) {
 }
 
 export const LiquidationAdd = () => {
-  const { poolList, tokenlist, setModal, activeToken } = useContext(DexContext);
+  const {
+    poolList,
+    tokenlist,
+    setModal,
+    activeToken,
+    setToastNotifcation,
+    toastNotifcation,
+  } = useContext(DexContext);
+  const toast = useToast();
+
+  useEffect(() => {
+    if (toastNotifcation) {
+      toastNotifcation.type === "add" &&
+        toast({
+          title: "Add Liquidity",
+          description: `${toastNotifcation.provider} added ${formatEther(
+            toastNotifcation.amount
+          )} ${toastNotifcation.token}\n To pool ${toastNotifcation.pool}.`,
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+      setToastNotifcation(false);
+    }
+  }, [toastNotifcation]);
 
   useEffect(() => {}, [poolList, activeToken]);
   if (!poolList) return false;

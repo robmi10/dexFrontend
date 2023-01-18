@@ -99,11 +99,13 @@ const Web3GetSwapAmount = ({
 
     !switchPair
       ? useSwapToken({
+          tokenPair: tokenPair,
           amount: parseUnits(amount, 18).toString(),
           estimatedAmount: swapToDai?.value?.toString(),
           pooladdress: pooladdress,
         })
       : useSwapEth({
+          tokenPair: tokenPair,
           amount: parseUnits(amount, 18).toString(),
           estimatedAmount: swapToEth?.value?.toString(),
           pooladdress: pooladdress,
@@ -126,6 +128,8 @@ const Web3GetSwapAmount = ({
 
     console.log({ amount: parseFloat(amount) });
     console.log({ currentToken: parseFloat(currentToken) });
+
+    console.log({ tokenPairNowCheck: tokenPair });
 
     if (parseFloat(currentToken) >= parseFloat(amount)) {
       setIsExchangeNotAccepted(false);
@@ -161,8 +165,8 @@ const Web3GetSwapAmount = ({
             }}
             className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
           >
-            <img className="w-8 h-8" src={urlFor(tokenPair[0]?.TokenImage)} />
-            <h1 className="text-2xl">{tokenPair[0]?.Token?.toUpperCase()}</h1>
+            <img className="w-8 h-8" src={urlFor(tokenPair?.TokenImage)} />
+            <h1 className="text-2xl">{tokenPair?.Token?.toUpperCase()}</h1>
             <MdOutlineKeyboardArrowDown size={30} />
           </button>
         )}

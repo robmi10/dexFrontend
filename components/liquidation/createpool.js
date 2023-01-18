@@ -7,6 +7,7 @@ import Web3CreatePool from "../web3/usecreatepool";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
+import { useToast } from "@chakra-ui/toast";
 
 const builder = imageUrlBuilder(client);
 
@@ -15,17 +16,36 @@ function urlFor(source) {
 }
 
 const Createpool = () => {
-  const { address, activePool, tokenlist, poolList, setModal, activeToken } =
-    useContext(DexContext);
+  const {
+    address,
+    activePool,
+    tokenlist,
+    poolList,
+    setModal,
+    activeToken,
+    toastNotifcation,
+    setToastNotifcation,
+  } = useContext(DexContext);
   const { account } = useEthers();
 
   const lpAddress = poolList[activePool]?.LpAddress;
   const { usePool } = Web3CreatePool();
-  const daiBalance = useTokenBalance(DaiTokenAddress, account);
-  const etherBalance = useEtherBalance(account);
   const { register, handleSubmit } = useForm();
   const liquidityBalance = useTokenBalance(lpAddress, account);
-  const [tokenFirst, setTokenFirst] = useState(0);
+  const toast = useToast();
+  useEffect(() => {
+    if (toastNotifcation) {
+      toastNotifcation.type === "create" &&
+        toast({
+          title: "Create Pool",
+          description: `${toastNotifcation.createdBy} created pool ${toastNotifcation.pool}\n With Token Pair ${toastNotifcation.tokenPair}/ETH]}.`,
+          status: "success",
+          duration: 4000,
+          isClosable: true,
+        });
+      setToastNotifcation(false);
+    }
+  }, [toastNotifcation]);
 
   useEffect(() => {}, [activeToken]);
 

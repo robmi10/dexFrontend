@@ -41,8 +41,11 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
     console.log({ liquidityAdd: parseUnits(amount, 18).toString() });
 
     console.log({ poolInfo });
+
+    console.log({ tokenPair });
+
     usePoolAdd({
-      token: tokenPair,
+      tokenPair: tokenPair,
       poolInfo: poolInfo,
       liquidity: parseUnits(amount, 18).toString(),
     });
@@ -55,7 +58,7 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
     console.log({ poolInfo });
 
     usePoolRemove({
-      token: tokenPair,
+      tokenPair: tokenPair,
       poolInfo: poolInfo,
       liquidity: parseUnits(amount, 18).toString(),
     });

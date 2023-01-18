@@ -48,39 +48,7 @@ const Web3CreatePoolAdd = () => {
 
     if (addLiquidityStatus.status === "Success") {
       const { index, address } = input.poolInfo;
-
-      console.log({ addLiquidityStatus });
-      console.log({ addLiquidityEvents });
-
-      console.log({
-        EventMintedamount:
-          addLiquidityEvents[0]?.args?._mintedAmount.toString(),
-      });
-      console.log({
-        LPamount: addLiquidityEvents[0]?.args?._amount.toString(),
-      });
-
-      console.log({
-        LpTokenBalance: addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
-      });
-
-      console.log({
-        _ethReserve: addLiquidityEvents[0]?.args?._ethBalance.toString(),
-      });
-
-      console.log({
-        _lpTokenBalance:
-          addLiquidityEvents[0]?.args?._lpTokenBalance.toString(),
-      });
-
-      console.log({
-        _lpTokenAddress:
-          addLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
-      });
-
-      console.log({
-        _tokenReserve: addLiquidityEvents[0]?.args?._tokenReserve.toString(),
-      });
+      const { tokenPair } = input;
 
       setliquidityStatus({
         liquidityid: index,
@@ -94,13 +62,16 @@ const Web3CreatePoolAdd = () => {
         poolAddress: address,
         lpaddress: addLiquidityEvents[0]?.args?._lpTokenAddress.toString(),
         tokenReserve: addLiquidityEvents[0]?.args?._tokenReserve.toString(),
+        tokenPair: tokenPair[0].Token,
       });
     }
   }, [addLiquidityStatus]);
 
   const usePoolAdd = async (data) => {
     const { address } = data.poolInfo;
-    const { liquidity } = data;
+    const { liquidity, tokenPair } = data;
+
+    console.log({ tokenPairInside: tokenPair });
     setInput(data);
     approveUser(address, liquidity);
   };

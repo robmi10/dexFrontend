@@ -9,7 +9,7 @@ import { DexContext } from "../useContext/context";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 
 const Web3SwapEth = () => {
-  const { setSetSwapStatus, activePool } = useContext(DexContext);
+  const { activePool, setToastNotifcation } = useContext(DexContext);
   const { account } = useEthers();
   const dexAddress = DexAddress;
   const daiAddress = DaiTokenAddress;
@@ -54,14 +54,17 @@ const Web3SwapEth = () => {
     console.log({ swapToEthStatus: swapToEthStatus.status });
 
     if (swapToEthStatus.status === "Success") {
-      console.log({ swapToEthEvents });
-      console.log({ swapToEthStatus });
+      const { tokenPair, amount, estimatedAmount } = input;
 
-      // setSetSwapStatus({
-      //   amount: amount,
-      //   estimatedAmount: estimatedAmount,
-      //   from: account,
-      // });
+      setToastNotifcation({
+        type: "swapEth",
+        swappedBy: account,
+        tokenFrom: "ETH",
+        tokenTo: tokenPair.Token,
+        amount: amount,
+        estimatedAmount: estimatedAmount,
+        time: Date.now(),
+      });
     }
 
     if (swapToEthStatus.status === "Error") {
@@ -75,9 +78,9 @@ const Web3SwapEth = () => {
     console.log({ data });
     console.log({ amountWei: amount });
     console.log({ estimatedAmount });
-    // console.log({
-    //   estimatedAmount: parseUnits(estimatedAmount, 18).toString(),
-    // });
+    console.log({
+      estimatedAmount: parseUnits(estimatedAmount, 18).toString(),
+    });
     setInput(data);
 
     console.log({ pooladdress });
