@@ -35,6 +35,7 @@ export const LiquidationRemove = () => {
   } = useContext(DexContext);
   const toast = useToast();
   useEffect(() => {
+    console.log({ toastNotifcationRemoveCheck: toastNotifcation });
     if (toastNotifcation) {
       toastNotifcation.type === "remove" &&
         toast({

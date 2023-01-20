@@ -54,8 +54,6 @@ const Web3GetSwapAmount = ({
     console.log({ loadingCheck: loading });
   }, [loading]);
 
-  console.log({ currentPool });
-
   const swapToEth = useCall(
     DexAddress &&
       amount && {
@@ -64,10 +62,10 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  console.log({ swapToEth: swapToEth?.value?.toString() });
+  // console.log({ swapToEth: swapToEth?.value?.toString() });
   setCalculateDaiToEth(swapToEth?.value?.toString());
 
-  console.log({ INSIDETOKENPAIR: ethPair });
+  // console.log({ INSIDETOKENPAIR: ethPair });
 
   useEffect(() => {
     handleToken();
@@ -81,7 +79,7 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  console.log({ swapToDai: swapToDai?.value?.toString() });
+  // console.log({ swapToDai: swapToDai?.value?.toString() });
 
   const swapToDaiSecond = useCall(
     DexAddress &&
@@ -91,9 +89,9 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  console.log({
-    swapToDaiSecond: swapToDaiSecond?.value?.toString(),
-  });
+  // console.log({
+  //   swapToDaiSecond: swapToDaiSecond?.value?.toString(),
+  // });
   setCalculateEthToDai(swapToDai?.value?.toString());
 
   useEffect(() => {
@@ -127,10 +125,10 @@ const Web3GetSwapAmount = ({
     if (parseFloat(currentToken) >= parseFloat(amount)) {
       setIsExchangeNotAccepted(false);
 
-      console.log("To big amount ");
+      // console.log("To big amount ");
     } else {
       setIsExchangeNotAccepted(true);
-      console.log("To small amount ");
+      // console.log("To small amount ");
     }
   };
 

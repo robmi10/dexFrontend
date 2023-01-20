@@ -55,9 +55,17 @@ const Web3CreatePoolRemove = () => {
       const { index, address } = input.poolInfo;
       const { tokenPair } = input;
 
+      console.log({ input });
       console.log({ tokenPair });
       console.log({ removeLiquidityStatus });
       console.log({ removeLiquidityEvents });
+
+      console.log({
+        removeliquidityAmount:
+          removeLiquidityEvents[0]?.args?._amount.toString(),
+      });
+
+      // console.log({removeliquidityAmount : removeLiquidityEvents[0]?.args?._amount.toString()})
 
       setliquidityRemoveStatus({
         liquidityid: index,

@@ -13,7 +13,9 @@ export const Navbar = () => {
     <div className="flex justify-center">
       <div className="bg-indigo-900 w-full flex h-20 flex-row justify-between items-center  text-white">
         <div className=" w-2/6 h-full flex items-center p-5 justify-between">
-          <RiExchangeFundsFill size={50} />
+          <Link href="/">
+            <RiExchangeFundsFill size={50} />
+          </Link>
 
           <Link
             href="/swap"

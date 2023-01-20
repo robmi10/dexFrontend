@@ -178,10 +178,10 @@ const DexProvider = ({ children }) => {
       }).then(() => {
         setToastNotifcation({
           type: "remove",
-          provider: liquidityStatus.liquidityowner,
-          amount: liquidityStatus.ethamount,
-          pool: liquidityStatus.liquidityid,
-          token: liquidityStatus.tokenPair,
+          provider: liquidityRemoveStatus.liquidityowner,
+          amount: liquidityRemoveStatus.ethamount,
+          pool: liquidityRemoveStatus.liquidityid,
+          token: liquidityRemoveStatus.tokenPair,
           time: Date.now(),
         });
         getPoolList();

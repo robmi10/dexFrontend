@@ -15,17 +15,16 @@ import { DexContext } from "../useContext/context";
 import Web3CreatePoolAdd from "./useaddliquidity";
 import Web3CreatePoolRemove from "./useremoveliquidity";
 
-const Web3GetLiquidityAmount = ({
-  _amount,
-  remove,
-  poolInfo,
-  tokenPair,
-  loading,
-}) => {
+const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
   const { usePoolAdd } = Web3CreatePoolAdd();
   const { usePoolRemove } = Web3CreatePoolRemove();
-  const { setCalculateEthToDai, setCalculateDaiToEth, activePool, setModal } =
-    useContext(DexContext);
+  const {
+    setCalculateEthToDai,
+    setCalculateDaiToEth,
+    activePool,
+    setModal,
+    loading,
+  } = useContext(DexContext);
   const { account } = useEthers();
 
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
@@ -65,6 +64,7 @@ const Web3GetLiquidityAmount = ({
     console.log({ liquidityAdd: parseUnits(amount, 18).toString() });
 
     console.log({ poolInfo });
+    console.log({ tokenPair });
 
     usePoolRemove({
       tokenPair: tokenPair,

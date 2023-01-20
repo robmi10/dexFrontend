@@ -25,11 +25,12 @@ export const LiquidationAdd = () => {
     setToastNotifcation,
     toastNotifcation,
     setLoading,
-    loading
+    loading,
   } = useContext(DexContext);
   const toast = useToast();
 
   useEffect(() => {
+    console.log({ toastNotifcationAddCheck: toastNotifcation });
     if (toastNotifcation) {
       toastNotifcation.type === "add" &&
         toast({
