@@ -76,7 +76,7 @@ export const LiquidationRemove = () => {
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
 
   return (
-    <div className="bg-slate-900 border border-gray-600 w-3/4 h-3/4 rounded-xl p-4 text-white flex flex-col items-center gap-20">
+    <div className="bg-slate-900 border border-gray-600 w-3/4 h-3/4 animate-fade rounded-xl p-4 text-white flex flex-col items-center gap-20">
       <div className="space-y-5 flex items-center flex-col h-full w-full">
         <div className=" w-full flex flex-row h-1/6 items-center justify-between p-4 text-xl border-b border-gray-700 text-gray-300">
           <Link href="/swap">

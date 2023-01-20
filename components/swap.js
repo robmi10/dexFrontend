@@ -116,7 +116,7 @@ export const Swap = () => {
   if (!tokenPair) return false;
 
   return (
-    <div className=" bg-slate-900 h-3/6 w-4/12 rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
+    <div className=" bg-slate-900 h-3/6 w-4/12 animate-fade rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
       <div className="space-y-2 flex justify-center items-center flex-col  w-full h-full p-2">
         <div className="w-full">
           <h1 className=" text-xl">Swap</h1>

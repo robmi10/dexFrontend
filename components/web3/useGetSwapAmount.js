@@ -180,7 +180,7 @@ const Web3GetSwapAmount = ({
       <button
         disabled={isExchangeNotAccepted}
         onClick={onSubmitAdd}
-        className="w-2/4 justify-center mt-2 h-16 flex items-center border-2 bg-indigo-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
+        className="w-2/4 justify-center mt-2 h-16 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
       >
         {loading ? <SquareLoader square={true} /> : <h1>SWAP</h1>}
       </button>

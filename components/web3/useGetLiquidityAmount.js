@@ -90,7 +90,7 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
         onClick={() => {
           remove ? onSubmitRemove() : onSubmitAdd();
         }}
-        className="w-full justify-center mt-2 h-2/6 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
+        className="w-full justify-center mt-2 h-2/6 flex items-center border-2 bg-slate-900 hover:cursor-pointer hover:duration-300 hover:text-indigo-900 hover:bg-white rounded-full"
       >
         {remove && !loading && <h1>Remove Liquidation</h1>}
         {!remove && !loading && <h1>Add Liquidation</h1>}

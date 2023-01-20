@@ -76,13 +76,13 @@ const Createpool = () => {
       <div className="w-2/4 gap-1 h-2/3 text-white flex flex-col items-center  ">
         <div className="w-full h-1/5  justify-between flex items-center p-4">
           <h1 className=" text-3xl">Pools</h1>
-          <div className=" flex flex-row items-center rounded-full border border-gray-700 bg-slate-900 p-2 hover:cursor-pointer">
+          <div className=" flex flex-row items-center rounded-full border  border-gray-700 bg-slate-900 p-2 hover:cursor-pointer">
             <h1 className="text-xs ">More</h1>
             <MdOutlineKeyboardArrowDown size={20} />
           </div>
         </div>
 
-        <div className=" bg-slate-900 w-full h-2/3 rounded-3xl border border-gray-600 justify-center items-center flex">
+        <div className=" bg-slate-900 w-full h-2/3 rounded-3xl border animate-fade border-gray-600 justify-center items-center flex">
           <div className="space-y-5 flex items-center flex-col">
             <label>TOKEN</label>
             <div className="h-24 flex w-80 relative">
@@ -120,7 +120,7 @@ const Createpool = () => {
               onClick={() => {
                 createPool(tokenPair[0]);
               }}
-              className="w-full justify-center mt-2 h-20 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
+              className="w-full justify-center mt-2 h-20 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer hover:duration-300  rounded-full"
             >
               {loading ? <SquareLoader square={true} /> : <h1>Create Pool</h1>}
             </button>
