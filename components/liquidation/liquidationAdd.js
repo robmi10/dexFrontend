@@ -24,6 +24,8 @@ export const LiquidationAdd = () => {
     activeToken,
     setToastNotifcation,
     toastNotifcation,
+    setLoading,
+    loading
   } = useContext(DexContext);
   const toast = useToast();
 
@@ -40,6 +42,7 @@ export const LiquidationAdd = () => {
           isClosable: true,
         });
       setToastNotifcation(false);
+      setLoading(false);
     }
   }, [toastNotifcation]);
 
@@ -134,6 +137,7 @@ export const LiquidationAdd = () => {
             <Web3GetLiquidityAmount
               tokenPair={tokenPair}
               poolInfo={filterPoolToken[0]}
+              loading={loading}
             />
           </div>
         </div>

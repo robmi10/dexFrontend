@@ -8,7 +8,7 @@ import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 
 const Web3CreatePoolRemove = () => {
-  const { liquidityRemoveStatus, setliquidityRemoveStatus } =
+  const { liquidityRemoveStatus, setliquidityRemoveStatus, setLoading } =
     useContext(DexContext);
   const { account } = useEthers();
   const daiAddress = DaiTokenAddress;
@@ -43,6 +43,10 @@ const Web3CreatePoolRemove = () => {
   useEffect(() => {
     if (daiStatus.status === "Success") {
       removeLiquidityFunc();
+    }
+
+    if (daiStatus.status === "Mining") {
+      setLoading(true);
     }
   }, [daiStatus]);
 

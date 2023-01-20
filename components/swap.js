@@ -5,13 +5,11 @@ import { DexContext } from "./useContext/context";
 import { BsArrowDownUp } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { VscPinned } from "react-icons/vsc";
-
 import Web3GetSwapAmount from "./web3/useGetSwapAmount";
-import btc from "./svg/btc.svg";
-import Image from "next/image";
 import { client } from "../sanityClient/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { useToast } from "@chakra-ui/toast";
+import SquareLoader, { Square } from "./animation/square/square";
 const builder = imageUrlBuilder(client);
 
 function urlFor(source) {
@@ -29,6 +27,8 @@ export const Swap = () => {
     tokenlist,
     toastNotifcation,
     setToastNotifcation,
+    setLoading,
+    loading,
   } = useContext(DexContext);
   const { usePoolAdd } = Web3CreatePoolAdd();
   const [switchPair, setSwitchPair] = useState(false);
@@ -38,12 +38,6 @@ export const Swap = () => {
 
   useEffect(() => {
     if (toastNotifcation) {
-      // type: "swapEth",
-      // swappedBy: account,
-      // tokenFrom: tokenPair.Token,
-      // tokenTo: "ETH",
-      // amount: amount,
-      // time: Date.now(), estimatedAmount
       toastNotifcation.type === "swapToken" &&
         toast({
           title: "Swap",
@@ -69,15 +63,19 @@ export const Swap = () => {
           isClosable: true,
         });
       setToastNotifcation(false);
+      setLoading(false);
     }
   }, [toastNotifcation]);
 
-  useEffect(() => {}, [
+  useEffect(() => {
+    console.log({ loadinginSwap: loading });
+  }, [
     poolList,
     activePool,
     calculateEthToDai,
     calculateDaiToEth,
     activePool,
+    loading,
   ]);
 
   if (!poolList) return false;
@@ -183,6 +181,7 @@ export const Swap = () => {
             ethPair={ethPair}
             pooladdress={pooladdress}
             isExchangeNotAccepted={isExchangeNotAccepted}
+            loading={loading}
           />
         }
       </div>

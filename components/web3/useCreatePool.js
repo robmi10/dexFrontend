@@ -7,7 +7,7 @@ import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 
 const Web3CreatePool = () => {
-  const { setCreatePoolStatus } = useContext(DexContext);
+  const { setCreatePoolStatus, setLoading } = useContext(DexContext);
   const { account } = useEthers();
   const dexAddress = DexAddress;
   const daiAddress = DaiTokenAddress;
@@ -22,6 +22,10 @@ const Web3CreatePool = () => {
 
   useEffect(() => {
     console.log({ createStatus: createStatus.status });
+
+    if (createStatus.status === "Mining") {
+      setLoading(true);
+    }
 
     if (createStatus.status === "Success") {
       const { Token, _id } = input;

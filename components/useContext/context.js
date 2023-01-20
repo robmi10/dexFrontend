@@ -21,6 +21,7 @@ const DexProvider = ({ children }) => {
   const [tokenlist, setTokenList] = useState(false);
   const [activeToken, setActiveToken] = useState(0);
   const [toastNotifcation, setToastNotifcation] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!poolList) {
@@ -221,6 +222,8 @@ const DexProvider = ({ children }) => {
         setActiveToken,
         setToastNotifcation,
         toastNotifcation,
+        loading,
+        setLoading,
       }}
     >
       {children}

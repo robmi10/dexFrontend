@@ -20,6 +20,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
 import { VscPinned } from "react-icons/vsc";
+import SquareLoader from "../animation/square/square";
 
 const builder = imageUrlBuilder(client);
 
@@ -34,6 +35,7 @@ const Web3GetSwapAmount = ({
   pooladdress,
   tokenPair,
   ethPair,
+  loading,
 }) => {
   const { setCalculateEthToDai, setCalculateDaiToEth, setModal } =
     useContext(DexContext);
@@ -48,6 +50,12 @@ const Web3GetSwapAmount = ({
   const etherBalance = useEtherBalance(pooladdress);
   const daiBalance = useTokenBalance(DaiTokenAddress, pooladdress);
 
+  useEffect(() => {
+    console.log({ loadingCheck: loading });
+  }, [loading]);
+
+  console.log({ currentPool });
+
   const swapToEth = useCall(
     DexAddress &&
       amount && {
@@ -56,10 +64,14 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  // console.log({ swapToEth: swapToEth?.value?.toString() });
+  console.log({ swapToEth: swapToEth?.value?.toString() });
   setCalculateDaiToEth(swapToEth?.value?.toString());
 
   console.log({ INSIDETOKENPAIR: ethPair });
+
+  useEffect(() => {
+    handleToken();
+  }, [switchPair]);
 
   const swapToDai = useCall(
     DexAddress &&
@@ -69,7 +81,7 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  // console.log({ swapToDai: swapToDai?.value?.toString() });
+  console.log({ swapToDai: swapToDai?.value?.toString() });
 
   const swapToDaiSecond = useCall(
     DexAddress &&
@@ -79,9 +91,9 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  // console.log({
-  //   swapToDaiSecond: swapToDaiSecond?.value?.toString(),
-  // });
+  console.log({
+    swapToDaiSecond: swapToDaiSecond?.value?.toString(),
+  });
   setCalculateEthToDai(swapToDai?.value?.toString());
 
   useEffect(() => {
@@ -89,14 +101,6 @@ const Web3GetSwapAmount = ({
   }, [swapToDai, swapToEth, amount]);
 
   const onSubmitAdd = () => {
-    console.log({ activePool });
-    console.log({ amount });
-
-    console.log({ switchPair });
-
-    console.log("swapToDai ->", swapToDai?.value?.toString());
-    console.log("swapToEth ->", swapToEth?.value?.toString());
-
     !switchPair
       ? useSwapToken({
           tokenPair: tokenPair,
@@ -112,24 +116,13 @@ const Web3GetSwapAmount = ({
         });
   };
 
-  const handleToken = (_amount) => {
+  const handleToken = () => {
     let currentToken =
       switchPair && swapToEth?.value?.toString()
         ? formatEther(swapToEth?.value?.toString())
         : !switchPair && swapToDai?.value?.toString()
         ? formatEther(swapToDai?.value?.toString())
         : 0;
-
-    console.log({ swapToEth: swapToEth?.value?.toString() });
-    console.log({ swapToDai: swapToDai?.value?.toString() });
-    console.log({
-      swapToDaiSecond: swapToDaiSecond?.value?.toString(),
-    });
-
-    console.log({ amount: parseFloat(amount) });
-    console.log({ currentToken: parseFloat(currentToken) });
-
-    console.log({ tokenPairNowCheck: tokenPair });
 
     if (parseFloat(currentToken) >= parseFloat(amount)) {
       setIsExchangeNotAccepted(false);
@@ -147,7 +140,6 @@ const Web3GetSwapAmount = ({
         <input
           onChange={() => {
             setTokenSecond(e.target.value);
-            handleToken(e.target.value);
           }}
           value={
             switchPair && swapToEth?.value?.toString()
@@ -192,7 +184,7 @@ const Web3GetSwapAmount = ({
         onClick={onSubmitAdd}
         className="w-2/4 justify-center mt-2 h-16 flex items-center border-2 bg-indigo-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
       >
-        SWAP
+        {loading ? <SquareLoader square={true} /> : <h1>SWAP</h1>}
       </button>
     </div>
   );

@@ -31,6 +31,7 @@ export const LiquidationRemove = () => {
     activeToken,
     toastNotifcation,
     setToastNotifcation,
+    setLoading,
   } = useContext(DexContext);
   const toast = useToast();
   useEffect(() => {
@@ -46,6 +47,7 @@ export const LiquidationRemove = () => {
           isClosable: true,
         });
       setToastNotifcation(false);
+      setLoading(false);
     }
   }, [toastNotifcation]);
 

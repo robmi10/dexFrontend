@@ -9,7 +9,8 @@ import { DexContext } from "../useContext/context";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 
 const Web3SwapEth = () => {
-  const { activePool, setToastNotifcation } = useContext(DexContext);
+  const { activePool, setToastNotifcation, setLoading } =
+    useContext(DexContext);
   const { account } = useEthers();
   const dexAddress = DexAddress;
   const daiAddress = DaiTokenAddress;
@@ -47,6 +48,10 @@ const Web3SwapEth = () => {
   useEffect(() => {
     if (daiStatus.status === "Success") {
       SwapToEth();
+    }
+
+    if (daiStatus.status === "Mining") {
+      setLoading(true);
     }
   }, [daiStatus]);
 

@@ -6,15 +6,22 @@ import {
 } from "@usedapp/core";
 import { Contract, ethers } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { DexAddress } from "../../address";
 import dexInfo from "../../constants/Dex.json";
+import SquareLoader from "../animation/square/square";
 import { DexContext } from "../useContext/context";
 
 import Web3CreatePoolAdd from "./useaddliquidity";
 import Web3CreatePoolRemove from "./useremoveliquidity";
 
-const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
+const Web3GetLiquidityAmount = ({
+  _amount,
+  remove,
+  poolInfo,
+  tokenPair,
+  loading,
+}) => {
   const { usePoolAdd } = Web3CreatePoolAdd();
   const { usePoolRemove } = Web3CreatePoolRemove();
   const { setCalculateEthToDai, setCalculateDaiToEth, activePool, setModal } =
@@ -25,6 +32,8 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
   const dexAddressContract = new Contract(DexAddress, dexInterface);
   const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
   const [amount, setAmount] = useState(0);
+
+  useEffect(() => {}, [loading]);
 
   const getLiquidityAmount = useCall(
     DexAddress &&
@@ -83,7 +92,9 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
         }}
         className="w-full justify-center mt-2 h-2/6 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
       >
-        {remove ? <h1>Remove Liquidation</h1> : <h1>Add Liquidation </h1>}
+        {remove && !loading && <h1>Remove Liquidation</h1>}
+        {!remove && !loading && <h1>Add Liquidation</h1>}
+        {loading && <SquareLoader />}
       </button>
       {isExchangeNotAccepted && (
         <p className="text-red-500 text-xs ">Error To Not Accepted Liquidity</p>

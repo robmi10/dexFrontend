@@ -8,6 +8,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
 import { useToast } from "@chakra-ui/toast";
+import SquareLoader from "../animation/square/square";
 
 const builder = imageUrlBuilder(client);
 
@@ -25,6 +26,8 @@ const Createpool = () => {
     activeToken,
     toastNotifcation,
     setToastNotifcation,
+    setLoading,
+    loading,
   } = useContext(DexContext);
   const { account } = useEthers();
 
@@ -44,10 +47,11 @@ const Createpool = () => {
           isClosable: true,
         });
       setToastNotifcation(false);
+      setLoading(false);
     }
   }, [toastNotifcation]);
 
-  useEffect(() => {}, [activeToken]);
+  useEffect(() => {}, [activeToken, loading]);
 
   const createPool = (value) => {
     console.log("inside create pool");
@@ -118,7 +122,7 @@ const Createpool = () => {
               }}
               className="w-full justify-center mt-2 h-20 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
             >
-              Create Pool
+              {loading ? <SquareLoader square={true} /> : <h1>Create Pool</h1>}
             </button>
           </div>
         </div>

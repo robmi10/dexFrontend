@@ -8,7 +8,8 @@ import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 
 const Web3CreatePoolAdd = () => {
-  const { liquidityStatus, setliquidityStatus } = useContext(DexContext);
+  const { liquidityStatus, setliquidityStatus, setLoading } =
+    useContext(DexContext);
   const daiAddress = DaiTokenAddress;
   const dexAddress = DexAddress;
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
@@ -40,6 +41,10 @@ const Web3CreatePoolAdd = () => {
   useEffect(() => {
     if (daiStatus.status === "Success") {
       addLiquidityFunc();
+    }
+
+    if (daiStatus.status === "Mining") {
+      setLoading(true);
     }
   }, [daiStatus]);
 
