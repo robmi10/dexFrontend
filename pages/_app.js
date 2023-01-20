@@ -5,6 +5,7 @@ import DexProvider from "../components/useContext/context";
 import { getDefaultProvider } from "ethers";
 import { Navbar } from "../components/navbar";
 import { ChakraProvider } from "@chakra-ui/react";
+import Footer from "../components/footer";
 
 const config = {
   // autoConnect: true,
