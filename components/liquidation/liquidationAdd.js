@@ -72,7 +72,7 @@ export const LiquidationAdd = () => {
 
   console.log({ ChecktokenPair: tokenPair });
   return (
-    <div className="bg-slate-900 border border-gray-600 w-3/4 h-3/4 animate-fade rounded-xl p-4 text-white flex flex-col items-center gap-20">
+    <div className="bg-slate-900 border border-gray-600 w-11/12 md:w-3/4 md:h-3/4 animate-fade rounded-xl p-4 text-white flex flex-col items-center gap-20">
       <div className="space-y-5 flex items-center flex-col h-full w-full">
         <div className=" w-full flex flex-row h-1/6 items-center justify-between p-4 text-xl border-b border-gray-700 text-gray-300">
           <Link href="/swap">
@@ -84,9 +84,9 @@ export const LiquidationAdd = () => {
           </h1>
         </div>
         <div className=" w-full  flex flex-col h-full  items-center justify-between p-4 text-xl  border-gray-700 text-gray-300">
-          <div className="w-full  h-2/4 flex flex-col items-center text-xl space-y-4">
-            <h1 className="w-2/4">Select Pair</h1>
-            <div className="mt-4 flex flex-row gap-2 w-2/4">
+          <div className="w-full h-2/4 flex flex-col items-center text-xl space-y-4">
+            <h1 className="md:w-2/4">Select Pair</h1>
+            <div className="mt-4 flex flex-row gap-2 md:w-2/4">
               <button className="h-16 w-full disabled bg-slate-800 text-xl text-white rounded-full  flex flex-row justify-between p-4 items-center gap-2">
                 <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
 
@@ -122,7 +122,7 @@ export const LiquidationAdd = () => {
                 </button>
               )}
             </div>
-            <div className=" w-2/4 rounded-lg h-full bg-slate-900 border border-gray-700 p-4 text-lg flex flex-row justify-between">
+            <div className=" md:w-2/4 rounded-lg h-full bg-slate-900 border border-gray-700 p-4 text-lg flex flex-row justify-between">
               <div className=" flex flex-col gap-2">
                 <h1 className=" font-bold text-white">Free Tier</h1>
                 <h1>1% fee earning.</h1>

@@ -79,7 +79,6 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  // console.log({ swapToDai: swapToDai?.value?.toString() });
 
   const swapToDaiSecond = useCall(
     DexAddress &&
@@ -89,9 +88,7 @@ const Web3GetSwapAmount = ({
         args: [currentPool, parseUnits(amount, 18)],
       }
   );
-  // console.log({
-  //   swapToDaiSecond: swapToDaiSecond?.value?.toString(),
-  // });
+
   setCalculateEthToDai(swapToDai?.value?.toString());
 
   useEffect(() => {
@@ -124,11 +121,8 @@ const Web3GetSwapAmount = ({
 
     if (parseFloat(currentToken) >= parseFloat(amount)) {
       setIsExchangeNotAccepted(false);
-
-      // console.log("To big amount ");
     } else {
       setIsExchangeNotAccepted(true);
-      // console.log("To small amount ");
     }
   };
 
@@ -153,7 +147,7 @@ const Web3GetSwapAmount = ({
             onClick={() => {
               setModal("swap");
             }}
-            className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
+            className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-1 md:gap-3"
           >
             <img className="w-8 h-8" src={urlFor(tokenPair?.TokenImage)} />
             <h1 className="text-2xl">{tokenPair?.Token?.toUpperCase()}</h1>
@@ -162,7 +156,7 @@ const Web3GetSwapAmount = ({
         )}
 
         {!switchPair && (
-          <button className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3">
+          <button className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-1 md:gap-3">
             <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
             <h1 className="text-2xl">{ethPair[0]?.Token?.toUpperCase()}</h1>
             <VscPinned size={25} />
@@ -180,7 +174,7 @@ const Web3GetSwapAmount = ({
       <button
         disabled={isExchangeNotAccepted}
         onClick={onSubmitAdd}
-        className="w-2/4 justify-center mt-2 h-16 flex items-center border-2 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
+        className="w-2/4 justify-center mt-2 h-16 flex items-center border-2 hover:transition-all hover:duration-300 bg-slate-900 hover:text-indigo-900 hover:bg-white hover:cursor-pointer rounded-full"
       >
         {loading ? <SquareLoader square={true} /> : <h1>SWAP</h1>}
       </button>

@@ -44,7 +44,7 @@ const ModalSwap = () => {
   return (
     <div>
       <div className="fixed h-full w-full bg-black bg-opacity-75 top-0 left-0 flex justify-center items-center z-10">
-        <div className="bg-slate-900 w-1/4 h-3/4 rounded-md border border-gray-500 flex flex-col gap-12">
+        <div className="bg-slate-900 w-11/12 md:w-1/4 h-3/4 rounded-md border border-gray-500 flex flex-col gap-12">
           <div className="h-1/3 space-y-3 p-4">
             <div className=" w-full h-1/4  flex flex-row text-gray-200 justify-between items-center">
               <h1>Select Token Swap </h1>

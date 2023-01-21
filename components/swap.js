@@ -116,7 +116,7 @@ export const Swap = () => {
   if (!tokenPair) return false;
 
   return (
-    <div className=" bg-slate-900 h-3/6 w-4/12 animate-fade rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
+    <div className=" bg-slate-900 w-11/12 h-3/6 md:w-4/12 animate-fade rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
       <div className="space-y-2 flex justify-center items-center flex-col  w-full h-full p-2">
         <div className="w-full">
           <h1 className=" text-xl">Swap</h1>
@@ -137,7 +137,7 @@ export const Swap = () => {
               onClick={() => {
                 setModal("swap");
               }}
-              className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
+              className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-1 md:gap-3"
             >
               <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
               <h1 className="  text-2xl">{ethPair[0]?.Token?.toUpperCase()}</h1>
@@ -150,7 +150,7 @@ export const Swap = () => {
               onClick={() => {
                 setModal("swap");
               }}
-              className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-3"
+              className="absolute right-2 bg-slate-900 md:text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-1 md:gap-3"
             >
               <img className="w-8 h-8" src={urlFor(tokenPair[0]?.TokenImage)} />
               <h1 className="  text-2xl">
@@ -161,16 +161,14 @@ export const Swap = () => {
           )}
         </div>
 
-        <div className="absolute z-10 h-12 w-12 rounded-xl bg-gray-800 border-4 border-slate-900 flex justify-center top-44">
-          <button
-            className="hover:text-gray-300"
-            onClick={() => {
-              setSwitchPair(!switchPair);
-            }}
-          >
-            <BsArrowDownUp size={25} />
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            setSwitchPair(!switchPair);
+          }}
+          className="absolute z-10 h-12 w-12 items-center rounded-xl bg-gray-800 border-4 border-slate-900 flex justify-center top-44"
+        >
+          <BsArrowDownUp size={25} className="hover:text-gray-300" />
+        </button>
 
         {
           <Web3GetSwapAmount

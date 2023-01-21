@@ -74,12 +74,12 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
   };
 
   return (
-    <div className="w-full flex h-full flex-col gap-2 justify-center items-center">
-      <label className="w-full">Deposit Amount</label>
-      <div className="h-24 flex w-full relative">
+    <div className="w-full mt-4 md:mt-0 flex h-full flex-col md:gap-2 justify-center items-center">
+      <label className="mb-2 md:mb-0 w-full">Deposit Amount</label>
+      <div className="h-24 flex w-full relative justify-center items-center">
         <input
           placeholder="ETH"
-          className="bg-slate-800 w-full items-center p-4 text-white rounded-2xl text-4xl"
+          className="bg-slate-800 w-48 md:w-full h-16 items-center p-4 text-white rounded-2xl text-4xl"
           onChange={(e) => {
             setAmount(e.target.value);
           }}
@@ -90,7 +90,7 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
         onClick={() => {
           remove ? onSubmitRemove() : onSubmitAdd();
         }}
-        className="w-full justify-center mt-2 h-2/6 flex items-center border-2 bg-slate-900 hover:cursor-pointer hover:duration-300 hover:text-indigo-900 hover:bg-white rounded-full"
+        className="md:w-full justify-center md:mt-2 h-16 md:h-2/6 w-48 p-1 flex items-center border-2 bg-slate-900 hover:cursor-pointer hover:duration-300 hover:text-indigo-900 hover:bg-white rounded-full"
       >
         {remove && !loading && <h1>Remove Liquidation</h1>}
         {!remove && !loading && <h1>Add Liquidation</h1>}

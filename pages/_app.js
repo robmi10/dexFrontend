@@ -6,6 +6,7 @@ import { getDefaultProvider } from "ethers";
 import { Navbar } from "../components/navbar";
 import { ChakraProvider } from "@chakra-ui/react";
 import Footer from "../components/footer";
+import Layout from "../components/layout";
 
 const config = {
   // autoConnect: true,
@@ -28,10 +29,12 @@ export default function App({ Component, pageProps }) {
             },
           }}
         >
-          <Navbar />
-          <div className="h-screen w-screen bg-indigo-900">
-            <Component {...pageProps} />
-          </div>
+          <Layout>
+            <Navbar />
+            <div className="h-screen w-screen bg-gradient-to-r from-slate-900  to-slate-700">
+              <Component {...pageProps} />
+            </div>
+          </Layout>
         </DAppProvider>
       </DexProvider>
     </ChakraProvider>
