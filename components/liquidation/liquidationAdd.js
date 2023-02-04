@@ -58,7 +58,6 @@ export const LiquidationAdd = () => {
   const tokenPair = tokenlist.filter(
     (option) => option.TokenId === activeToken
   );
-  console.log({ tokenPair });
 
   if (!tokenPair) return false;
 
@@ -66,11 +65,17 @@ export const LiquidationAdd = () => {
     (option, index) => option.index === tokenPair[0].PoolId
   );
 
+  console.log({ filterPoolList });
+  console.log({ tokenPair });
+  console.log({ poolList });
+
   console.log({ filterPoolToken });
 
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
 
   console.log({ ChecktokenPair: tokenPair });
+
+  console.log("tokenPair[0]?.TokenStatus", tokenPair[0]?.TokenStatus);
   return (
     <div className="bg-slate-900 border border-gray-600 w-11/12 md:w-3/4 md:h-3/4 animate-fade rounded-xl p-4 text-white flex flex-col items-center gap-20">
       <div className="space-y-5 flex items-center flex-col h-full w-full">
@@ -105,7 +110,7 @@ export const LiquidationAdd = () => {
                 </button>
               )}
 
-              {tokenPair[0]?.TokenStatus && (
+              {tokenPair[0]?.TokenStatus !== 0 && (
                 <button
                   onClick={() => {
                     setModal("swap");

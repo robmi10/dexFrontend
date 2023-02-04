@@ -3,9 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Footer from "./footer";
 import { DexContext } from "./useContext/context";
 import { AiOutlineClose } from "react-icons/ai";
+import { useEthers } from "@usedapp/core";
 
 const Layout = ({ children }) => {
   const { isWeb3Enabled, setModal, modal } = useContext(DexContext);
+  const { activateBrowserWallet, deactivate, account, error } = useEthers();
 
   useEffect(() => {}, [modal]);
 
@@ -58,6 +60,22 @@ const Layout = ({ children }) => {
               >
                 Remove
               </Link>
+
+              <div className="flex w-1/4  items-center p-5 justify-center">
+                {!account && (
+                  <button onClick={activateBrowserWallet}>
+                    CONNECT WALLET
+                  </button>
+                )}
+                {account && (
+                  <button
+                    className="h-10 flex items-center p-4 border-2 border-white-500 hover:bg-white hover:text-indigo-900 rounded-full"
+                    onClick={deactivate}
+                  >
+                    DISCONNECT
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>

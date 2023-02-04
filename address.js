@@ -1,6 +1,6 @@
-export const DaiTokenAddress = "0xfB52a341B74A8C99F8cC0bcddCA85d83fd5ff497";
+export const DaiTokenAddress = "0x7323696F2e5911b99a7506Ec550ca4FAeCceecAc";
 
 export const LiquidityTokenAddress =
-  "0x78Eb3c6fD0c12Eee9DF40240C33e5e9B83405920";
+  "0x5D5a9fa69efbdd8cc10CD80fA9fc46e39A709A75";
 
-export const DexAddress = "0xfD664B51c03DCc8B88574C79C6cA9Bd470f25E2c";
+export const DexAddress = "0x293A3dB0eE49F731987d22849DEDadbcB1803be0";

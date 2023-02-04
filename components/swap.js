@@ -68,15 +68,8 @@ export const Swap = () => {
   }, [toastNotifcation]);
 
   useEffect(() => {
-    console.log({ loadinginSwap: loading });
-  }, [
-    poolList,
-    activePool,
-    calculateEthToDai,
-    calculateDaiToEth,
-    activePool,
-    loading,
-  ]);
+    // console.log({ loadinginSwap: loading });
+  }, [poolList, activePool, loading]);
 
   if (!poolList) return false;
 
@@ -85,6 +78,8 @@ export const Swap = () => {
     address: option.PoolAddress,
   }));
 
+  console.log({ filterPoolList });
+
   const isPoolist = filterPoolList.length > 0;
 
   const updateValue = ({ target }) => {
@@ -92,28 +87,37 @@ export const Swap = () => {
   };
 
   if (!activePool && activePool !== 0) return false;
-  const poolListTokenValue = poolList.filter(
-    (option) => option.PoolId === activePool
-  );
 
-  if (!poolListTokenValue) return false;
+  console.log({ activePool });
 
   if (!tokenlist) return false;
 
   const tokenPair = tokenlist.filter((option) => option.TokenId === activePool);
 
-  console.log({ tokenPair });
-  console.log({ tokenPairToken: tokenPair[0]?.Token });
-  // const ethPair = poolListTokenValue[0]?.TokenPair[1];
-  const pooladdress = poolListTokenValue[0]?.PoolAddress;
+  const poolListTokenValue = poolList.filter(
+    (option) => option.PoolId === tokenPair[0].PoolId
+  );
+
+  if (!poolListTokenValue) return false;
+
+  // const tokenPair = tokenlist[4];
 
   console.log({ tokenlist });
 
+  console.log({ poolListTokenValue });
+
+  const pooladdress = poolListTokenValue[0]?.PoolAddress;
+
+  console.log({ checkpooladdress: pooladdress });
+
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
 
-  console.log({ ethPair });
+  console.log({ tokenPairCheck: tokenPair[0] });
+  // console.log({ tokenPairId: tokenPair[0].TokenId });
 
   if (!tokenPair) return false;
+
+  console.log({ tokenFirst });
 
   return (
     <div className=" bg-slate-900 w-11/12 h-3/6 md:w-4/12 animate-fade rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">

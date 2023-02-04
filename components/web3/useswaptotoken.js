@@ -38,15 +38,15 @@ const Web3SwapToken = () => {
   } = useContractFunction(daiAddressContract, "approve");
 
   const SwapToToken = () => {
-    const { amount, estimatedAmount } = input;
+    const { amount, estimatedAmount, tokenPair } = input;
+
     console.log("inside useSwapToken function");
 
-    console.log({ insideamount: amount });
     console.log({ insideestimatedAmount: estimatedAmount });
 
     console.log({ insideactivePool: activePool });
 
-    dexSwapToToken(activePool, amount, estimatedAmount, {
+    dexSwapToToken(tokenPair.PoolId, estimatedAmount, {
       value: amount,
     });
   };
@@ -82,6 +82,9 @@ const Web3SwapToken = () => {
   const useSwapToken = async (data) => {
     const { amount, estimatedAmount, pooladdress, tokenPair } = data;
     console.log("inside useSwapToken");
+
+    console.log({ activePool });
+    console.log({ PoolId: tokenPair.PoolId });
     console.log({ data });
     console.log({ amountWei: parseUnits(amount, 18).toString() });
     console.log({ amount });
@@ -90,7 +93,7 @@ const Web3SwapToken = () => {
     console.log({ tokenPair });
     setInput(data);
 
-    approveUser(pooladdress, amount);
+    approveUser(pooladdress, estimatedAmount);
   };
   return { useSwapToken };
 };

@@ -8,7 +8,7 @@ import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 
 const Web3CreatePoolAdd = () => {
-  const { liquidityStatus, setliquidityStatus, setLoading } =
+  const { liquidityStatus, setliquidityStatus, setLoading, poolList } =
     useContext(DexContext);
   const daiAddress = DaiTokenAddress;
   const dexAddress = DexAddress;
@@ -55,6 +55,8 @@ const Web3CreatePoolAdd = () => {
       const { index, address } = input.poolInfo;
       const { tokenPair } = input;
 
+      console.log({ addLiquidityEvents });
+
       setliquidityStatus({
         liquidityid: index,
         liquidityowner: addLiquidityEvents[0]?.args?._from,
@@ -76,7 +78,10 @@ const Web3CreatePoolAdd = () => {
     const { address } = data.poolInfo;
     const { liquidity, tokenPair } = data;
 
+    console.log({ data });
+
     console.log({ tokenPairInside: tokenPair });
+    console.log({ data });
     setInput(data);
     approveUser(address, liquidity);
   };

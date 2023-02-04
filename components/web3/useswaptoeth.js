@@ -36,11 +36,10 @@ const Web3SwapEth = () => {
     const { amount, estimatedAmount, pooladdress } = input;
     console.log("inside useSwapToken function");
 
-    console.log({ insideamount: amount });
     console.log({ insideestimatedAmount: estimatedAmount });
     console.log({ insideactivePool: activePool });
 
-    dexSwapToEth(activePool, amount, estimatedAmount, account, {
+    dexSwapToEth(activePool, estimatedAmount, account, {
       value: amount,
     });
   };
@@ -79,7 +78,7 @@ const Web3SwapEth = () => {
 
   const useSwapEth = async (data) => {
     const { amount, estimatedAmount, pooladdress } = data;
-    console.log("inside useSwapEth");
+    console.log("inside useSwapEth", data);
     console.log({ data });
     console.log({ amountWei: amount });
     console.log({ estimatedAmount });

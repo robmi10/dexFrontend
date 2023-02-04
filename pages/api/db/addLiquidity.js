@@ -12,7 +12,7 @@ const AddLiquidity = async (req, res) => {
       LiquidityOwner: req.body.liquidityowner,
       StakeAmount: req.body.tokenamount,
       PoolAddress: req.body.token,
-      TokenReserve: req.body.tokenReserve,
+      // TokenReserve: req.body.tokenReserve,
     };
 
     const poolTableId =
@@ -23,10 +23,10 @@ const AddLiquidity = async (req, res) => {
     await client
       .patch(poolTableId)
       .set({
-        TokenAmount: req.body.lptotalvalue,
+        TokenAmount: req.body.tokenReserve,
         EthAmount: req.body.ethtotalvalue,
         LpAddress: req.body.lpaddress,
-        TokenReserve: req.body.tokenReserve,
+        // TokenReserve: req.body.tokenReserve,
       })
       .commit()
       .then((res) => {

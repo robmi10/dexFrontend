@@ -47,55 +47,78 @@ const Web3GetSwapAmount = ({
   const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
   const { useSwapToken } = Web3SwapToken();
   const { useSwapEth } = Web3SwapEth();
-  const etherBalance = useEtherBalance(pooladdress);
-  const daiBalance = useTokenBalance(DaiTokenAddress, pooladdress);
+  const etherBalancePool = useEtherBalance(
+    "0x2fAaB5074F8C2811F7e61202f1f47A2DA1A7899e"
+  );
+  const daiBalancePool = useTokenBalance(
+    DaiTokenAddress,
+    "0x2fAaB5074F8C2811F7e61202f1f47A2DA1A7899e"
+  );
 
-  useEffect(() => {
-    console.log({ loadingCheck: loading });
-  }, [loading]);
+  const etherBalanceUser = useEtherBalance(account);
+  const daiBalanceUser = useTokenBalance(DaiTokenAddress, account);
+
+  console.log({ etherBalancePool: etherBalancePool?.toString() });
+  console.log({ daiBalancePool: daiBalancePool?.toString() });
+
+  console.log({ etherBalanceUser: etherBalanceUser?.toString() });
+  console.log({ daiBalanceUser: daiBalanceUser?.toString() });
+
+  useEffect(() => {}, [loading]);
+
+  if (amount) {
+    console.log({ amountParse: parseUnits(amount, 18).toString() });
+  }
 
   const swapToEth = useCall(
     DexAddress &&
       amount && {
         contract: dexAddressContract,
-        method: "_getSwapAmount",
-        args: [currentPool, parseUnits(amount, 18)],
+        method: "_getSwapEthToToken",
+        args: [
+          tokenPair.PoolId,
+          parseUnits(amount, 18).toString(),
+          // { value: parseUnits(amount, 18).toString() },
+        ],
       }
   );
-  // console.log({ swapToEth: swapToEth?.value?.toString() });
-  setCalculateDaiToEth(swapToEth?.value?.toString());
 
-  // console.log({ INSIDETOKENPAIR: ethPair });
+  console.log({ poolID: tokenPair.PoolId });
+
+  setCalculateDaiToEth(swapToEth?.value?.toString());
 
   useEffect(() => {
     handleToken();
-  }, [switchPair]);
+  }, [switchPair, activePool]);
 
   const swapToDai = useCall(
     DexAddress &&
       amount && {
         contract: dexAddressContract,
-        method: "_getSwapAmountEth",
-        args: [currentPool, parseUnits(amount, 18)],
+        method: "_getSwapTokenToEth",
+        args: [
+          tokenPair.PoolId,
+          parseUnits(amount, 18).toString(),
+          // { value: parseUnits(amount, 18).toString() },
+        ],
       }
   );
 
-  const swapToDaiSecond = useCall(
-    DexAddress &&
-      amount && {
-        contract: dexAddressContract,
-        method: "_getAmount",
-        args: [currentPool, parseUnits(amount, 18)],
-      }
-  );
+  console.log({ swapToEth: swapToEth?.value?.toString() });
+  console.log({ swapToDai: swapToDai?.value?.toString() });
 
-  setCalculateEthToDai(swapToDai?.value?.toString());
+  console.log({ pooladdressInsideSwap: pooladdress });
 
   useEffect(() => {
+    console.log("inside useffect now");
     handleToken();
   }, [swapToDai, swapToEth, amount]);
 
   const onSubmitAdd = () => {
+    console.log({ pooladdress });
+    console.log({ estimatedAmount: swapToEth?.value?.toString() });
+    console.log({ tokenPair });
+    console.log({ amount: parseUnits(amount, 18).toString() });
     !switchPair
       ? useSwapToken({
           tokenPair: tokenPair,
