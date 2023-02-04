@@ -11,12 +11,8 @@ const CreatePool = async (req, res) => {
       LpAddress: req.body.lpaddress,
       TokenPair: [req.body.tokenPair, req.body.ethPair],
     };
-    console.log({ poollDoc });
-
-    console.log({ TokenId: req.body.tokenId });
 
     await client.createIfNotExists(poollDoc);
-    console.log("Success !");
     await client
       .patch(req.body.tokenId)
       .set({
@@ -25,12 +21,11 @@ const CreatePool = async (req, res) => {
       })
       .commit()
       .then((res) => {
-        console.log({ "changeToken status": res });
+        console.log({ res });
       });
     res.status(200).send({ message: "success" });
   } catch (error) {
     res.status(500).send({ message: "error", data: error.message });
-    console.error(error);
   }
 };
 

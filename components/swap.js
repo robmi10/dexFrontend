@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Web3CreatePoolAdd from "./web3/useaddliquidity";
 import { formatEther } from "ethers/lib/utils";
 import { DexContext } from "./useContext/context";
 import { BsArrowDownUp } from "react-icons/bs";
@@ -9,9 +8,7 @@ import Web3GetSwapAmount from "./web3/useGetSwapAmount";
 import { client } from "../sanityClient/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { useToast } from "@chakra-ui/toast";
-import SquareLoader, { Square } from "./animation/square/square";
 const builder = imageUrlBuilder(client);
-
 function urlFor(source) {
   return builder.image(source);
 }
@@ -20,9 +17,6 @@ export const Swap = () => {
   const {
     poolList,
     activePool,
-    setActivePool,
-    calculateEthToDai,
-    calculateDaiToEth,
     setModal,
     tokenlist,
     toastNotifcation,
@@ -30,10 +24,9 @@ export const Swap = () => {
     setLoading,
     loading,
   } = useContext(DexContext);
-  const { usePoolAdd } = Web3CreatePoolAdd();
   const [switchPair, setSwitchPair] = useState(false);
   const [tokenFirst, setTokenFirst] = useState(0);
-  const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
+  const [isExchangeNotAccepted] = useState("");
   const toast = useToast();
 
   useEffect(() => {
@@ -67,57 +60,19 @@ export const Swap = () => {
     }
   }, [toastNotifcation]);
 
-  useEffect(() => {
-    // console.log({ loadinginSwap: loading });
-  }, [poolList, activePool, loading]);
+  useEffect(() => {}, [poolList, activePool, loading]);
 
-  if (!poolList) return false;
-
-  const filterPoolList = poolList.map((option, i) => ({
-    index: i,
-    address: option.PoolAddress,
-  }));
-
-  console.log({ filterPoolList });
-
-  const isPoolist = filterPoolList.length > 0;
-
-  const updateValue = ({ target }) => {
-    setActivePool(parseInt(target.value));
-  };
-
-  if (!activePool && activePool !== 0) return false;
-
-  console.log({ activePool });
-
-  if (!tokenlist) return false;
+  if (!poolList && !activePool && activePool !== 0 && !tokenlist) return false;
 
   const tokenPair = tokenlist.filter((option) => option.TokenId === activePool);
-
   const poolListTokenValue = poolList.filter(
     (option) => option.PoolId === tokenPair[0].PoolId
   );
 
-  if (!poolListTokenValue) return false;
-
-  // const tokenPair = tokenlist[4];
-
-  console.log({ tokenlist });
-
-  console.log({ poolListTokenValue });
+  if (!poolListTokenValue && !tokenPair) return false;
 
   const pooladdress = poolListTokenValue[0]?.PoolAddress;
-
-  console.log({ checkpooladdress: pooladdress });
-
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
-
-  console.log({ tokenPairCheck: tokenPair[0] });
-  // console.log({ tokenPairId: tokenPair[0].TokenId });
-
-  if (!tokenPair) return false;
-
-  console.log({ tokenFirst });
 
   return (
     <div className=" bg-slate-900 w-11/12 h-3/6 md:w-4/12 animate-fade rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
@@ -128,6 +83,7 @@ export const Swap = () => {
 
         <div className="h-24 flex w-full relative">
           <input
+            type="number"
             className="bg-slate-800 w-full items-center p-4 text-white rounded-2xl text-4xl"
             value={tokenFirst}
             onChange={(e) => {

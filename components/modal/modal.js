@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { DexContext } from "../useContext/context";
 import ModalSwap from "./modalSwap";
 import ModalToken from "./modalToken";
 
 const Modal = () => {
-  const { modal, tokenlist, setModal, setActivePool, activePool } =
-    useContext(DexContext);
+  const { modal, tokenlist, activePool } = useContext(DexContext);
 
   useEffect(() => {
     console.log({ modalCheck: modal });

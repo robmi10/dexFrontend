@@ -1,12 +1,9 @@
-import { useEtherBalance, useEthers } from "@usedapp/core";
 import React from "react";
 import { createContext, useState, useEffect } from "react";
 import { client } from "../../sanityClient/client";
 export const DexContext = createContext();
-// import { client } from "../../sanityclient/sanity";
 
 const DexProvider = ({ children }) => {
-  const { account } = useEthers();
   const [createPoolStatus, setCreatePoolStatus] = useState(false);
   const [approveStatus, setCreateApproveStatus] = useState(false);
   const [liquidityStatus, setliquidityStatus] = useState(false);
@@ -55,12 +52,9 @@ const DexProvider = ({ children }) => {
 
   const getTokenList = async () => {
     const queryTokenTable = '*[_type=="TokenTable"]';
-    console.log({ queryTokenTable });
     try {
       await client.fetch(queryTokenTable).then((res) => {
-        console.log({ resVote: res });
         setTokenList(res);
-        console.log({ tokenlist });
       });
     } catch (error) {
       console.log({ error });
@@ -69,12 +63,9 @@ const DexProvider = ({ children }) => {
 
   const getPoolList = async () => {
     const queryPoolTable = '*[_type=="poolTable"]';
-    console.log({ queryPoolTableCheck: queryPoolTable });
     try {
       await client.fetch(queryPoolTable).then((res) => {
-        console.log({ resVote: res });
         setPoolList(res);
-        console.log({ poolListInsideContext: poolList });
       });
     } catch (error) {
       console.log({ error });
@@ -82,7 +73,6 @@ const DexProvider = ({ children }) => {
   };
 
   const createPool = async () => {
-    console.log({ createPoolStatus });
     try {
       await fetch("api/db/createPool", {
         method: "POST",
@@ -115,12 +105,6 @@ const DexProvider = ({ children }) => {
   };
 
   const addLiquidity = async () => {
-    console.log({ liquidityStatus });
-
-    // console.log({
-    //   liquidityStatusAmount: liquidityStatus.totalamount.toString(),
-    // });
-
     try {
       await fetch("api/db/addLiquidity", {
         method: "POST",
@@ -156,7 +140,6 @@ const DexProvider = ({ children }) => {
   };
 
   const removeLiquidity = async () => {
-    console.log({ liquidityRemoveStatus });
     try {
       await fetch("api/db/removeLiquidity", {
         method: "POST",

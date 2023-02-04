@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useEthers, useContractFunction } from "@usedapp/core";
 import dexInfo from "../../constants/Dex.json";
 import daiInfo from "../../constants/DAI.json";
@@ -6,7 +6,6 @@ import { ethers } from "ethers";
 import { Contract } from "@ethersproject/contracts";
 import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
-import { formatUnits, parseUnits } from "ethers/lib/utils";
 
 const Web3SwapEth = () => {
   const { activePool, setToastNotifcation, setLoading } =
@@ -20,24 +19,18 @@ const Web3SwapEth = () => {
   const daiAddressContract = new Contract(daiAddress, daiInterface);
   const [input, setInput] = useState(false);
 
-  const {
-    state: daiStatus,
-    send: approveUser,
-    events: daiEvents,
-  } = useContractFunction(daiAddressContract, "approve");
+  const { state: daiStatus, send: approveUser } = useContractFunction(
+    daiAddressContract,
+    "approve"
+  );
 
-  const {
-    state: swapToEthStatus,
-    send: dexSwapToEth,
-    events: swapToEthEvents,
-  } = useContractFunction(dexAddressContract, "_swapTokenToEth");
+  const { state: swapToEthStatus, send: dexSwapToEth } = useContractFunction(
+    dexAddressContract,
+    "_swapTokenToEth"
+  );
 
   const SwapToEth = () => {
-    const { amount, estimatedAmount, pooladdress } = input;
-    console.log("inside useSwapToken function");
-
-    console.log({ insideestimatedAmount: estimatedAmount });
-    console.log({ insideactivePool: activePool });
+    const { amount, estimatedAmount } = input;
 
     dexSwapToEth(activePool, estimatedAmount, account, {
       value: amount,
@@ -55,8 +48,6 @@ const Web3SwapEth = () => {
   }, [daiStatus]);
 
   useEffect(() => {
-    console.log({ swapToEthStatus: swapToEthStatus.status });
-
     if (swapToEthStatus.status === "Success") {
       const { tokenPair, amount, estimatedAmount } = input;
 
@@ -70,24 +61,11 @@ const Web3SwapEth = () => {
         time: Date.now(),
       });
     }
-
-    if (swapToEthStatus.status === "Error") {
-      console.log("Error !!");
-    }
   }, [swapToEthStatus]);
 
   const useSwapEth = async (data) => {
-    const { amount, estimatedAmount, pooladdress } = data;
-    console.log("inside useSwapEth", data);
-    console.log({ data });
-    console.log({ amountWei: amount });
-    console.log({ estimatedAmount });
-    console.log({
-      estimatedAmount: parseUnits(estimatedAmount, 18).toString(),
-    });
+    const { estimatedAmount, pooladdress } = data;
     setInput(data);
-
-    console.log({ pooladdress });
 
     approveUser(pooladdress, estimatedAmount);
   };

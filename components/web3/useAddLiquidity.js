@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useEthers, useContractFunction } from "@usedapp/core";
+import { useContext, useEffect, useState } from "react";
+import { useContractFunction } from "@usedapp/core";
 import dexInfo from "../../constants/Dex.json";
 import daiInfo from "../../constants/DAI.json";
 import { ethers } from "ethers";
@@ -8,8 +8,7 @@ import { DexAddress, DaiTokenAddress } from "../../address";
 import { DexContext } from "../useContext/context";
 
 const Web3CreatePoolAdd = () => {
-  const { liquidityStatus, setliquidityStatus, setLoading, poolList } =
-    useContext(DexContext);
+  const { setliquidityStatus, setLoading } = useContext(DexContext);
   const daiAddress = DaiTokenAddress;
   const dexAddress = DexAddress;
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
@@ -24,14 +23,13 @@ const Web3CreatePoolAdd = () => {
     events: addLiquidityEvents,
   } = useContractFunction(dexAddressContract, "_addLiquidity");
 
-  const {
-    state: daiStatus,
-    send: approveUser,
-    events: daiEvents,
-  } = useContractFunction(daiAddressContract, "approve");
+  const { state: daiStatus, send: approveUser } = useContractFunction(
+    daiAddressContract,
+    "approve"
+  );
 
   const addLiquidityFunc = () => {
-    const { index, address } = input.poolInfo;
+    const { index } = input.poolInfo;
     const { liquidity } = input;
     addLiquidity(index, liquidity, {
       value: liquidity,
@@ -49,13 +47,9 @@ const Web3CreatePoolAdd = () => {
   }, [daiStatus]);
 
   useEffect(() => {
-    console.log({ addLiquidityStatus });
-
     if (addLiquidityStatus.status === "Success") {
       const { index, address } = input.poolInfo;
       const { tokenPair } = input;
-
-      console.log({ addLiquidityEvents });
 
       setliquidityStatus({
         liquidityid: index,
@@ -76,12 +70,7 @@ const Web3CreatePoolAdd = () => {
 
   const usePoolAdd = async (data) => {
     const { address } = data.poolInfo;
-    const { liquidity, tokenPair } = data;
-
-    console.log({ data });
-
-    console.log({ tokenPairInside: tokenPair });
-    console.log({ data });
+    const { liquidity } = data;
     setInput(data);
     approveUser(address, liquidity);
   };

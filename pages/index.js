@@ -1,11 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { DexContext } from "../components/useContext/context";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { BiDollar, BiTrendingUp } from "react-icons/bi";
 
 import Link from "next/link";
 import Footer from "../components/footer";
-import Modal from "../components/modal/modal";
 
 export default function Home() {
   const { modal } = useContext(DexContext);
@@ -93,7 +92,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

@@ -6,7 +6,6 @@ import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
 
 const builder = imageUrlBuilder(client);
-
 function urlFor(source) {
   return builder.image(source);
 }
@@ -18,14 +17,11 @@ const ModalToken = () => {
     setActivePool,
     tokenlist,
     activePool,
-    activeToken,
     setActiveToken,
   } = useContext(DexContext);
   const [searchInput, setSearchInput] = useState(false);
 
-  useEffect(() => {
-    console.log({ modalCheck: modal });
-  }, [modal, activePool]);
+  useEffect(() => {}, [modal, activePool]);
 
   if (!tokenlist) return false;
   const listSearch = tokenlist?.filter((optionToken) => {
@@ -34,9 +30,7 @@ const ModalToken = () => {
       : optionToken?.Token.toLowerCase().includes(searchInput);
   });
 
-  console.log({ listSearch });
   const latestTokenFilter = tokenlist.slice(0, 4);
-  const tokenPair = tokenlist[activePool];
 
   return (
     <div>
@@ -116,7 +110,6 @@ const ModalToken = () => {
                       onClick={() => {
                         setActiveToken(option.TokenId);
                         setModal(false);
-                        console.log({ currentiD: option.TokenId });
                       }}
                       className="flex flex-row h-16 items-center text-white hover:bg-gray-700 p-4 w-full gap-4 hover:cursor-pointer"
                     >
@@ -133,7 +126,6 @@ const ModalToken = () => {
                       onClick={() => {
                         setActivePool(option.TokenId);
                         setModal(false);
-                        console.log({ currentiD: option.TokenId });
                       }}
                       className="flex opacity-20 flex-row h-16 items-center text-white hover:bg-gray-700 p-4 w-full gap-4 hover:cursor-pointer"
                     >

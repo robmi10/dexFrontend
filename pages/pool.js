@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import Createpool from "../components/liquidation/createpool";
 import Modal from "../components/modal/modal";
-import { Swap } from "../components/swap";
 import { DexContext } from "../components/useContext/context";
 
 const Pool = () => {

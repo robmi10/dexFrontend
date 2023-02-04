@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useEthers, useContractFunction } from "@usedapp/core";
+import { useContext, useEffect, useState } from "react";
+import { useContractFunction } from "@usedapp/core";
 import dexInfo from "../../constants/Dex.json";
 import { ethers } from "ethers";
 import { Contract } from "@ethersproject/contracts";
@@ -8,7 +8,6 @@ import { DexContext } from "../useContext/context";
 
 const Web3CreatePool = () => {
   const { setCreatePoolStatus, setLoading } = useContext(DexContext);
-  const { account } = useEthers();
   const dexAddress = DexAddress;
   const daiAddress = DaiTokenAddress;
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
@@ -21,21 +20,12 @@ const Web3CreatePool = () => {
   } = useContractFunction(dexAddressContract, "createPool");
 
   useEffect(() => {
-    console.log({ createStatus: createStatus.status });
-
     if (createStatus.status === "Mining") {
       setLoading(true);
     }
 
     if (createStatus.status === "Success") {
       const { Token, _id } = input;
-
-      console.log({ createEvents });
-
-      console.log({
-        createEventsIDSecond: createEvents[0]?.args?._id.toString(),
-      });
-      console.log({ createStatus });
 
       setCreatePoolStatus({
         createdId: createEvents[0]?.args._id,
@@ -50,7 +40,6 @@ const Web3CreatePool = () => {
   }, [createStatus]);
 
   const usePool = async (data) => {
-    console.log({ data });
     setInput(data);
     createPool(daiAddress);
   };

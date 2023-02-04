@@ -1,13 +1,12 @@
 import Link from "next/link";
-import React, { useContext, useEffect, useState } from "react";
-import Footer from "./footer";
+import React, { useContext, useEffect } from "react";
 import { DexContext } from "./useContext/context";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEthers } from "@usedapp/core";
 
 const Layout = ({ children }) => {
-  const { isWeb3Enabled, setModal, modal } = useContext(DexContext);
-  const { activateBrowserWallet, deactivate, account, error } = useEthers();
+  const { setModal, modal } = useContext(DexContext);
+  const { activateBrowserWallet, deactivate, account } = useEthers();
 
   useEffect(() => {}, [modal]);
 

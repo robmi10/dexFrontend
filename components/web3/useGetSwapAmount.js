@@ -1,21 +1,13 @@
-import {
-  useCall,
-  useEtherBalance,
-  useEthers,
-  useTokenBalance,
-} from "@usedapp/core";
+import { useCall, useEthers } from "@usedapp/core";
 import { Contract, ethers } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import React, { useContext, useState, useEffect } from "react";
-import { BsArrowDownUp } from "react-icons/bs";
-import { DaiTokenAddress, DexAddress } from "../../address";
+import { DexAddress } from "../../address";
 import dexInfo from "../../constants/Dex.json";
 import { DexContext } from "../useContext/context";
 import { formatEther } from "ethers/lib/utils";
 import Web3SwapToken from "./useswaptotoken";
 import Web3SwapEth from "./useswaptoeth";
-import eth from "../svg/eth.svg";
-import Image from "next/image";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
@@ -37,53 +29,25 @@ const Web3GetSwapAmount = ({
   ethPair,
   loading,
 }) => {
-  const { setCalculateEthToDai, setCalculateDaiToEth, setModal } =
-    useContext(DexContext);
+  const { setCalculateDaiToEth, setModal } = useContext(DexContext);
   const { account } = useEthers();
   const amount = tokenFirst;
-  const currentPool = activePool;
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
   const dexAddressContract = new Contract(DexAddress, dexInterface);
   const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
   const { useSwapToken } = Web3SwapToken();
   const { useSwapEth } = Web3SwapEth();
-  const etherBalancePool = useEtherBalance(
-    "0x2fAaB5074F8C2811F7e61202f1f47A2DA1A7899e"
-  );
-  const daiBalancePool = useTokenBalance(
-    DaiTokenAddress,
-    "0x2fAaB5074F8C2811F7e61202f1f47A2DA1A7899e"
-  );
-
-  const etherBalanceUser = useEtherBalance(account);
-  const daiBalanceUser = useTokenBalance(DaiTokenAddress, account);
-
-  console.log({ etherBalancePool: etherBalancePool?.toString() });
-  console.log({ daiBalancePool: daiBalancePool?.toString() });
-
-  console.log({ etherBalanceUser: etherBalanceUser?.toString() });
-  console.log({ daiBalanceUser: daiBalanceUser?.toString() });
 
   useEffect(() => {}, [loading]);
-
-  if (amount) {
-    console.log({ amountParse: parseUnits(amount, 18).toString() });
-  }
 
   const swapToEth = useCall(
     DexAddress &&
       amount && {
         contract: dexAddressContract,
         method: "_getSwapEthToToken",
-        args: [
-          tokenPair.PoolId,
-          parseUnits(amount, 18).toString(),
-          // { value: parseUnits(amount, 18).toString() },
-        ],
+        args: [tokenPair.PoolId, parseUnits(amount, 18).toString()],
       }
   );
-
-  console.log({ poolID: tokenPair.PoolId });
 
   setCalculateDaiToEth(swapToEth?.value?.toString());
 
@@ -96,29 +60,15 @@ const Web3GetSwapAmount = ({
       amount && {
         contract: dexAddressContract,
         method: "_getSwapTokenToEth",
-        args: [
-          tokenPair.PoolId,
-          parseUnits(amount, 18).toString(),
-          // { value: parseUnits(amount, 18).toString() },
-        ],
+        args: [tokenPair.PoolId, parseUnits(amount, 18).toString()],
       }
   );
 
-  console.log({ swapToEth: swapToEth?.value?.toString() });
-  console.log({ swapToDai: swapToDai?.value?.toString() });
-
-  console.log({ pooladdressInsideSwap: pooladdress });
-
   useEffect(() => {
-    console.log("inside useffect now");
     handleToken();
   }, [swapToDai, swapToEth, amount]);
 
   const onSubmitAdd = () => {
-    console.log({ pooladdress });
-    console.log({ estimatedAmount: swapToEth?.value?.toString() });
-    console.log({ tokenPair });
-    console.log({ amount: parseUnits(amount, 18).toString() });
     !switchPair
       ? useSwapToken({
           tokenPair: tokenPair,
@@ -153,6 +103,8 @@ const Web3GetSwapAmount = ({
     <div className="w-full flex flex-col justify-center items-center ">
       <div className="h-24 flex w-full relative z-0">
         <input
+          disabled
+          type="number"
           onChange={() => {
             setTokenSecond(e.target.value);
           }}

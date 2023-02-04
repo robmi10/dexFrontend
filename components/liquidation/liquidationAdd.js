@@ -6,7 +6,6 @@ import { VscPinned } from "react-icons/vsc";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import Link from "next/link";
 import { client } from "../../sanityClient/client";
-
 import { useToast } from "@chakra-ui/react";
 import imageUrlBuilder from "@sanity/image-url";
 import { formatEther } from "ethers/lib/utils";
@@ -30,7 +29,6 @@ export const LiquidationAdd = () => {
   const toast = useToast();
 
   useEffect(() => {
-    console.log({ toastNotifcationAddCheck: toastNotifcation });
     if (toastNotifcation) {
       toastNotifcation.type === "add" &&
         toast({
@@ -62,20 +60,10 @@ export const LiquidationAdd = () => {
   if (!tokenPair) return false;
 
   const filterPoolToken = filterPoolList.filter(
-    (option, index) => option.index === tokenPair[0].PoolId
+    (option) => option.index === tokenPair[0].PoolId
   );
-
-  console.log({ filterPoolList });
-  console.log({ tokenPair });
-  console.log({ poolList });
-
-  console.log({ filterPoolToken });
-
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
 
-  console.log({ ChecktokenPair: tokenPair });
-
-  console.log("tokenPair[0]?.TokenStatus", tokenPair[0]?.TokenStatus);
   return (
     <div className="bg-slate-900 border border-gray-600 w-11/12 md:w-3/4 md:h-3/4 animate-fade rounded-xl p-4 text-white flex flex-col items-center gap-20">
       <div className="space-y-5 flex items-center flex-col h-full w-full">

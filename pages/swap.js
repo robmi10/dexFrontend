@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-import SquareLoader from "../components/animation/square/square";
 import Modal from "../components/modal/modal";
 import { Swap } from "../components/swap";
 import { DexContext } from "../components/useContext/context";

@@ -1,9 +1,4 @@
-import {
-  useCall,
-  useEtherBalance,
-  useEthers,
-  useTokenBalance,
-} from "@usedapp/core";
+import { useCall } from "@usedapp/core";
 import { Contract, ethers } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import React, { useContext, useState, useEffect } from "react";
@@ -15,21 +10,14 @@ import { DexContext } from "../useContext/context";
 import Web3CreatePoolAdd from "./useaddliquidity";
 import Web3CreatePoolRemove from "./useremoveliquidity";
 
-const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
+const Web3GetLiquidityAmount = ({ remove, poolInfo, tokenPair }) => {
   const { usePoolAdd } = Web3CreatePoolAdd();
   const { usePoolRemove } = Web3CreatePoolRemove();
-  const {
-    setCalculateEthToDai,
-    setCalculateDaiToEth,
-    activePool,
-    setModal,
-    loading,
-  } = useContext(DexContext);
-  const { account } = useEthers();
+  const { activePool, loading } = useContext(DexContext);
 
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
   const dexAddressContract = new Contract(DexAddress, dexInterface);
-  const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
+  const [isExchangeNotAccepted] = useState("");
   const [amount, setAmount] = useState(0);
 
   useEffect(() => {}, [loading]);
@@ -42,16 +30,8 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
         args: [activePool, parseUnits(amount, 18)],
       }
   );
-  console.log({ getLiquidityAmount: getLiquidityAmount?.value?.toString() });
-  // setCalculateDaiToEth(swapToEth?.value?.toString());
 
-  const onSubmitAdd = (data) => {
-    console.log({ liquidityAdd: parseUnits(amount, 18).toString() });
-
-    console.log({ poolInfo });
-
-    console.log({ tokenPair });
-
+  const onSubmitAdd = () => {
     usePoolAdd({
       tokenPair: tokenPair,
       poolInfo: poolInfo,
@@ -59,13 +39,7 @@ const Web3GetLiquidityAmount = ({ _amount, remove, poolInfo, tokenPair }) => {
     });
   };
 
-  const onSubmitRemove = (data) => {
-    console.log("onsubmit remove");
-    console.log({ liquidityAdd: parseUnits(amount, 18).toString() });
-
-    console.log({ poolInfo });
-    console.log({ tokenPair });
-
+  const onSubmitRemove = () => {
     usePoolRemove({
       tokenPair: tokenPair,
       poolInfo: poolInfo,

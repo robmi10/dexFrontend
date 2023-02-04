@@ -1,7 +1,4 @@
-import { useEtherBalance, useEthers, useTokenBalance } from "@usedapp/core";
-import React, { useContext, useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { DaiTokenAddress } from "../../address";
+import React, { useContext, useEffect } from "react";
 import { DexContext } from "../useContext/context";
 import Web3CreatePool from "../web3/usecreatepool";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -18,10 +15,7 @@ function urlFor(source) {
 
 const Createpool = () => {
   const {
-    address,
-    activePool,
     tokenlist,
-    poolList,
     setModal,
     activeToken,
     toastNotifcation,
@@ -29,12 +23,7 @@ const Createpool = () => {
     setLoading,
     loading,
   } = useContext(DexContext);
-  const { account } = useEthers();
-
-  const lpAddress = poolList[activePool]?.LpAddress;
   const { usePool } = Web3CreatePool();
-  const { register, handleSubmit } = useForm();
-  const liquidityBalance = useTokenBalance(lpAddress, account);
   const toast = useToast();
   useEffect(() => {
     if (toastNotifcation) {
@@ -54,8 +43,6 @@ const Createpool = () => {
   useEffect(() => {}, [activeToken, loading]);
 
   const createPool = (value) => {
-    console.log("inside create pool");
-    console.log({ value });
     usePool(value);
   };
 
@@ -65,11 +52,6 @@ const Createpool = () => {
   );
 
   const isActive = activeToken !== false;
-
-  console.log({ tokenPair });
-  console.log({ activeToken });
-
-  console.log({ isActive });
 
   return (
     <div className="flex h-full w-full flex-col gap-4 justify-center items-center">
@@ -116,7 +98,6 @@ const Createpool = () => {
               )}
             </div>
             <button
-              // disabled={isExchangeNotAccepted}
               onClick={() => {
                 createPool(tokenPair[0]);
               }}

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { DexContext } from "./useContext/context";
 import { RiExchangeFundsFill } from "react-icons/ri";
@@ -7,8 +7,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Link from "next/link";
 
 export const Navbar = () => {
-  const { address, setAddress, modal, setModal } = useContext(DexContext);
-  const { activateBrowserWallet, deactivate, account, error } = useEthers();
+  const { setModal } = useContext(DexContext);
+  const { activateBrowserWallet, deactivate, account } = useEthers();
   const [dropdown, setDropdown] = useState(false);
 
   return (

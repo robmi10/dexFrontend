@@ -1,16 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useEthers } from "@usedapp/core";
-import { useForm } from "react-hook-form";
-import Web3CreatePoolRemove from "../web3/useremoveliquidity";
+import React, { useEffect, useContext } from "react";
 import { DexContext } from "../useContext/context";
 import { formatEther } from "ethers/lib/utils";
 import Link from "next/link";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-
 import { VscPinned } from "react-icons/vsc";
-
 import Web3GetLiquidityAmount from "../web3/useGetLiquidityAmount";
 import { useToast } from "@chakra-ui/react";
 import imageUrlBuilder from "@sanity/image-url";
@@ -26,7 +20,6 @@ export const LiquidationRemove = () => {
     poolList,
     activePool,
     tokenlist,
-    setActivePool,
     setModal,
     activeToken,
     toastNotifcation,
@@ -35,7 +28,6 @@ export const LiquidationRemove = () => {
   } = useContext(DexContext);
   const toast = useToast();
   useEffect(() => {
-    console.log({ toastNotifcationRemoveCheck: toastNotifcation });
     if (toastNotifcation) {
       toastNotifcation.type === "remove" &&
         toast({
@@ -68,10 +60,8 @@ export const LiquidationRemove = () => {
   if (!tokenPair) return false;
 
   const filterPoolToken = filterPoolList.filter(
-    (option, index) => option.index === tokenPair[0].PoolId
+    (option) => option.index === tokenPair[0].PoolId
   );
-
-  console.log({ filterPoolToken });
 
   const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
 
