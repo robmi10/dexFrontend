@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { DexContext } from "../useContext/context";
-import Web3GetLiquidityAmount from "../web3/useGetLiquidityAmount";
+import Web3GetLiquidityAmount from "../web3/usegetliquidityamount";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { VscPinned } from "react-icons/vsc";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";

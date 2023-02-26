@@ -4,7 +4,7 @@ import { DexContext } from "./useContext/context";
 import { BsArrowDownUp } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { VscPinned } from "react-icons/vsc";
-import Web3GetSwapAmount from "./web3/useGetSwapAmount";
+import Web3GetSwapAmount from "./web3/usegetswapamount";
 import { client } from "../sanityClient/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { useToast } from "@chakra-ui/toast";
