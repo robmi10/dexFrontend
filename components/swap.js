@@ -64,10 +64,11 @@ export const Swap = () => {
 
   if (!poolList && !activePool && activePool !== 0 && !tokenlist) return false;
   const listfilter = tokenlist || [];
+  const poolListfilter = poolList || [];
   const tokenPair = listfilter?.filter(
     (option) => option.TokenId === activePool
   );
-  const poolListTokenValue = poolList.filter(
+  const poolListTokenValue = poolListfilter.filter(
     (option) => option.PoolId === tokenPair[0].PoolId
   );
 

@@ -47,8 +47,9 @@ export const LiquidationAdd = () => {
 
   useEffect(() => {}, [poolList, activeToken]);
   if (!poolList) return false;
+  const poolListfilter = poolList || [];
 
-  const filterPoolList = poolList.map((option, i) => ({
+  const filterPoolList = poolListfilter?.map((option, i) => ({
     index: i,
     address: option.PoolAddress,
   }));
