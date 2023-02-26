@@ -64,6 +64,9 @@ export const Swap = () => {
 
   if (!poolList && !activePool && activePool !== 0 && !tokenlist) return false;
   const listfilter = tokenlist || [];
+  const tokenPair = listfilter?.filter(
+    (option) => option.TokenId === activePool
+  );
   const poolListfilter = poolList || [];
   const poolListTokenValue = poolListfilter.filter(
     (option) => option.PoolId === tokenPair[0].PoolId
@@ -73,9 +76,6 @@ export const Swap = () => {
 
   const pooladdress = poolListTokenValue[0]?.PoolAddress;
   const ethPair = listfilter?.filter((option) => option.TokenId === 1);
-  const tokenPair = listfilter?.filter(
-    (option) => option.TokenId === activePool
-  );
 
   return (
     <div className=" bg-slate-900 w-11/12 h-3/6 md:w-4/12 animate-fade rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
