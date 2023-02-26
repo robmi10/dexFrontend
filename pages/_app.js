@@ -1,6 +1,12 @@
 import "../styles/globals.css";
 import { ChainId } from "@thirdweb-dev/react";
-import { Avalanche, DAppProvider, Hardhat, Localhost } from "@usedapp/core";
+import {
+  Avalanche,
+  DAppProvider,
+  Hardhat,
+  Localhost,
+  Mumbai,
+} from "@usedapp/core";
 import DexProvider from "../components/useContext/context";
 import { getDefaultProvider } from "ethers";
 import { Navbar } from "../components/navbar";
@@ -8,24 +14,16 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Footer from "../components/footer";
 import Layout from "../components/layout";
 
-const config = {
-  // autoConnect: true,
-  readOnlyChainId: ChainId.Hardhat,
-  readOnlyUrls: {
-    31337: "http://localhost:8545",
-  },
-};
-
 export default function App({ Component, pageProps }) {
   return (
     <ChakraProvider>
       <DexProvider>
         <DAppProvider
           config={{
-            networks: [Localhost],
-            readOnlyChainId: ChainId.Localhost,
+            networks: [Mumbai],
+            readOnlyChainId: 80001,
             readOnlyUrls: {
-              [ChainId.Localhost]: "http://localhost:7545",
+              [80001]: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_PROJECT_ID}`,
             },
           }}
         >
