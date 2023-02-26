@@ -75,7 +75,7 @@ export const Swap = () => {
   if (!poolListTokenValue && !tokenPair) return false;
 
   const pooladdress = poolListTokenValue[0]?.PoolAddress;
-  const ethPair = tokenlist?.filter((option) => option.TokenId === 1);
+  const ethPair = listfilter?.filter((option) => option.TokenId === 1);
 
   return (
     <div className=" bg-slate-900 w-11/12 h-3/6 md:w-4/12 animate-fade rounded-xl text-white border border-gray-500 flex flex-col items-center relative ">
