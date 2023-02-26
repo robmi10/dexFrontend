@@ -63,9 +63,10 @@ const ModalSwap = () => {
 
             <div className="text-white items-center">
               <div className="w-full h-auto flex flex-wrap gap-4">
-                {latestTokenFilter?.map((option) => {
+                {latestTokenFilter?.map((option, index) => {
                   return (
                     <button
+                      key={index}
                       onClick={() => {
                         setActiveToken(option.TokenId);
                         setActivePool(option.TokenId);
@@ -85,11 +86,12 @@ const ModalSwap = () => {
             </div>
           </div>
           <div className="w-full h-2/3  overflow-auto border-t border-gray-600 flex gap-6 flex-col">
-            {listSearch?.map((option) => {
+            {listSearch?.map((option, index) => {
               return (
                 <>
                   {option.TokenStatus > 0 && (
                     <button
+                      key={index}
                       onClick={() => {
                         setActiveToken(option.TokenId);
                         setActivePool(option.TokenId);

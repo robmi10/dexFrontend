@@ -39,10 +39,10 @@ const Webthreecreatepool = () => {
     }
   }, [createStatus]);
 
-  const usePool = async (data) => {
+  const Pool = async (data) => {
     setInput(data);
     createPool(daiAddress);
   };
-  return { usePool };
+  return { Pool };
 };
 export default Webthreecreatepool;

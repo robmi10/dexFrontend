@@ -11,8 +11,8 @@ import Web3CreatePoolAdd from "./useaddliquidity";
 import Web3CreatePoolRemove from "./useremoveliquidity";
 
 const Web3GetLiquidityAmount = ({ remove, poolInfo, tokenPair }) => {
-  const { usePoolAdd } = Web3CreatePoolAdd();
-  const { usePoolRemove } = Web3CreatePoolRemove();
+  const { PoolAdd } = Web3CreatePoolAdd();
+  const { PoolRemove } = Web3CreatePoolRemove();
   const { activePool, loading } = useContext(DexContext);
 
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
@@ -32,7 +32,7 @@ const Web3GetLiquidityAmount = ({ remove, poolInfo, tokenPair }) => {
   );
 
   const onSubmitAdd = () => {
-    usePoolAdd({
+    PoolAdd({
       tokenPair: tokenPair,
       poolInfo: poolInfo,
       liquidity: parseUnits(amount, 18).toString(),
@@ -40,7 +40,7 @@ const Web3GetLiquidityAmount = ({ remove, poolInfo, tokenPair }) => {
   };
 
   const onSubmitRemove = () => {
-    usePoolRemove({
+    PoolRemove({
       tokenPair: tokenPair,
       poolInfo: poolInfo,
       liquidity: parseUnits(amount, 18).toString(),

@@ -63,12 +63,12 @@ const Web3SwapEth = () => {
     }
   }, [swapToEthStatus]);
 
-  const useSwapEth = async (data) => {
+  const SwapEth = async (data) => {
     const { estimatedAmount, pooladdress } = data;
     setInput(data);
 
     approveUser(pooladdress, estimatedAmount);
   };
-  return { useSwapEth };
+  return { SwapEth };
 };
 export default Web3SwapEth;

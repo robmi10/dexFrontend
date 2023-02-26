@@ -23,7 +23,7 @@ const Createpool = () => {
     setLoading,
     loading,
   } = useContext(DexContext);
-  const { usePool } = Webthreecreatepool();
+  const { Pool } = Webthreecreatepool();
   const toast = useToast();
   useEffect(() => {
     if (toastNotifcation) {
@@ -43,7 +43,7 @@ const Createpool = () => {
   useEffect(() => {}, [activeToken, loading]);
 
   const createPool = (value) => {
-    usePool(value);
+    Pool(value);
   };
 
   if (!tokenlist) return false;

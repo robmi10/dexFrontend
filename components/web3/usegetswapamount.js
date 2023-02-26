@@ -35,8 +35,8 @@ const Web3GetSwapAmount = ({
   const dexInterface = new ethers.utils.Interface(dexInfo.abi);
   const dexAddressContract = new Contract(DexAddress, dexInterface);
   const [isExchangeNotAccepted, setIsExchangeNotAccepted] = useState("");
-  const { useSwapToken } = Web3SwapToken();
-  const { useSwapEth } = Web3SwapEth();
+  const { SwapToken } = Web3SwapToken();
+  const { SwapEth } = Web3SwapEth();
 
   useEffect(() => {}, [loading]);
 
@@ -70,13 +70,13 @@ const Web3GetSwapAmount = ({
 
   const onSubmitAdd = () => {
     !switchPair
-      ? useSwapToken({
+      ? SwapToken({
           tokenPair: tokenPair,
           amount: parseUnits(amount, 18).toString(),
           estimatedAmount: swapToDai?.value?.toString(),
           pooladdress: pooladdress,
         })
-      : useSwapEth({
+      : SwapEth({
           tokenPair: tokenPair,
           amount: parseUnits(amount, 18).toString(),
           estimatedAmount: swapToEth?.value?.toString(),

@@ -69,12 +69,12 @@ const Web3CreatePoolRemove = () => {
     }
   }, [removeLiquidityStatus]);
 
-  const usePoolRemove = async (data) => {
+  const PoolRemove = async (data) => {
     const { address } = data.poolInfo;
     const { liquidity } = data;
     setInput(data);
     approveUser(address, liquidity);
   };
-  return { usePoolRemove };
+  return { PoolRemove };
 };
 export default Web3CreatePoolRemove;

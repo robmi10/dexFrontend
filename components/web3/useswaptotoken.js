@@ -59,12 +59,12 @@ const Web3SwapToken = () => {
     }
   }, [swapToTokenStatus]);
 
-  const useSwapToken = async (data) => {
+  const SwapToken = async (data) => {
     const { estimatedAmount, pooladdress } = data;
     setInput(data);
 
     approveUser(pooladdress, estimatedAmount);
   };
-  return { useSwapToken };
+  return { SwapToken };
 };
 export default Web3SwapToken;

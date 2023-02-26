@@ -68,12 +68,12 @@ const Web3CreatePoolAdd = () => {
     }
   }, [addLiquidityStatus]);
 
-  const usePoolAdd = async (data) => {
+  const PoolAdd = async (data) => {
     const { address } = data.poolInfo;
     const { liquidity } = data;
     setInput(data);
     approveUser(address, liquidity);
   };
-  return { usePoolAdd };
+  return { PoolAdd };
 };
 export default Web3CreatePoolAdd;
