@@ -63,8 +63,8 @@ export const Swap = () => {
   useEffect(() => {}, [poolList, activePool, loading]);
 
   if (!poolList && !activePool && activePool !== 0 && !tokenlist) return false;
-
-  const tokenPair = tokenlist?.filter(
+  const listfilter = tokenlist || [];
+  const tokenPair = listfilter?.filter(
     (option) => option.TokenId === activePool
   );
   const poolListTokenValue = poolList.filter(
