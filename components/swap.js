@@ -94,7 +94,7 @@ export const Swap = () => {
             }}
           ></input>
 
-          {switchPair && (
+          {switchPair && ethPair && (
             <button
               disabled
               onClick={() => {
@@ -108,7 +108,7 @@ export const Swap = () => {
             </button>
           )}
 
-          {!switchPair && (
+          {!switchPair && ethPair && (
             <button
               onClick={() => {
                 setModal("swap");
