@@ -53,7 +53,7 @@ export const LiquidationRemove = () => {
     address: option.PoolAddress,
   }));
 
-  const tokenPair = tokenlist.filter(
+  const tokenPair = tokenlist?.filter(
     (option) => option.TokenId === activeToken
   );
 
