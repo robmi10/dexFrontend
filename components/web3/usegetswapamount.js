@@ -117,7 +117,7 @@ const Web3GetSwapAmount = ({
           }
           className="h-24 flex w-full bg-slate-800 items-center p-4 text-white rounded-2xl text-4xl"
         />
-        {switchPair && (
+        {switchPair && tokenPair?.TokenImage && (
           <button
             onClick={() => {
               setModal("swap");
@@ -130,7 +130,7 @@ const Web3GetSwapAmount = ({
           </button>
         )}
 
-        {!switchPair && (
+        {!switchPair && ethPair[0]?.TokenImage && (
           <button className="absolute right-2 bg-slate-900 text-xl text-gray-400 rounded-full top-1/4 w-4/12 h-2/4 flex flex-row justify-center items-center gap-1 md:gap-3">
             <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
             <h1 className="text-2xl">{ethPair[0]?.Token?.toUpperCase()}</h1>

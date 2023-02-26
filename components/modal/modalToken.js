@@ -65,7 +65,7 @@ const ModalToken = () => {
                 {latestTokenFilter?.map((option) => {
                   return (
                     <>
-                      {!option.TokenStatus && (
+                      {!option.TokenStatus && option?.TokenImage && (
                         <button
                           onClick={() => {
                             setActiveToken(option.TokenId);
@@ -75,12 +75,12 @@ const ModalToken = () => {
                         >
                           <img
                             className="w-8 h-8"
-                            src={urlFor(option.TokenImage)}
+                            src={urlFor(option?.TokenImage)}
                           />
                           <h1>{option.Token}</h1>
                         </button>
                       )}
-                      {option.TokenStatus > 0 && (
+                      {option.TokenStatus > 0 && option.TokenImage && (
                         <button
                           onClick={() => {
                             setActiveToken(option.TokenId);
@@ -90,7 +90,7 @@ const ModalToken = () => {
                         >
                           <img
                             className="w-8 h-8"
-                            src={urlFor(option.TokenImage)}
+                            src={urlFor(option?.TokenImage)}
                           />
                           <h1>{option.Token}</h1>
                         </button>

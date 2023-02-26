@@ -79,7 +79,7 @@ const Createpool = () => {
                   <MdOutlineKeyboardArrowDown size={30} />
                 </button>
               )}
-              {isActive && (
+              {isActive && tokenPair[0]?.TokenImage && (
                 <button
                   onClick={() => {
                     setModal("token");

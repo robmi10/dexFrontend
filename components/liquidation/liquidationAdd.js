@@ -99,7 +99,7 @@ export const LiquidationAdd = () => {
                 </button>
               )}
 
-              {tokenPair[0]?.TokenStatus !== 0 && (
+              {tokenPair[0]?.TokenStatus !== 0 && tokenPair[0]?.TokenImage && (
                 <button
                   onClick={() => {
                     setModal("swap");

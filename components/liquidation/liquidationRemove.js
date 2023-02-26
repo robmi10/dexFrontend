@@ -82,7 +82,12 @@ export const LiquidationRemove = () => {
             <h1 className="md:w-2/4">Select Pair</h1>
             <div className="mt-4 flex flex-row gap-2  md:w-2/4 ">
               <button className="h-16 w-full disabled bg-slate-800 text-xl text-white rounded-full  flex flex-row justify-between p-4 items-center gap-2">
-                <img className="w-8 h-8" src={urlFor(ethPair[0]?.TokenImage)} />
+                {ethPair[0]?.TokenImage && (
+                  <img
+                    className="w-8 h-8"
+                    src={urlFor(ethPair[0]?.TokenImage)}
+                  />
+                )}
 
                 <h1 className="text-2xl">{ethPair[0]?.Token}</h1>
                 <VscPinned size={25} />
@@ -99,7 +104,7 @@ export const LiquidationRemove = () => {
                 </button>
               )}
 
-              {tokenPair[0]?.TokenStatus !== 0 && (
+              {tokenPair[0]?.TokenStatus !== 0 && tokenPair[0]?.TokenImage && (
                 <button
                   onClick={() => {
                     setModal("swap");
