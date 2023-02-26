@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { DexContext } from "../useContext/context";
-import Web3CreatePool from "../web3/usecreatepool";
+import Webthreecreatepool from "../web3/usecreatepool";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import imageUrlBuilder from "@sanity/image-url";
 import { client } from "../../sanityClient/client";
@@ -23,7 +23,7 @@ const Createpool = () => {
     setLoading,
     loading,
   } = useContext(DexContext);
-  const { usePool } = Web3CreatePool();
+  const { usePool } = Webthreecreatepool();
   const toast = useToast();
   useEffect(() => {
     if (toastNotifcation) {
